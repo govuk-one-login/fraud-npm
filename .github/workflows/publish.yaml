@@ -1,0 +1,27 @@
+# currently hardcode logging dir. if multiple packages change to enable run over
+# multiple directories to create each package
+# decide how to run also
+name: Publish
+on: workflow_dispatch
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+            working-directory: ./logging
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run build
+      - run: |
+          echo @govuk-one-login:https://npm.pkg.github.com/ > .npmrc
+          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> .npmrc
+      - run: npm publish
+        env:
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
