@@ -1,7 +1,7 @@
-import { Logger } from '@aws-lambda-powertools/logger';
-import { LogEvents } from './events';
-import { MetricUnits, Metrics } from '@aws-lambda-powertools/metrics';
-import { Tracer } from '@aws-lambda-powertools/tracer';
+import { Logger } from "@aws-lambda-powertools/logger";
+import { LogEvents } from "./log-events";
+import { MetricUnits, Metrics } from "@aws-lambda-powertools/metrics";
+import { Tracer } from "@aws-lambda-powertools/tracer";
 
 export const fraudTracer = new Tracer();
 
