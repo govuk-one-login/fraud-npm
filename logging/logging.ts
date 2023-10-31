@@ -46,11 +46,21 @@ export class FraudLogger {
     );
   };
 
+  /**
+   * Send successful JWE decryption event log
+   *
+   * @param messageId - The unique identifier of the message that was successfully decrypted.
+   */
   logJWEDecryptSuccess = (messageId: string): void => {
     this.logger.info(LogEvents.JWEDecryptSuccess, { messageId });
     this.metrics.addMetric(LogEvents.JWEDecryptSuccess, MetricUnits.Count, 1);
   };
 
+  /**
+   * Send successful JWS ecryption event log
+   *
+   * @param messageId - The unique identifier of the message that was successfully decrypted.
+   */
   logJWSVerifySuccess = (messageId: string): void => {
     this.logger.info(LogEvents.JWSVerifySuccess, { messageId });
     this.metrics.addMetric(LogEvents.JWSVerifySuccess, MetricUnits.Count, 1);
