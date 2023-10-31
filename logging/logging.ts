@@ -8,8 +8,11 @@ export const fraudTracer = new Tracer();
 export class FraudLogger {
   constructor(
     public logger: Logger,
-    public metrics: Metrics
-  ) {}
+    public metrics: Metrics,
+    public environment?: string
+  ) {
+    if (environment === "development") this.logger.setLogLevel("DEBUG");
+  }
 
   /**
    * Send Started Processing Event log
