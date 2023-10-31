@@ -158,4 +158,25 @@ describe("logSETBatchProcess", () => {
       });
     });
   });
+  describe("logMessage", () => {
+    beforeEach(() => {
+      jest.resetAllMocks();
+    });
+
+    it("should be defined", () => {
+      expect(fraudLogger.logMessage).toBeDefined();
+    });
+
+    it("should call logger.info", () => {
+      jest.spyOn(fraudLogger.logger, "info").mockImplementation(() => null);
+      jest
+        .spyOn(fraudLogger.metrics, "addMetric")
+        .mockImplementation(() => null);
+
+      const testMessage = "Test Message";
+      fraudLogger.logMessage(testMessage);
+
+      expect(fraudLogger.logger.info).toHaveBeenCalledWith(testMessage);
+    });
+  });
 });
