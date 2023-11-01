@@ -1,5 +1,5 @@
 {
-    "version": "0.0.8",
+    "version": "0.0.9",
     "name": "@govuk-one-login/logging",
     "description": "govuk-one-login common logging api",
     "author": {
