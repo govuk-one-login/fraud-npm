@@ -19,6 +19,7 @@ jobs:
           node-version: 20
       - run: npm install
       - run: npm ci
+      - run: npx tsc
       - run: npm test
       - run: |
           echo @govuk-one-login:https://npm.pkg.github.com/ > .npmrc
