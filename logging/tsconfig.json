@@ -6,6 +6,6 @@
     "module": "NodeNext",
     "moduleResolution": "nodenext",
     "strict": true,
-    "target": "ES2018"
+    "target": "ES2020"
   }
 }
