@@ -1,6 +1,6 @@
 # currently hardcode logging dir. if multiple packages change to enable run over
 # multiple directories to create each package
-# decide how to run also
+# decide how to run also+
 name: Publish
 on: workflow_dispatch
 jobs:
@@ -17,7 +17,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 20
-      - run: npm install
       - run: npm ci
       - run: npx tsc
       - run: npm test
