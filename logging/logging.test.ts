@@ -78,30 +78,6 @@ describe("FraudLogger", () => {
     });
   });
 
-  describe("logJWSVerifySuccess", () => {
-    beforeEach(() => {
-      jest.resetAllMocks();
-    });
-
-    it("should be defined", async () => {
-      expect(fraudLogger.logJWSVerifySuccess).toBeDefined();
-    });
-
-    it("should call logger.info", () => {
-      jest.spyOn(fraudLogger.logger, "info").mockImplementation(() => null);
-      jest
-        .spyOn(fraudLogger.metrics, "addMetric")
-        .mockImplementation(() => null);
-
-      fraudLogger.logJWSVerifySuccess("testID");
-
-      expect(fraudLogger.logger.info).toHaveBeenCalledWith(
-        LogEvents.JWSVerifySuccess,
-        { messageId: "testID" }
-      );
-    });
-  });
-
   describe("logErrorProcessing", () => {
     beforeEach(() => {
       jest.resetAllMocks();
@@ -127,71 +103,6 @@ describe("FraudLogger", () => {
     });
   });
 
-  describe("logSETBatchProcess", () => {
-    beforeEach(() => {
-      jest.resetAllMocks();
-    });
-
-    it("should be defined", async () => {
-      expect(fraudLogger.logSETBatchProcess).toBeDefined();
-    });
-
-    it("should call logger.info", () => {
-      const logEventsValue: LogEvents = LogEvents.FullSQSBatchGenerated;
-      const successfulMessageIds: string[] = ["id1", "id2"];
-      const failedMessageIds: string[] = ["id3", "id4"];
-
-      jest.spyOn(fraudLogger.logger, "info").mockImplementation(() => null);
-      jest
-        .spyOn(fraudLogger.metrics, "addMetric")
-        .mockImplementation(() => null);
-
-      fraudLogger.logSETBatchProcess([
-        logEventsValue,
-        successfulMessageIds,
-        failedMessageIds,
-      ]);
-
-      expect(fraudLogger.logger.info).toHaveBeenCalledWith(
-        logEventsValue,
-        { successfulMessageIds },
-        { failedMessageIds }
-      );
-    });
-  });
-
-  describe("logFailedMessageProcessing", () => {
-    beforeEach(() => {
-      jest.resetAllMocks();
-    });
-
-    it("should be defined", async () => {
-      expect(fraudLogger.logFailedMessageProcessing).toBeDefined();
-    });
-
-    it("should call logger.info", () => {
-      const logEventsValue: LogEvents = LogEvents.FailedSQSBatchGenerated;
-      const failedMessageIds = [
-        { itemIdentifier: "id3" },
-        { itemIdentifier: "id4" },
-      ];
-
-      jest.spyOn(fraudLogger.logger, "info").mockImplementation(() => null);
-      jest
-        .spyOn(fraudLogger.metrics, "addMetric")
-        .mockImplementation(() => null);
-
-      fraudLogger.logFailedMessageProcessing([
-        logEventsValue,
-        failedMessageIds,
-      ]);
-
-      expect(fraudLogger.logger.info).toHaveBeenCalledWith(logEventsValue, {
-        failedMessageIds,
-      });
-    });
-  });
-
   describe("logMessage", () => {
     beforeEach(() => {
       jest.resetAllMocks();
@@ -211,27 +122,6 @@ describe("FraudLogger", () => {
       fraudLogger.logMessage(testMessage);
 
       expect(fraudLogger.logger.info).toHaveBeenCalledWith(testMessage);
-    });
-  });
-
-  describe("logJWSSignSuccess", () => {
-    it("should be defined", async () => {
-      expect(fraudLogger.logJWSSignSuccess).toBeDefined();
-    });
-
-    it("should call logger.info", () => {
-      jest.spyOn(fraudLogger.logger, "info").mockImplementation(() => null);
-      jest
-        .spyOn(fraudLogger.metrics, "addMetric")
-        .mockImplementation(() => null);
-
-      fraudLogger.logJWSSignSuccess("jwsContentHere", "messageID");
-
-      expect(fraudLogger.logger.info).toHaveBeenCalledWith(
-        LogEvents.JWSSignSuccess,
-        { jws: "jwsContentHere" },
-        { messageId: "messageID" }
-      );
     });
   });
   describe("logDebug", () => {
@@ -261,31 +151,6 @@ describe("FraudLogger", () => {
       fraudLogger.logDebug(testDebugMessage);
 
       expect(fraudLogger.logger.debug).not.toHaveBeenCalled();
-    });
-
-    describe("logSETBatchGeneration", () => {
-      it("should be defined", async () => {
-        expect(fraudLogger.logSETBatchGeneration).toBeDefined();
-      });
-
-      it("should call logger.info", () => {
-        jest.spyOn(fraudLogger.logger, "info").mockImplementation(() => null);
-        jest
-          .spyOn(fraudLogger.metrics, "addMetric")
-          .mockImplementation(() => null);
-
-        fraudLogger.logSETBatchGeneration([
-          LogEvents.PartialSETBatchGenerated,
-          ["messageId1", "messageId2"],
-          ["batchId1", "batchId2"],
-        ]);
-
-        expect(fraudLogger.logger.info).toHaveBeenCalledWith(
-          LogEvents.PartialSETBatchGenerated,
-          { successfulMessageIds: ["messageId1", "messageId2"] },
-          { failedMessageIds: ["batchId1", "batchId2"] }
-        );
-      });
     });
   });
 });
