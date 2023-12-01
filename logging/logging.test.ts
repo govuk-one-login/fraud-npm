@@ -1,4 +1,4 @@
-import { Metrics } from "@aws-lambda-powertools/metrics";
+import { MetricUnits, Metrics } from "@aws-lambda-powertools/metrics";
 import { LogEvents } from "./log-events";
 import { FraudLogger } from "./logging";
 import { Logger } from "@aws-lambda-powertools/logger";
@@ -27,122 +27,98 @@ describe("FraudLogger", () => {
     expect(mockLogger.setLogLevel).not.toHaveBeenCalledWith("DEBUG");
   });
 
-  describe("logStartedProcessing", () => {
-    beforeEach(() => {
-      jest.resetAllMocks();
-    });
+  it("should handle calls without optional message IDs", () => {
+    const mockLogEvent = "mockLogEvent";
 
-    it("should be defined", () => {});
+    jest.spyOn(fraudLogger.logger, "info");
+    jest.spyOn(fraudLogger.metrics, "addMetric");
 
-    it("should call logger.info and metrics.AddMetric", () => {
-      jest.spyOn(fraudLogger.logger, "info").mockImplementation(() => null);
-      jest
-        .spyOn(fraudLogger.metrics, "addMetric")
-        .mockImplementation(() => null);
+    fraudLogger.logEventProcessed(mockLogEvent);
 
-      expect(fraudLogger.logger.info).toHaveBeenCalledWith(
-        LogEvents.StartedProcessing,
-        {
-          messageId: "12345",
-        }
-      );
-    });
+    expect(fraudLogger.logger.info).toHaveBeenCalledWith(
+      mockLogEvent,
+      { previousMessageId: undefined },
+      { newMessageId: undefined }
+    );
+    expect(fraudLogger.logger.info).toHaveBeenCalledTimes(1);
+
+    expect(fraudLogger.metrics.addMetric).toHaveBeenCalledWith(
+      mockLogEvent,
+      MetricUnits.Count,
+      1
+    );
+    expect(fraudLogger.metrics.addMetric).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("logErrorProcessing", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
   });
 
-  describe("logSuccessfullyProcessed", () => {
-    beforeEach(() => {
-      jest.resetAllMocks();
-    });
-
-    it("should be defined", async () => {});
-
-    it("should call logger.info", () => {
-      jest.spyOn(fraudLogger.logger, "info").mockImplementation(() => null);
-      jest
-        .spyOn(fraudLogger.metrics, "addMetric")
-        .mockImplementation(() => null);
-
-      expect(fraudLogger.logger.info).toHaveBeenCalledWith(
-        LogEvents.SuccessfullyProcessed,
-        { previousMessageId: "12345" },
-        { newMessageId: "678910" }
-      );
-    });
+  it("should be defined", async () => {
+    expect(fraudLogger.logErrorProcessing).toBeDefined();
   });
 
-  describe("logErrorProcessing", () => {
-    beforeEach(() => {
-      jest.resetAllMocks();
-    });
+  it("should call logger.error", () => {
+    jest.spyOn(fraudLogger.logger, "error").mockImplementation(() => null);
+    jest.spyOn(fraudLogger.metrics, "addMetric").mockImplementation(() => null);
 
-    it("should be defined", async () => {
-      expect(fraudLogger.logErrorProcessing).toBeDefined();
-    });
+    fraudLogger.logErrorProcessing("12345", "Error Message");
 
-    it("should call logger.error", () => {
-      jest.spyOn(fraudLogger.logger, "error").mockImplementation(() => null);
-      jest
-        .spyOn(fraudLogger.metrics, "addMetric")
-        .mockImplementation(() => null);
+    expect(fraudLogger.logger.error).toHaveBeenCalledWith(
+      LogEvents.ErrorProcessing,
+      { messageId: "12345" },
+      { error: "Error Message" }
+    );
+  });
+});
 
-      fraudLogger.logErrorProcessing("12345", "Error Message");
-
-      expect(fraudLogger.logger.error).toHaveBeenCalledWith(
-        LogEvents.ErrorProcessing,
-        { messageId: "12345" },
-        { error: "Error Message" }
-      );
-    });
+describe("logMessage", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
   });
 
-  describe("logMessage", () => {
-    beforeEach(() => {
-      jest.resetAllMocks();
-    });
-
-    it("should be defined", () => {
-      expect(fraudLogger.logMessage).toBeDefined();
-    });
-
-    it("should call logger.info", () => {
-      jest.spyOn(fraudLogger.logger, "info").mockImplementation(() => null);
-      jest
-        .spyOn(fraudLogger.metrics, "addMetric")
-        .mockImplementation(() => null);
-
-      const testMessage = "Test Message";
-      fraudLogger.logMessage(testMessage);
-
-      expect(fraudLogger.logger.info).toHaveBeenCalledWith(testMessage);
-    });
+  it("should be defined", () => {
+    expect(fraudLogger.logMessage).toBeDefined();
   });
-  describe("logDebug", () => {
-    beforeEach(() => {
-      jest.resetAllMocks();
-    });
 
-    it("should be defined", () => {
-      expect(fraudLogger.logDebug).toBeDefined();
-    });
+  it("should call logger.info", () => {
+    jest.spyOn(fraudLogger.logger, "info").mockImplementation(() => null);
+    jest.spyOn(fraudLogger.metrics, "addMetric").mockImplementation(() => null);
 
-    it("should call logger.debug when logger level is DEBUG", () => {
-      jest.spyOn(fraudLogger.logger, "getLevelName").mockReturnValue("DEBUG");
-      jest.spyOn(fraudLogger.logger, "debug").mockImplementation(() => null);
+    const testMessage = "Test Message";
+    fraudLogger.logMessage(testMessage);
 
-      const testDebugMessage = "Test Debug Message";
-      fraudLogger.logDebug(testDebugMessage);
+    expect(fraudLogger.logger.info).toHaveBeenCalledWith(testMessage);
+  });
+});
+describe("logDebug", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
 
-      expect(fraudLogger.logger.debug).toHaveBeenCalledWith(testDebugMessage);
-    });
+  it("should be defined", () => {
+    expect(fraudLogger.logDebug).toBeDefined();
+  });
 
-    it("should not call logger.debug when logger level is not DEBUG", () => {
-      jest.spyOn(fraudLogger.logger, "getLevelName").mockReturnValue("INFO");
-      jest.spyOn(fraudLogger.logger, "debug").mockImplementation(() => null);
+  it("should call logger.debug when logger level is DEBUG", () => {
+    jest.spyOn(fraudLogger.logger, "getLevelName").mockReturnValue("DEBUG");
+    jest.spyOn(fraudLogger.logger, "debug").mockImplementation(() => null);
 
-      const testDebugMessage = "Test Debug Message";
-      fraudLogger.logDebug(testDebugMessage);
+    const testDebugMessage = "Test Debug Message";
+    fraudLogger.logDebug(testDebugMessage);
 
-      expect(fraudLogger.logger.debug).not.toHaveBeenCalled();
-    });
+    expect(fraudLogger.logger.debug).toHaveBeenCalledWith(testDebugMessage);
+  });
+
+  it("should not call logger.debug when logger level is not DEBUG", () => {
+    jest.spyOn(fraudLogger.logger, "getLevelName").mockReturnValue("INFO");
+    jest.spyOn(fraudLogger.logger, "debug").mockImplementation(() => null);
+
+    const testDebugMessage = "Test Debug Message";
+    fraudLogger.logDebug(testDebugMessage);
+
+    expect(fraudLogger.logger.debug).not.toHaveBeenCalled();
   });
 });

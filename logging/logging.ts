@@ -20,7 +20,7 @@ export class FraudLogger {
    * @param previousMessageId
    * @param newMessageId
    */
-  logEventProcessedProcessed = (
+  logEventProcessed = (
     logEvent: string,
     previousMessageId?: string,
     newMessageId?: string
