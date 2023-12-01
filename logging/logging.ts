@@ -46,8 +46,8 @@ export class FraudLogger {
    * @param messageId
    * @param error
    */
-  logMessage = (logMessage: string): void => {
-    this.logger.info(logMessage);
+  logMessage = (logMessage: string, messageId?: string): void => {
+    this.logger.info(logMessage, { messageId });
     this.metrics.addMetric(logMessage, MetricUnits.Count, 1);
   };
 

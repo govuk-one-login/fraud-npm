@@ -87,12 +87,15 @@ describe("logMessage", () => {
     jest.spyOn(fraudLogger.logger, "info").mockImplementation(() => null);
     jest.spyOn(fraudLogger.metrics, "addMetric").mockImplementation(() => null);
 
-    const testMessage = "Test Message";
-    fraudLogger.logMessage(testMessage);
+    const mockMessage = "mockMessage";
+    fraudLogger.logMessage(mockMessage, "mockMessageId");
 
-    expect(fraudLogger.logger.info).toHaveBeenCalledWith(testMessage);
+    expect(fraudLogger.logger.info).toHaveBeenCalledWith(mockMessage, {
+      messageId: "mockMessageId",
+    });
   });
 });
+
 describe("logDebug", () => {
   beforeEach(() => {
     jest.resetAllMocks();
