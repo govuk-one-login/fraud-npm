@@ -15,35 +15,18 @@ export class FraudLogger {
   }
 
   /**
-   * Send Started Processing Event log
-   *
-   * @param messageId
-   */
-  logStartedProcessing = (messageId?: string): void => {
-    this.logger.info(LogEvents.StartedProcessing, { messageId });
-    this.metrics.addMetric(LogEvents.StartedProcessing, MetricUnits.Count, 1);
-  };
-
-  /**
-   *  Send Successfully Processed Event log
+   *  Send Event Processed Event log
    *
    * @param previousMessageId
    * @param newMessageId
    */
-  logSuccessfullyProcessed = (
+  logEventProcessedProcessed = (
+    logEvent: string,
     previousMessageId?: string,
     newMessageId?: string
   ): void => {
-    this.logger.info(
-      LogEvents.SuccessfullyProcessed,
-      { previousMessageId },
-      { newMessageId }
-    );
-    this.metrics.addMetric(
-      LogEvents.SuccessfullyProcessed,
-      MetricUnits.Count,
-      1
-    );
+    this.logger.info(logEvent, { previousMessageId }, { newMessageId });
+    this.metrics.addMetric(logEvent, MetricUnits.Count, 1);
   };
 
   /**
