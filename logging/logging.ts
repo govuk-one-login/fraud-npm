@@ -5,13 +5,14 @@ import { Tracer } from "@aws-lambda-powertools/tracer";
 
 export const fraudTracer = new Tracer();
 
-export class FraudLogger {
-  constructor(
-    public logger: Logger,
-    public metrics: Metrics,
-    public environment?: string
-  ) {
-    if (environment === "development") this.logger.setLogLevel("DEBUG");
+export class FraudLogger extends Logger {
+  private metrics: Metrics;
+  constructor(serviceName?: string, namespace?: string) {
+    super();
+    this.metrics = new Metrics({
+      serviceName: serviceName,
+      namespace: namespace,
+    });
   }
 
   /**
@@ -25,7 +26,7 @@ export class FraudLogger {
     previousMessageId?: string,
     newMessageId?: string
   ): void => {
-    this.logger.info(logEvent, { previousMessageId }, { newMessageId });
+    super.info(logEvent, { previousMessageId }, { newMessageId });
     this.metrics.addMetric(logEvent, MetricUnits.Count, 1);
   };
 
@@ -36,7 +37,7 @@ export class FraudLogger {
    * @param error
    */
   logErrorProcessing = (messageId?: string, error?: any): void => {
-    this.logger.error(LogEvents.ErrorProcessing, { messageId }, { error });
+    super.error(LogEvents.ErrorProcessing, { messageId }, { error });
     this.metrics.addMetric(LogEvents.ErrorProcessing, MetricUnits.Count, 1);
   };
 
@@ -47,7 +48,7 @@ export class FraudLogger {
    * @param error
    */
   logMessage = (logMessage: string, messageId?: string): void => {
-    this.logger.info(logMessage, { messageId });
+    super.info(logMessage, { messageId });
     this.metrics.addMetric(logMessage, MetricUnits.Count, 1);
   };
 
@@ -59,10 +60,8 @@ export class FraudLogger {
    * @param message
    */
   logDebug = (message: string): void => {
-    if (this.logger.getLevelName() === "DEBUG") {
-      this.logger.debug(message);
+    if (super.getLevelName() === "DEBUG") {
+      super.debug(message);
     }
   };
-
-
 }
