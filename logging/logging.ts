@@ -6,7 +6,7 @@ import { Tracer } from "@aws-lambda-powertools/tracer";
 export const fraudTracer = new Tracer();
 
 export class FraudLogger extends Logger {
-  private metrics: Metrics;
+  public metrics: Metrics;
   constructor(serviceName?: string, namespace?: string) {
     super();
     this.metrics = new Metrics({
