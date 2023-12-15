@@ -8,7 +8,7 @@ import { TokenClaimsChange } from '../event-classes/caep/token-claims-change';
 
 export const caepEventMapping: Record<
   (typeof CaepEventURIs)[CaepEventTypes],
-  BaseEvent
+  typeof BaseEvent
 > = {
   [CaepEventURIs[CaepEventTypes.AssuranceLevelChange]]:
     AssuranceLevelChangeEvent,

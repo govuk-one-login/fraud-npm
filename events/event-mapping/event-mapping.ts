@@ -29,7 +29,7 @@ export type AllEventTypes =
 
 export const eventMapping: Record<
   (typeof AllEventURIs)[AllEventTypes],
-  BaseEvent
+  typeof BaseEvent
 > = {
   ...notificationEventMapping,
   ...riscEventMapping,

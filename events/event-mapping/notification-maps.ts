@@ -8,7 +8,7 @@ import { DeviceConcernEvent } from '../event-classes/notification/device-concern
 
 export const notificationEventMapping: Record<
   (typeof NotificationEventURIs)[NotificationEventTypes],
-  BaseEvent
+  typeof BaseEvent
 > = {
   [NotificationEventURIs[NotificationEventTypes.AccountConcern]]:
     AccountConcernEvent,

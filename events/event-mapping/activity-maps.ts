@@ -7,7 +7,7 @@ import { SessionRecoveredEvent } from '../event-classes/activity/session-recover
 
 export const activityEventMapping: Record<
   (typeof ActivityEventURIs)[ActivityEventTypes],
-  BaseEvent
+  typeof BaseEvent
 > = {
   [ActivityEventURIs[ActivityEventTypes.SessionRecovered]]:
     SessionRecoveredEvent,

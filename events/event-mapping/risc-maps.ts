@@ -16,7 +16,7 @@ import { SessionsRevokedEvent } from '../event-classes/risc/sessions-revoked';
 
 export const riscEventMapping: Record<
   (typeof RiscEventURIs)[RiscEventTypes],
-  BaseEvent
+  typeof BaseEvent
 > = {
   [RiscEventURIs[RiscEventTypes.AccountPurged]]: AccountPurgedEvent,
   [RiscEventURIs[RiscEventTypes.AccountDisabled]]: AccountDisabledEvent,

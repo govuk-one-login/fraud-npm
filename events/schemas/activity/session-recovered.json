@@ -1,0 +1,45 @@
+{
+  "properties": {
+    "subject": {
+      "properties": {
+        "format": {
+          "type": "string"
+        },
+        "uri": {
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "session": {
+      "properties": {
+        "format": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "previous_session_id": {
+      "type": "string"
+    },
+    "initiating_entity": {
+      "type": "string"
+    },
+    "reason_admin": {
+      "properties": {
+        "en": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "event_timestamp": {
+      "type": "string"
+    }
+  },
+  "required": ["subject", "session"]
+}

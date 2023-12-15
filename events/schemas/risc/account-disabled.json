@@ -1,0 +1,30 @@
+{
+  "properties": {
+    "reason": {
+      "type": "string"
+    },
+    "subject": {
+      "properties": {
+        "iss": {
+          "format": "uri",
+          "type": "string"
+        },
+        "sub": {
+          "type": "string"
+        },
+        "subject_type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject_type",
+        "sub"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "subject"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,37 @@
+{
+  "properties": {
+    "aud": {
+      "type": "string"
+    },
+    "events": {
+      "type": "object"
+    },
+    "iat": {
+      "type": "number"
+    },
+    "iss": {
+      "format": "uri",
+      "type": "string"
+    },
+    "jti": {
+      "type": "string"
+    },
+    "sub": {
+      "type": "string"
+    },
+    "toe": {
+      "type": "number"
+    },
+    "txn": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "iss",
+    "jti",
+    "iat",
+    "aud",
+    "events"
+  ],
+  "type": "object"
+}
