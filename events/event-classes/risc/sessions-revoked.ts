@@ -1,8 +1,17 @@
 import { TxmaEventNames } from '../../enums/event-names';
 import { RiscEventTypes } from '../../enums/risc-events';
-import { BaseEvent } from '../BaseEvent';
+import { SsfSchema } from '../../types/ssf';
+import { BaseEvent } from '../base-event';
+
+import * as eventSchema from '../../schemas/risc/sessions-revoked.json';
 
 export class SessionsRevokedEvent extends BaseEvent {
-  readonly eventType: RiscEventTypes = RiscEventTypes.SessionsRevoked;
-  readonly txmaEventName: TxmaEventNames = TxmaEventNames.SessionsRevoked;
+  constructor(message: SsfSchema) {
+    super(
+      message,
+      RiscEventTypes.SessionsRevoked,
+      TxmaEventNames.SessionsRevoked,
+      eventSchema
+    );
+  }
 }

@@ -1,10 +1,17 @@
 import { TxmaEventNames } from '../../enums/event-names';
 import { RiscEventTypes } from '../../enums/risc-events';
-import { BaseEvent } from '../BaseEvent';
+import { SsfSchema } from '../../types/ssf';
+import { BaseEvent } from '../base-event';
+
+import * as eventSchema from '../../schemas/risc/account-credential-change-required.json';
 
 export class AccountCredentialChangeEvent extends BaseEvent {
-  readonly eventType: RiscEventTypes =
-    RiscEventTypes.AccountCredentialChangeRequired;
-  readonly txmaEventName: TxmaEventNames =
-    TxmaEventNames.AccountCredentialChange;
+  constructor(message: SsfSchema) {
+    super(
+      message,
+      RiscEventTypes.AccountCredentialChangeRequired,
+      TxmaEventNames.AccountCredentialChange,
+      eventSchema
+    );
+  }
 }

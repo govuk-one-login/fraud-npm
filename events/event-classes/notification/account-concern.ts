@@ -1,9 +1,17 @@
 import { TxmaEventNames } from '../../enums/event-names';
 import { NotificationEventTypes } from '../../enums/notification-events';
-import { BaseEvent } from '../BaseEvent';
+import { BaseEvent } from '../base-event';
+
+import * as eventSchema from '../../schemas/notification/account-concern.json';
+import { SsfSchema } from '../../types/ssf';
 
 export class AccountConcernEvent extends BaseEvent {
-  readonly eventType: NotificationEventTypes =
-    NotificationEventTypes.AccountConcern;
-  readonly txmaEventName: TxmaEventNames = TxmaEventNames.AccountConcern;
+  constructor(message: SsfSchema) {
+    super(
+      message,
+      NotificationEventTypes.AccountConcern,
+      TxmaEventNames.AccountConcern,
+      eventSchema
+    );
+  }
 }

@@ -1,9 +1,17 @@
 import { CaepEventTypes } from '../../enums/caep-events';
 import { TxmaEventNames } from '../../enums/event-names';
-import { BaseEvent } from '../BaseEvent';
+import { BaseEvent } from '../base-event';
+
+import * as eventSchema from '../../schemas/caep/device-compliance-change.json';
+import { SsfSchema } from '../../types/ssf';
 
 export class DeviceComplianceChangeEvent extends BaseEvent {
-  readonly eventType: CaepEventTypes = CaepEventTypes.DeviceComplianceChange;
-  readonly txmaEventName: TxmaEventNames =
-    TxmaEventNames.DeviceComplianceChange;
+  constructor(message: SsfSchema) {
+    super(
+      message,
+      CaepEventTypes.DeviceComplianceChange,
+      TxmaEventNames.DeviceComplianceChange,
+      eventSchema
+    );
+  }
 }

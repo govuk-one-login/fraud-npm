@@ -1,8 +1,17 @@
 import { TxmaEventNames } from '../../enums/event-names';
 import { RiscEventTypes } from '../../enums/risc-events';
-import { BaseEvent } from '../BaseEvent';
+import { BaseEvent } from '../base-event';
+
+import * as eventSchema from '../../schemas/risc/opt-out-cancelled.json';
+import { SsfSchema } from '../../types/ssf';
 
 export class OptOutCancelledEvent extends BaseEvent {
-  readonly eventType: RiscEventTypes = RiscEventTypes.OptOutCancelled;
-  readonly txmaEventName: TxmaEventNames = TxmaEventNames.OptOutCancelled;
+  constructor(message: SsfSchema) {
+    super(
+      message,
+      RiscEventTypes.OptOutCancelled,
+      TxmaEventNames.OptOutCancelled,
+      eventSchema
+    );
+  }
 }

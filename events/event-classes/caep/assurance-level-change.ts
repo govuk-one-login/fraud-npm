@@ -1,8 +1,17 @@
 import { CaepEventTypes } from '../../enums/caep-events';
 import { TxmaEventNames } from '../../enums/event-names';
-import { BaseEvent } from '../BaseEvent';
+import { SsfSchema } from '../../types/ssf';
+import { BaseEvent } from '../base-event';
+
+import * as eventSchema from '../../schemas/caep/assurance-level-change.json';
 
 export class AssuranceLevelChangeEvent extends BaseEvent {
-  readonly eventType: CaepEventTypes = CaepEventTypes.AssuranceLevelChange;
-  readonly txmaEventName: TxmaEventNames = TxmaEventNames.AssuranceLevelChange;
+  constructor(message: SsfSchema) {
+    super(
+      message,
+      CaepEventTypes.AssuranceLevelChange,
+      TxmaEventNames.AssuranceLevelChange,
+      eventSchema
+    );
+  }
 }

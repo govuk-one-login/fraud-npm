@@ -1,5 +1,4 @@
 import { RiscEventTypes, RiscEventURIs } from '../enums/risc-events';
-import { BaseEvent } from '../event-classes/BaseEvent';
 import { AccountCredentialChangeEvent } from '../event-classes/risc/account-credential-change-required';
 import { AccountDisabledEvent } from '../event-classes/risc/account-disabled';
 import { AccountPurgedEvent } from '../event-classes/risc/account-purged';
@@ -16,7 +15,7 @@ import { SessionsRevokedEvent } from '../event-classes/risc/sessions-revoked';
 
 export const riscEventMapping: Record<
   (typeof RiscEventURIs)[RiscEventTypes],
-  typeof BaseEvent
+  any
 > = {
   [RiscEventURIs[RiscEventTypes.AccountPurged]]: AccountPurgedEvent,
   [RiscEventURIs[RiscEventTypes.AccountDisabled]]: AccountDisabledEvent,
@@ -36,3 +35,11 @@ export const riscEventMapping: Record<
     RecoveryInformationChangedEvent,
   [RiscEventURIs[RiscEventTypes.SessionsRevoked]]: SessionsRevokedEvent,
 };
+
+// Examples
+const eventClass =
+  riscEventMapping[
+    'https://schemas.openid.net/secevent/risc/event-type/account-purged'
+  ];
+
+const eventClass2 = riscEventMapping[RiscEventURIs['accountPurged']];

@@ -1,8 +1,16 @@
 import { CaepEventTypes } from '../../enums/caep-events';
 import { TxmaEventNames } from '../../enums/event-names';
-import { BaseEvent } from '../BaseEvent';
+import { BaseEvent } from '../base-event';
+import * as eventSchema from '../../schemas/caep/session-revoked.json';
+import { SsfSchema } from '../../types/ssf';
 
 export class SessionRevokedEvent extends BaseEvent {
-  readonly eventType: CaepEventTypes = CaepEventTypes.SessionRevoked;
-  readonly txmaEventName: TxmaEventNames = TxmaEventNames.SessionRevoked;
+  constructor(message: SsfSchema) {
+    super(
+      message,
+      CaepEventTypes.SessionRevoked,
+      TxmaEventNames.SessionRevoked,
+      eventSchema
+    );
+  }
 }

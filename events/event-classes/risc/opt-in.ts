@@ -1,8 +1,12 @@
 import { TxmaEventNames } from '../../enums/event-names';
 import { RiscEventTypes } from '../../enums/risc-events';
-import { BaseEvent } from '../BaseEvent';
+import { BaseEvent } from '../base-event';
+
+import * as eventSchema from '../../schemas/risc/opt-in.json';
+import { SsfSchema } from '../../types/ssf';
 
 export class OptInEvent extends BaseEvent {
-  readonly eventType: RiscEventTypes = RiscEventTypes.OptIn;
-  readonly txmaEventName: TxmaEventNames = TxmaEventNames.OptIn;
+  constructor(message: SsfSchema) {
+    super(message, RiscEventTypes.OptIn, TxmaEventNames.OptIn, eventSchema);
+  }
 }

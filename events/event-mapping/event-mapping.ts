@@ -8,7 +8,6 @@ import {
   NotificationEventURIs,
 } from '../enums/notification-events';
 import { RiscEventTypes, RiscEventURIs } from '../enums/risc-events';
-import { BaseEvent } from '../event-classes/BaseEvent';
 import { activityEventMapping } from './activity-maps';
 import { caepEventMapping } from './caep-maps';
 import { notificationEventMapping } from './notification-maps';
@@ -27,10 +26,14 @@ export type AllEventTypes =
   | CaepEventTypes
   | ActivityEventTypes;
 
-export const eventMapping: Record<
-  (typeof AllEventURIs)[AllEventTypes],
-  typeof BaseEvent
-> = {
+export const EventTypes: Record<string, AllEventTypes> = {
+  ...NotificationEventTypes,
+  ...RiscEventTypes,
+  ...CaepEventTypes,
+  ...ActivityEventTypes,
+};
+
+export const eventMapping: Record<(typeof AllEventURIs)[AllEventTypes], any> = {
   ...notificationEventMapping,
   ...riscEventMapping,
   ...activityEventMapping,

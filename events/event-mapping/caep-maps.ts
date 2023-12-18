@@ -1,5 +1,4 @@
 import { CaepEventTypes, CaepEventURIs } from '../enums/caep-events';
-import { BaseEvent } from '../event-classes/BaseEvent';
 import { AssuranceLevelChangeEvent } from '../event-classes/caep/assurance-level-change';
 import { CredentialChangeEvent } from '../event-classes/caep/credential-change';
 import { DeviceComplianceChangeEvent } from '../event-classes/caep/device-compliance-change';
@@ -8,7 +7,7 @@ import { TokenClaimsChange } from '../event-classes/caep/token-claims-change';
 
 export const caepEventMapping: Record<
   (typeof CaepEventURIs)[CaepEventTypes],
-  typeof BaseEvent
+  any
 > = {
   [CaepEventURIs[CaepEventTypes.AssuranceLevelChange]]:
     AssuranceLevelChangeEvent,

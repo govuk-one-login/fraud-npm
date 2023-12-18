@@ -1,10 +1,17 @@
 import { TxmaEventNames } from '../../enums/event-names';
 import { RiscEventTypes } from '../../enums/risc-events';
-import { BaseEvent } from '../BaseEvent';
+import { SsfSchema } from '../../types/ssf';
+import { BaseEvent } from '../base-event';
+
+import * as eventSchema from '../../schemas/risc/recovery-information-changed.json';
 
 export class RecoveryInformationChangedEvent extends BaseEvent {
-  readonly eventType: RiscEventTypes =
-    RiscEventTypes.RecoveryInformationChanged;
-  readonly txmaEventName: TxmaEventNames =
-    TxmaEventNames.RecoveryInformationChanged;
+  constructor(message: SsfSchema) {
+    super(
+      message,
+      RiscEventTypes.RecoveryInformationChanged,
+      TxmaEventNames.RecoveryInformationChanged,
+      eventSchema
+    );
+  }
 }

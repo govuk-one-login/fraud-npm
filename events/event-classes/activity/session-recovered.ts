@@ -1,8 +1,18 @@
+import { BaseEvent } from '../base-event';
+
 import { ActivityEventTypes } from '../../enums/activity-events';
 import { TxmaEventNames } from '../../enums/event-names';
-import { BaseEvent } from '../BaseEvent';
+import { SsfSchema } from '../../types/ssf';
+
+import * as eventSchema from '../../schemas/activity/session-recovered.json';
 
 export class SessionRecoveredEvent extends BaseEvent {
-  readonly eventType: ActivityEventTypes = ActivityEventTypes.SessionRecovered;
-  readonly txmaEventName: TxmaEventNames = TxmaEventNames.SessionRecovered;
+  constructor(message: SsfSchema) {
+    super(
+      message,
+      ActivityEventTypes.SessionRecovered,
+      TxmaEventNames.SessionRecovered,
+      eventSchema
+    );
+  }
 }
