@@ -9,12 +9,12 @@ export class OptOutInitiatedEvent extends BaseEvent {
   readonly eventType: RiscEventTypes = RiscEventTypes.OptOutInitiated;
   readonly txmaEventName: TxmaEventNames = TxmaEventNames.OptOutInitiated;
 
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       RiscEventTypes.OptOutInitiated,
       TxmaEventNames.OptOutInitiated,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

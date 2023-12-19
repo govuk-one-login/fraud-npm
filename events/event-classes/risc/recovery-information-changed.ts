@@ -6,12 +6,12 @@ import { BaseEvent } from '../base-event';
 import * as eventSchema from '../../schemas/risc/recovery-information-changed.json';
 
 export class RecoveryInformationChangedEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       RiscEventTypes.RecoveryInformationChanged,
       TxmaEventNames.RecoveryInformationChanged,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

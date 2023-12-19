@@ -6,12 +6,12 @@ import * as eventSchema from '../../schemas/risc/credential-compromise.json';
 import { SsfSchema } from '../../types/ssf';
 
 export class CredentialCompromiseEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       RiscEventTypes.CredentialCompromise,
       TxmaEventNames.CredentialCompromise,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

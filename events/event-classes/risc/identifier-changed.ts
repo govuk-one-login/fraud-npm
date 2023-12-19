@@ -6,12 +6,12 @@ import * as eventSchema from '../../schemas/risc/identifier-changed.json';
 import { SsfSchema } from '../../types/ssf';
 
 export class IdentifierChangedEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       RiscEventTypes.IdentifierChanged,
       TxmaEventNames.IdentifierChanged,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

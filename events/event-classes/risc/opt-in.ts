@@ -6,7 +6,7 @@ import * as eventSchema from '../../schemas/risc/opt-in.json';
 import { SsfSchema } from '../../types/ssf';
 
 export class OptInEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
-    super(message, RiscEventTypes.OptIn, TxmaEventNames.OptIn, eventSchema);
+  constructor(message?: SsfSchema) {
+    super(RiscEventTypes.OptIn, TxmaEventNames.OptIn, eventSchema, message);
   }
 }

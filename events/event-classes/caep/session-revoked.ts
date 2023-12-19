@@ -5,12 +5,12 @@ import * as eventSchema from '../../schemas/caep/session-revoked.json';
 import { SsfSchema } from '../../types/ssf';
 
 export class SessionRevokedEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       CaepEventTypes.SessionRevoked,
       TxmaEventNames.SessionRevoked,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

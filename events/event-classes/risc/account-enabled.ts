@@ -6,12 +6,12 @@ import * as eventSchema from '../../schemas/risc/account-enabled.json';
 import { SsfSchema } from '../../types/ssf';
 
 export class AccountEnabledEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       RiscEventTypes.AccountEnabled,
       TxmaEventNames.AccountEnabled,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

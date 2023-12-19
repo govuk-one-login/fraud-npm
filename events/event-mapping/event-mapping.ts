@@ -1,37 +1,8 @@
-import {
-  ActivityEventTypes,
-  ActivityEventURIs,
-} from '../enums/activity-events';
-import { CaepEventTypes, CaepEventURIs } from '../enums/caep-events';
-import {
-  NotificationEventTypes,
-  NotificationEventURIs,
-} from '../enums/notification-events';
-import { RiscEventTypes, RiscEventURIs } from '../enums/risc-events';
+import { AllEventURIs, AllEventTypes } from '../enums/events';
 import { activityEventMapping } from './activity-maps';
 import { caepEventMapping } from './caep-maps';
 import { notificationEventMapping } from './notification-maps';
 import { riscEventMapping } from './risc-maps';
-
-export const AllEventURIs: Record<AllEventTypes, string> = {
-  ...RiscEventURIs,
-  ...CaepEventURIs,
-  ...NotificationEventURIs,
-  ...ActivityEventURIs,
-};
-
-export type AllEventTypes =
-  | NotificationEventTypes
-  | RiscEventTypes
-  | CaepEventTypes
-  | ActivityEventTypes;
-
-export const EventTypes: Record<string, AllEventTypes> = {
-  ...NotificationEventTypes,
-  ...RiscEventTypes,
-  ...CaepEventTypes,
-  ...ActivityEventTypes,
-};
 
 export const eventMapping: Record<(typeof AllEventURIs)[AllEventTypes], any> = {
   ...notificationEventMapping,

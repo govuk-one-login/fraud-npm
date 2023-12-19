@@ -35,11 +35,3 @@ export const riscEventMapping: Record<
     RecoveryInformationChangedEvent,
   [RiscEventURIs[RiscEventTypes.SessionsRevoked]]: SessionsRevokedEvent,
 };
-
-// Examples
-const eventClass =
-  riscEventMapping[
-    'https://schemas.openid.net/secevent/risc/event-type/account-purged'
-  ];
-
-const eventClass2 = riscEventMapping[RiscEventURIs['accountPurged']];

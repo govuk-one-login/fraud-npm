@@ -6,12 +6,12 @@ import * as eventSchema from '../../schemas/notification/account-concern.json';
 import { SsfSchema } from '../../types/ssf';
 
 export class AccountConcernEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       NotificationEventTypes.AccountConcern,
       TxmaEventNames.AccountConcern,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

@@ -6,12 +6,12 @@ import * as eventSchema from '../../schemas/risc/opt-out-cancelled.json';
 import { SsfSchema } from '../../types/ssf';
 
 export class OptOutCancelledEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       RiscEventTypes.OptOutCancelled,
       TxmaEventNames.OptOutCancelled,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

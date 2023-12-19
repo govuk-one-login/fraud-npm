@@ -6,12 +6,12 @@ import { BaseEvent } from '../base-event';
 import * as eventSchema from '../../schemas/caep/assurance-level-change.json';
 
 export class AssuranceLevelChangeEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       CaepEventTypes.AssuranceLevelChange,
       TxmaEventNames.AssuranceLevelChange,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

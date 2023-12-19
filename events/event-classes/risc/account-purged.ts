@@ -6,12 +6,12 @@ import * as eventSchema from '../../schemas/risc/account-purged.json';
 import { SsfSchema } from '../../types/ssf';
 
 export class AccountPurgedEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       RiscEventTypes.AccountPurged,
       TxmaEventNames.AccountPurged,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

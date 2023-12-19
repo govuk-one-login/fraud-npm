@@ -6,12 +6,12 @@ import * as eventSchema from '../../schemas/caep/device-compliance-change.json';
 import { SsfSchema } from '../../types/ssf';
 
 export class DeviceComplianceChangeEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       CaepEventTypes.DeviceComplianceChange,
       TxmaEventNames.DeviceComplianceChange,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

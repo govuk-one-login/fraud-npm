@@ -6,12 +6,12 @@ import * as eventSchema from '../../schemas/caep/token-claims-change.json';
 import { SsfSchema } from '../../types/ssf';
 
 export class TokenClaimsChange extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       CaepEventTypes.TokenClaimsChange,
       TxmaEventNames.TokenClaimsChange,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

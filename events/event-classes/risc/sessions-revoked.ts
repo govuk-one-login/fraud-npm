@@ -6,12 +6,12 @@ import { BaseEvent } from '../base-event';
 import * as eventSchema from '../../schemas/risc/sessions-revoked.json';
 
 export class SessionsRevokedEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       RiscEventTypes.SessionsRevoked,
       TxmaEventNames.SessionsRevoked,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }

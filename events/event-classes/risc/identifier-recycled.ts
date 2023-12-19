@@ -6,12 +6,12 @@ import * as eventSchema from '../../schemas/risc/identifier-recycled.json';
 import { SsfSchema } from '../../types/ssf';
 
 export class IdentifierRecycledEvent extends BaseEvent {
-  constructor(message: SsfSchema) {
+  constructor(message?: SsfSchema) {
     super(
-      message,
       RiscEventTypes.IdentifierRecycled,
       TxmaEventNames.IdentifierRecycled,
-      eventSchema
+      eventSchema,
+      message
     );
   }
 }
