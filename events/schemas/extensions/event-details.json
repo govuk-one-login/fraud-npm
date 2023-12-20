@@ -1,0 +1,11 @@
+{
+  "properties": {
+    "device_id": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

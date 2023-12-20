@@ -1,0 +1,11 @@
+{
+  "properties": {
+    "event_timestamp_ms": {
+      "type": "number"
+    },
+    "event_timeframe_ms": {
+      "type": "number"
+    }
+  },
+  "type": "object"
+}

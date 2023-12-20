@@ -11,7 +11,7 @@ export class ValidateService {
    * @param schema Schema to validate against
    * @param message Message to be validated
    */
-  static async validate(schema: Schema, message: any): Promise<void> {
+  static async validate(schema: Schema, message: unknown): Promise<void> {
     addFormats(this.AJV, this.AjvFormats);
 
     const validate: ValidateFunction = this.AJV.compile(schema);
