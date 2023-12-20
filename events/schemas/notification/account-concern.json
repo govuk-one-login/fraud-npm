@@ -1,0 +1,47 @@
+{
+  "properties": {
+    "subject": {
+      "properties": {
+        "format": {
+          "type": "string"
+        },
+        "uri": {
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "initiating_entity": {
+      "type": "string"
+    },
+    "reason_admin": {
+      "properties": {
+        "en": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "rationale": {
+      "properties": {
+        "code": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "event_timeframe": {
+      "properties": {
+        "start_time": {
+          "type": "number"
+        },
+        "end_time": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": ["subject"]
+}

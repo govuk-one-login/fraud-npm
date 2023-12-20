@@ -1,0 +1,94 @@
+{
+  "properties": {
+    "event_timestamp": {
+      "type": "number"
+    },
+    "initiating_entity": {
+      "enum": [
+        "admin",
+        "user",
+        "policy",
+        "system"
+      ],
+      "type": "string"
+    },
+    "reason_admin": {
+      "type": "object"
+    },
+    "reason_user": {
+      "type": "object"
+    },
+    "subject": {
+      "properties": {
+        "device": {
+          "properties": {
+            "format": {
+              "type": "string"
+            },
+            "iss": {
+              "type": "string"
+            },
+            "sub": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "format": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "session": {
+          "properties": {
+            "format": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "format",
+            "id"
+          ],
+          "type": "object"
+        },
+        "tenant": {
+          "properties": {
+            "format": {
+              "type": "string"
+            },
+            "iss": {
+              "type": "string"
+            },
+            "sub": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "user": {
+          "properties": {
+            "format": {
+              "type": "string"
+            },
+            "iss": {
+              "type": "string"
+            },
+            "sub": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "subject"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,33 @@
+{
+  "properties": {
+    "new-value": {
+      "type": "string"
+    },
+    "subject": {
+      "properties": {
+        "email": {
+          "format": "email",
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "subject_type": {
+          "enum": [
+            "email",
+            "phone"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject_type"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "subject"
+  ],
+  "type": "object"
+}

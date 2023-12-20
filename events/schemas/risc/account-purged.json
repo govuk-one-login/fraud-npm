@@ -1,0 +1,22 @@
+{
+  "properties": {
+    "subject": {
+      "properties": {
+        "iss": {
+          "type": "string"
+        },
+        "sub": {
+          "type": "string"
+        },
+        "subject_type": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "subject"
+  ],
+  "type": "object"
+}
