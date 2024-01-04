@@ -7,7 +7,7 @@ export const fraudTracer = new Tracer();
 
 export class FraudLogger extends Logger {
   public metrics: Metrics;
-  constructor(serviceName?: string, namespace?: string) {
+  constructor(serviceName: string, namespace?: string) {
     super();
     this.metrics = new Metrics({
       serviceName: serviceName,
