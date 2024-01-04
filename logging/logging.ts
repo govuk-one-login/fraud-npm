@@ -60,8 +60,8 @@ export class FraudLogger extends Logger {
    * @param message
    */
   logDebug = (message: string): void => {
-    if (super.getLevelName() === "DEBUG") {
-      super.debug(message);
+    if (super.getLevelName() !== "DEBUG") return;
+    super.debug(message);
     }
   };
 }
