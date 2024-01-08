@@ -1,3 +1,4 @@
+import { ErrorMessages } from '../../enums/errors';
 import { AllEventURIs, AllEventTypes, EventTypes } from '../../enums/events';
 import { BaseEvent } from '../../event-classes/base-event';
 import { eventMapping } from '../../event-mapping/event-mapping';
@@ -8,7 +9,7 @@ export class MapService {
    */
   static getEventClass(searchTerm: string): BaseEvent {
     if (!this.isEventType(searchTerm) && !this.isEventURI(searchTerm))
-      throw new Error();
+      throw new Error(ErrorMessages.NotValidEventType);
 
     return eventMapping[
       this.isEventURI(searchTerm)

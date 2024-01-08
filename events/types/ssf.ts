@@ -5,16 +5,21 @@ export interface SsfSchema {
   iat: number;
   jti: string;
   aud: string;
-  sub: string;
-  toe?: number;
-  events: {
-    [key: string]: EventStructure;
-  };
+  events: SETEvents;
   exp?: string;
 }
 
+export interface SETEvents {
+  [key: string]: EventStructure;
+}
+
 export type EventStructure = {
-  [key in EventFieldNames]?: string | number | EventSubject | EventClaims;
+  [key in EventFieldNames]?:
+    | string
+    | number
+    | EventSubject
+    | EventClaims
+    | EventStructure;
 };
 
 export interface EventClaims {
@@ -22,7 +27,6 @@ export interface EventClaims {
 }
 
 export type EventSubject = {
-  subject_type: string;
-  iss: string;
-  sub: string;
+  format: string;
+  uri: string;
 };

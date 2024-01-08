@@ -25,3 +25,9 @@ export const EventTypes: Record<string, AllEventTypes> = {
   ...CaepEventTypes,
   ...ActivityEventTypes,
 };
+
+export enum IdentifierTypes {
+  UserID = 'userId',
+  DeviceID = 'deviceId',
+  GroupID = 'groupId',
+}

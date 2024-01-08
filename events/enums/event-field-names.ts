@@ -18,4 +18,5 @@ export enum EventFieldNames {
   X509Issuer = 'x509_issuer',
   X509Serial = 'x509_serial',
   Fido2Aaguid = 'fido2_aaguid',
+  Device = 'device',
 }

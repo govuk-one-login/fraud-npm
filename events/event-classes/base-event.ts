@@ -1,27 +1,25 @@
-import { SsfSchema } from '../types/ssf';
+import { SETEvents, SsfSchema } from '../types/ssf';
 import { ValidateService } from '../services/validate/validate';
 import { Schema } from 'ajv';
 import { TxmaEventNames } from '../enums/event-names';
-import { ReformatService } from '../services/reformat/reformat';
-import { TxmaType } from '../enums/txma';
-import { AllEventTypes, AllEventURIs } from '../enums/events';
-import { GenerateService } from '../services/generate/generate';
-
-import * as setSchema from '../schemas/setschema.json';
+import { AllEventTypes, AllEventURIs, IdentifierTypes } from '../enums/events';
+import * as setSchema from '../schemas/set-schema.json';
 import * as eventDetailsSchema from '../schemas/extensions/event-details.json';
 import * as eventMetadataSchema from '../schemas/extensions/metadata.json';
+import { ErrorMessages } from '../enums/errors';
+import { BaseSET } from './base-set';
 
-export abstract class BaseEvent {
+export class BaseEvent {
   readonly setSchema: Schema = setSchema;
   readonly eventDetailsSchema: Schema = eventDetailsSchema;
   readonly eventMetadataSchema: Schema = eventMetadataSchema;
   eventType: AllEventTypes;
   txmaEventName: TxmaEventNames;
-  setMessage?: SsfSchema;
   eventMessage: any;
   eventSchema: Schema;
   eventDetailsKey?: string;
   eventMetadataKey?: string;
+  setMessage?: SsfSchema;
 
   constructor(
     eventType: AllEventTypes,
@@ -51,7 +49,7 @@ export abstract class BaseEvent {
    */
   async validateEvent(): Promise<void> {
     if (!this.setMessage || !this.eventMessage)
-      throw new Error('No Set / Event found');
+      throw new Error(ErrorMessages.NoMessage);
 
     const validations: [Schema, unknown][] = [
       [this.setSchema, this.setMessage],
@@ -77,24 +75,32 @@ export abstract class BaseEvent {
     );
   }
 
-  /**
-   * Map the Inbound event to the TxMA message schema and validate required fields
-   */
-  async reformatMessage(): Promise<TxmaType> {
-    if (!this.setMessage || !this.eventMessage)
-      throw new Error('No Set / Event found');
-
-    const txmaMessage: TxmaType = await ReformatService.reformatForTxma(
-      this.txmaEventName,
-      this.setMessage
-    );
-
-    // Add in Txma Schema
-    await ValidateService.validate({}, txmaMessage);
-    return txmaMessage;
+  async generateSET(
+    idType: IdentifierTypes,
+    id: string,
+    issuer: string
+  ): Promise<SsfSchema> {
+    this.setMessage = new BaseSET(issuer);
+    this.setMessage.events = {
+      ...(await this.generateEvent(idType, id)),
+    };
+    return this.setMessage;
   }
 
-  async generateSET(): Promise<SsfSchema> {
-    return GenerateService.generateSET();
+  async generateEvent(idType: IdentifierTypes, id: string): Promise<SETEvents> {
+    return {
+      [AllEventURIs[this.eventType]]: {
+        subject: {
+          ...(idType === IdentifierTypes.UserID
+            ? { format: 'uri', uri: id }
+            : {
+                [idType === IdentifierTypes.DeviceID ? 'device' : 'group']: {
+                  format: 'opaque',
+                  id,
+                },
+              }),
+        },
+      },
+    };
   }
 }
