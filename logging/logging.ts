@@ -15,13 +15,24 @@ export class FraudLogger extends Logger {
       namespace: namespace,
     });
   }
-
+  debugWithMetrics = (input: string, metric: LogEvents, ...extraInput: LogItemExtraInput): void => {
+    super.debug(input, ...extraInput);
+    this.metrics.addMetric(metric, MetricUnits.Count, 1);
+  }
   infoWithMetrics = (input: string, metric: LogEvents, ...extraInput: LogItemExtraInput): void => {
     super.info(input, ...extraInput);
     this.metrics.addMetric(metric, MetricUnits.Count, 1);
   }
+  warnWithMetrics = (input: string, metric: LogEvents, ...extraInput: LogItemExtraInput): void => {
+    super.warn(input, ...extraInput);
+    this.metrics.addMetric(metric, MetricUnits.Count, 1);
+  }
   errorWithMetrics = (input: string, metric: LogEvents, ...extraInput: LogItemExtraInput): void => {
     super.error(input, ...extraInput);
+    this.metrics.addMetric(metric, MetricUnits.Count, 1);
+  }
+  criticalWithMetrics = (input: string, metric: LogEvents, ...extraInput: LogItemExtraInput): void => {
+    super.critical(input, ...extraInput);
     this.metrics.addMetric(metric, MetricUnits.Count, 1);
   }
 }
