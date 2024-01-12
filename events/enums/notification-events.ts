@@ -7,9 +7,9 @@ export const NotificationEventKeys: Array<NotificationEventTypes> = Object.keys(
   NotificationEventTypes
 ) as NotificationEventTypes[];
 
+const GOV_UK_SCHEMA_ROOT_NOTIFICATION ='https://vocab.account.gov.uk/secevent/v1/notification/'
+
 export const NotificationEventURIs: Record<NotificationEventTypes, string> = {
-  [NotificationEventTypes.AccountConcern]:
-    'https://vocab.account.gov.uk/secevent/v1/notification/accountConcern',
-  [NotificationEventTypes.DeviceConcern]:
-    'https://vocab.account.gov.uk/secevent/v1/notification/deviceConcern',
+  [NotificationEventTypes.AccountConcern]: GOV_UK_SCHEMA_ROOT_NOTIFICATION + 'accountConcern',
+  [NotificationEventTypes.DeviceConcern]: GOV_UK_SCHEMA_ROOT_NOTIFICATION + 'deviceConcern',
 };

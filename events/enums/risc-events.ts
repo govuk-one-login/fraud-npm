@@ -19,33 +19,21 @@ export const RiscEventKeys: Array<RiscEventTypes> = Object.keys(
   RiscEventTypes
 ) as RiscEventTypes[];
 
+const RISC_SCHEMA_ROOT = 'https://schemas.openid.net/secevent/risc/event-type/'
+
 export const RiscEventURIs: Record<RiscEventTypes, string> = {
-  [RiscEventTypes.AccountPurged]:
-    'https://schemas.openid.net/secevent/risc/event-type/account-purged',
-  [RiscEventTypes.AccountCredentialChangeRequired]:
-    'https://schemas.openid.net/secevent/risc/event-type/account-credential-change-required',
-  [RiscEventTypes.AccountDisabled]:
-    'https://schemas.openid.net/secevent/risc/event-type/account-disabled',
-  [RiscEventTypes.AccountEnabled]:
-    'https://schemas.openid.net/secevent/risc/event-type/account-enabled',
-  [RiscEventTypes.CredentialCompromise]:
-    'https://schemas.openid.net/secevent/risc/event-type/credential-compromise',
-  [RiscEventTypes.IdentifierChanged]:
-    'https://schemas.openid.net/secevent/risc/event-type/identifier-changed',
-  [RiscEventTypes.IdentifierRecycled]:
-    'https://schemas.openid.net/secevent/risc/event-type/identifier-recycled',
-  [RiscEventTypes.OptIn]:
-    'https://schemas.openid.net/secevent/risc/event-type/opt-in',
-  [RiscEventTypes.OptOutInitiated]:
-    'https://schemas.openid.net/secevent/risc/event-type/opt-out-initiated',
-  [RiscEventTypes.OptOutCancelled]:
-    'https://schemas.openid.net/secevent/risc/event-type/opt-out-cancelled',
-  [RiscEventTypes.OptOutEffective]:
-    'https://schemas.openid.net/secevent/risc/event-type/opt-out-effective',
-  [RiscEventTypes.RecoveryActivated]:
-    'https://schemas.openid.net/secevent/risc/event-type/recovery-activated',
-  [RiscEventTypes.RecoveryInformationChanged]:
-    'https://schemas.openid.net/secevent/risc/event-type/recovery-information-changed',
-  [RiscEventTypes.SessionsRevoked]:
-    'https://schemas.openid.net/secevent/risc/event-type/sessions-revoked',
+  [RiscEventTypes.AccountPurged]: RISC_SCHEMA_ROOT + 'account-purged',
+  [RiscEventTypes.AccountCredentialChangeRequired]: RISC_SCHEMA_ROOT + 'account-credential-change-required',
+  [RiscEventTypes.AccountDisabled]: RISC_SCHEMA_ROOT + 'account-disabled',
+  [RiscEventTypes.AccountEnabled]: RISC_SCHEMA_ROOT + 'account-enabled',
+  [RiscEventTypes.CredentialCompromise]: RISC_SCHEMA_ROOT + 'credential-compromise',
+  [RiscEventTypes.IdentifierChanged]: RISC_SCHEMA_ROOT + 'identifier-changed',
+  [RiscEventTypes.IdentifierRecycled]: RISC_SCHEMA_ROOT + 'identifier-recycled',
+  [RiscEventTypes.OptIn]: RISC_SCHEMA_ROOT + 'opt-in',
+  [RiscEventTypes.OptOutInitiated]: RISC_SCHEMA_ROOT + 'opt-out-initiated',
+  [RiscEventTypes.OptOutCancelled]: RISC_SCHEMA_ROOT + 'opt-out-cancelled',
+  [RiscEventTypes.OptOutEffective]: RISC_SCHEMA_ROOT + 'opt-out-effective',
+  [RiscEventTypes.RecoveryActivated]: RISC_SCHEMA_ROOT + 'recovery-activated',
+  [RiscEventTypes.RecoveryInformationChanged]: RISC_SCHEMA_ROOT + 'recovery-information-changed',
+  [RiscEventTypes.SessionsRevoked]: RISC_SCHEMA_ROOT + 'sessions-revoked',
 };
