@@ -11,6 +11,7 @@ export enum EventFieldNames {
   Reason = 'reason',
   NewValue = 'new-value',
   EventTimestamp = 'event_timestamp',
+  EventTimeframeMs = 'event_timeframe_ms',
   ReasonAdmin = 'reason_admin',
   ReasonUser = 'reason_user',
   InitiatingEntity = 'initiating_entity',
@@ -19,4 +20,6 @@ export enum EventFieldNames {
   X509Serial = 'x509_serial',
   Fido2Aaguid = 'fido2_aaguid',
   Device = 'device',
+  DeviceId = 'device_id',
+  Location = 'location'
 }

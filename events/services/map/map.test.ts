@@ -8,7 +8,7 @@ const eventUriTestInput = Object.entries(eventMapping);
 const eventTypeTestInput = Object.entries(eventMapping).map((event) => {
   event[0] =
     Object.keys(AllEventURIs).find(
-      (uri) => AllEventURIs[uri as AllEventTypes] === event[0]
+      (uri) => AllEventURIs[uri as AllEventTypes].uri === event[0]
     ) ?? '';
   return event;
 });

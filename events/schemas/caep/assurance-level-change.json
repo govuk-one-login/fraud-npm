@@ -46,23 +46,19 @@
     },
     "subject": {
       "properties": {
-        "assertion_id": {
-          "type": "string"
-        },
         "format": {
-          "type": "string"
+          "type": "string",
+          "const": "uri"
         },
-        "iss": {
+        "uri": {
           "format": "uri",
-          "type": "string"
-        },
-        "issuer": {
-          "type": "string"
-        },
-        "jti": {
           "type": "string"
         }
       },
+      "required": [
+        "format",
+        "uri"
+      ],
       "type": "object"
     }
   },

@@ -2,16 +2,19 @@
   "properties": {
     "subject": {
       "properties": {
-        "iss": {
-          "type": "string"
+        "format": {
+          "type": "string",
+          "const": "uri"
         },
-        "sub": {
-          "type": "string"
-        },
-        "subject_type": {
+        "uri": {
+          "format": "uri",
           "type": "string"
         }
       },
+      "required": [
+        "format",
+        "uri"
+      ],
       "type": "object"
     }
   },

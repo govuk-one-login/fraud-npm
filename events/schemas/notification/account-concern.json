@@ -3,13 +3,18 @@
     "subject": {
       "properties": {
         "format": {
-          "type": "string"
+          "type": "string",
+          "const": "uri"
         },
         "uri": {
           "format": "uri",
           "type": "string"
         }
       },
+      "required": [
+        "format",
+        "uri"
+      ],
       "type": "object"
     },
     "initiating_entity": {

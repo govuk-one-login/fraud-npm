@@ -1,8 +1,5 @@
 {
   "properties": {
-    "credential_type": {
-      "type": "string"
-    },
     "subject": {
       "properties": {
         "format": {
@@ -21,9 +18,5 @@
       "type": "object"
     }
   },
-  "required": [
-    "subject",
-    "credential_type"
-  ],
   "type": "object"
 }

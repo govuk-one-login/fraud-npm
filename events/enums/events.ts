@@ -6,7 +6,7 @@ import {
 } from './notification-events';
 import { RiscEventURIs, RiscEventTypes } from './risc-events';
 
-export const AllEventURIs: Record<AllEventTypes, string> = {
+export const AllEventURIs: Record<AllEventTypes, UriInfo> = {
   ...RiscEventURIs,
   ...CaepEventURIs,
   ...NotificationEventURIs,
@@ -30,4 +30,13 @@ export enum IdentifierTypes {
   UserID = 'userId',
   DeviceID = 'deviceId',
   GroupID = 'groupId',
+}
+
+export enum TimestampTypes {
+  timeStamp, timeFrame
+}
+
+export type UriInfo = {
+  uri : string,
+  detailsKey: string
 }

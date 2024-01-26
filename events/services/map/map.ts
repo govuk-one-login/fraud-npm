@@ -14,7 +14,7 @@ export class MapService {
     return eventMapping[
       this.isEventURI(searchTerm)
         ? searchTerm
-        : AllEventURIs[searchTerm as AllEventTypes]
+        : AllEventURIs[searchTerm as AllEventTypes].uri
     ];
   }
 
@@ -28,5 +28,5 @@ export class MapService {
    * Return if searchTerm is a valid event URI
    */
   static isEventURI = (searchTerm: string): boolean =>
-    Object.values(AllEventURIs).includes(searchTerm);
+    Object.values(AllEventURIs).map( (uriInfo) => uriInfo.uri).includes(searchTerm);
 }

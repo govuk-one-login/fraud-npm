@@ -1,3 +1,5 @@
+import { UriInfo } from './events';
+
 export enum CaepEventTypes {
   AssuranceLevelChange = 'assuranceLevelChange',
   CredentialChange = 'credentialChange',
@@ -12,10 +14,12 @@ export const CaepEventKeys: Array<CaepEventTypes> = Object.keys(
 
 const CAEP_SCHEMA_ROOT = 'https://schemas.openid.net/secevent/caep/event-type/'
 
-export const CaepEventURIs: Record<CaepEventTypes, string> = {
-  [CaepEventTypes.AssuranceLevelChange]: CAEP_SCHEMA_ROOT + 'assurance-level-change',
-  [CaepEventTypes.CredentialChange]: CAEP_SCHEMA_ROOT + 'credential-change',
-  [CaepEventTypes.DeviceComplianceChange]: CAEP_SCHEMA_ROOT + 'device-compliance-change',
-  [CaepEventTypes.SessionRevoked]: CAEP_SCHEMA_ROOT + 'session-revoked',
-  [CaepEventTypes.TokenClaimsChange]: CAEP_SCHEMA_ROOT + 'token-claims-change',
+export const CaepEventURIs: Record<CaepEventTypes, UriInfo> = {
+  [CaepEventTypes.AssuranceLevelChange]: { uri: CAEP_SCHEMA_ROOT + 'assurance-level-change',
+    detailsKey: 'assuranceLevelChange' },
+  [CaepEventTypes.CredentialChange]: { uri: CAEP_SCHEMA_ROOT + 'credential-change', detailsKey: 'credentialChange' },
+  [CaepEventTypes.DeviceComplianceChange]: { uri: CAEP_SCHEMA_ROOT + 'device-compliance-change',
+    detailsKey: 'deviceComplianceChange' },
+  [CaepEventTypes.SessionRevoked]: { uri: CAEP_SCHEMA_ROOT + 'session-revoked', detailsKey: 'sessionRevoked' },
+  [CaepEventTypes.TokenClaimsChange]: { uri: CAEP_SCHEMA_ROOT + 'token-claims-change', detailsKey: 'tokenClaimsChange' },
 };

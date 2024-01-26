@@ -10,6 +10,7 @@ import { ErrorMessages } from '../enums/errors';
 import { BaseSET } from './base-set';
 
 export class BaseEvent {
+
   readonly setSchema: Schema = setSchema;
   readonly eventDetailsSchema: Schema = eventDetailsSchema;
   readonly eventMetadataSchema: Schema = eventMetadataSchema;
@@ -33,7 +34,7 @@ export class BaseEvent {
 
     if (message) {
       this.setMessage = message;
-      this.eventMessage = this.setMessage?.events[AllEventURIs[this.eventType]];
+      this.eventMessage = this.setMessage?.events[AllEventURIs[this.eventType].uri];
       this.eventDetailsKey = Object.keys(this.setMessage.events).find((key) =>
         key.includes('eventDetails')
       );
@@ -44,8 +45,8 @@ export class BaseEvent {
   }
 
   /**
-   * Validate SET against SET schema
-   * Validate event against event schema
+   * Validate the SET against SET schema and the event against event schema. Note that the event is contained
+   * within the SET.
    */
   async validateEvent(): Promise<void> {
     if (!this.setMessage || !this.eventMessage)
@@ -73,34 +74,5 @@ export class BaseEvent {
         ValidateService.validate(schema, message)
       )
     );
-  }
-
-  async generateSET(
-    idType: IdentifierTypes,
-    id: string,
-    issuer: string
-  ): Promise<SsfSchema> {
-    this.setMessage = new BaseSET(issuer);
-    this.setMessage.events = {
-      ...(await this.generateEvent(idType, id)),
-    };
-    return this.setMessage;
-  }
-
-  async generateEvent(idType: IdentifierTypes, id: string): Promise<SETEvents> {
-    return {
-      [AllEventURIs[this.eventType]]: {
-        subject: {
-          ...(idType === IdentifierTypes.UserID
-            ? { format: 'uri', uri: id }
-            : {
-                [idType === IdentifierTypes.DeviceID ? 'device' : 'group']: {
-                  format: 'opaque',
-                  id,
-                },
-              }),
-        },
-      },
-    };
   }
 }

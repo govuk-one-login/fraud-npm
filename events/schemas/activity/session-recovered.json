@@ -3,13 +3,18 @@
     "subject": {
       "properties": {
         "format": {
-          "type": "string"
+          "type": "string",
+          "const": "uri"
         },
         "uri": {
           "format": "uri",
           "type": "string"
         }
       },
+      "required": [
+        "format",
+        "uri"
+      ],
       "type": "object"
     },
     "session": {
@@ -38,8 +43,9 @@
       "type": "object"
     },
     "event_timestamp": {
-      "type": "string"
+      "type": "number"
     }
   },
+  "type": "object",
   "required": ["subject", "session"]
 }

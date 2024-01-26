@@ -13,25 +13,21 @@ import { RecoveryActivatedEvent } from '../event-classes/risc/recovery-activated
 import { RecoveryInformationChangedEvent } from '../event-classes/risc/recovery-information-changed';
 import { SessionsRevokedEvent } from '../event-classes/risc/sessions-revoked';
 
-export const riscEventMapping: Record<
-  (typeof RiscEventURIs)[RiscEventTypes],
-  any
-> = {
-  [RiscEventURIs[RiscEventTypes.AccountPurged]]: AccountPurgedEvent,
-  [RiscEventURIs[RiscEventTypes.AccountDisabled]]: AccountDisabledEvent,
-  [RiscEventURIs[RiscEventTypes.AccountPurged]]: AccountPurgedEvent,
-  [RiscEventURIs[RiscEventTypes.AccountCredentialChangeRequired]]:
+export const riscEventMapping: Record<string, any> = {
+  [RiscEventURIs[RiscEventTypes.AccountPurged].uri]: AccountPurgedEvent,
+  [RiscEventURIs[RiscEventTypes.AccountDisabled].uri]: AccountDisabledEvent,
+  [RiscEventURIs[RiscEventTypes.AccountPurged].uri]: AccountPurgedEvent,
+  [RiscEventURIs[RiscEventTypes.AccountCredentialChangeRequired].uri]:
     AccountCredentialChangeEvent,
-  [RiscEventURIs[RiscEventTypes.CredentialCompromise]]:
-    CredentialCompromiseEvent,
-  [RiscEventURIs[RiscEventTypes.IdentifierChanged]]: IdentifierChangedEvent,
-  [RiscEventURIs[RiscEventTypes.IdentifierRecycled]]: IdentifierRecycledEvent,
-  [RiscEventURIs[RiscEventTypes.OptIn]]: OptInEvent,
-  [RiscEventURIs[RiscEventTypes.OptOutInitiated]]: OptOutInitiatedEvent,
-  [RiscEventURIs[RiscEventTypes.OptOutCancelled]]: OptOutCancelledEvent,
-  [RiscEventURIs[RiscEventTypes.OptOutEffective]]: OptOutEffectiveEvent,
-  [RiscEventURIs[RiscEventTypes.RecoveryActivated]]: RecoveryActivatedEvent,
-  [RiscEventURIs[RiscEventTypes.RecoveryInformationChanged]]:
+  [RiscEventURIs[RiscEventTypes.CredentialCompromise].uri]: CredentialCompromiseEvent,
+  [RiscEventURIs[RiscEventTypes.IdentifierChanged].uri]: IdentifierChangedEvent,
+  [RiscEventURIs[RiscEventTypes.IdentifierRecycled].uri]: IdentifierRecycledEvent,
+  [RiscEventURIs[RiscEventTypes.OptIn].uri]: OptInEvent,
+  [RiscEventURIs[RiscEventTypes.OptOutInitiated].uri]: OptOutInitiatedEvent,
+  [RiscEventURIs[RiscEventTypes.OptOutCancelled].uri]: OptOutCancelledEvent,
+  [RiscEventURIs[RiscEventTypes.OptOutEffective].uri]: OptOutEffectiveEvent,
+  [RiscEventURIs[RiscEventTypes.RecoveryActivated].uri]: RecoveryActivatedEvent,
+  [RiscEventURIs[RiscEventTypes.RecoveryInformationChanged].uri]:
     RecoveryInformationChangedEvent,
-  [RiscEventURIs[RiscEventTypes.SessionsRevoked]]: SessionsRevokedEvent,
+  [RiscEventURIs[RiscEventTypes.SessionsRevoked].uri]: SessionsRevokedEvent,
 };
