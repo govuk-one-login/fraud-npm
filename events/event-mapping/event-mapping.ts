@@ -9,12 +9,13 @@ export const EVENT_METADATA_URI= 'https://vocab.account.gov.uk/secevent/v1/event
 export const EVENT_DETAILS_URI = 'https://vocab.account.gov.uk/secevent/v1/'
 
 export const MOCK_DEVICE_ID = 'some-device-id'
-export const MOCK_LOCATION = 'GB'
+export const DEFAULT_LOCATION = 'GB'
 
 export const MOCK_URI = 'uri:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw='
 
 export async function generateStandardUserSubjectEvent(eventType: AllEventTypes, id: string,
-  timestampType: TimestampTypes, startTime: number, endTime: number): Promise<SETEvents> {
+  timestampType: TimestampTypes, startTime: number, endTime: number,
+  deviceId: string, location: string): Promise<SETEvents> {
   return {
     [AllEventURIs[eventType].uri]: {
       subject: {
@@ -35,8 +36,8 @@ export async function generateStandardUserSubjectEvent(eventType: AllEventTypes,
     },
 
     [EVENT_DETAILS_URI + AllEventURIs[eventType].detailsKey + '/eventDetails'] : {
-      device_id: MOCK_DEVICE_ID,
-      location : MOCK_LOCATION
+      //device_id: location,
+      location : deviceId
     }
   }
 };

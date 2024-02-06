@@ -1,4 +1,4 @@
-import { generateStandardUserSubjectEvent } from './event-mapping';
+import { generateStandardUserSubjectEvent, MOCK_DEVICE_ID, DEFAULT_LOCATION } from './event-mapping';
 import { TimestampTypes } from '../enums/events';
 import { ActivityEventTypes } from '../enums/activity-events';
 
@@ -9,7 +9,8 @@ describe('generate functions', () => {
 
   it('generateStandardUserSubjectEvent works with event timestamp', async () => {
 
-    const thing = await generateStandardUserSubjectEvent(ActivityEventTypes.SessionRecovered, 'id', TimestampTypes.timeStamp, 100, 100)
+    const thing = await generateStandardUserSubjectEvent(ActivityEventTypes.SessionRecovered,
+     'id', TimestampTypes.timeStamp, 100, 100, DEFAULT_LOCATION, MOCK_DEVICE_ID)
 
     const expectedThing = {
       'https://vocab.account.gov.uk/secevent/v1/activity/sessionRecovered': { subject: { format: 'uri', uri: 'id' } },
@@ -22,7 +23,8 @@ describe('generate functions', () => {
 
   it('generateStandardUserSubjectEvent works with event timeframe', async () => {
 
-    const thing = await generateStandardUserSubjectEvent(ActivityEventTypes.SessionRecovered, 'id', TimestampTypes.timeFrame, 100, 100)
+    const thing = await generateStandardUserSubjectEvent(ActivityEventTypes.SessionRecovered,
+     'id', TimestampTypes.timeFrame, 100, 100,  DEFAULT_LOCATION, MOCK_DEVICE_ID,)
 
     const expectedThing = {
       'https://vocab.account.gov.uk/secevent/v1/activity/sessionRecovered': { subject: { format: 'uri', uri: 'id' } },

@@ -12,7 +12,7 @@
         "phone": {
           "type": "string"
         },
-        "subject_type": {
+        "format": {
           "enum": [
             "email",
             "phone"
@@ -21,12 +21,13 @@
         }
       },
       "required": [
-        "subject_type"
+        "format"
       ],
       "type": "object"
     }
   },
   "required": [
+    "new-value",
     "subject"
   ],
   "type": "object"

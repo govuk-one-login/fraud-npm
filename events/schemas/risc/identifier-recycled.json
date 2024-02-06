@@ -2,23 +2,23 @@
   "properties": {
     "subject": {
       "properties": {
+        "format": {
+          "enum": [
+            "email",
+            "phone"
+          ],
+          "type": "string"
+        },
         "email": {
           "format": "email",
           "type": "string"
         },
         "phone": {
           "type": "string"
-        },
-        "subject_type": {
-          "enum": [
-            "email",
-            "phone"
-          ],
-          "type": "string"
         }
       },
       "required": [
-        "subject_type"
+        "format"
       ],
       "type": "object"
     }

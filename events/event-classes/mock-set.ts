@@ -81,9 +81,8 @@ export class MockSET {
    *
    * @param eventSplit is the probability ratio of events types to be sent
    */
-  public async setEvent(randomEventType: string): Promise<void> {
-  // TODO - not finished - need to instantiate, plus metadata and extendsions
-    this.mockSET.events = MapService.getEventClass(randomEventType)
+  public async setEvent(eventType: string): Promise<void> {
+    this.mockSET.events = MapService.getEventClass(eventType)
   }
 
   /**
