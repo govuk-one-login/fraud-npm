@@ -22,9 +22,12 @@ export type EventStructure = {
     | string
     | number
     | EventSubject
+    | EventDeviceSubject
+    | EventSessionSubject
     | EventClaims
     | EventStructure
     | EventTimeframe
+    | EventTimeframeMilliseconds
 };
 
 export interface EventClaims {
@@ -36,9 +39,48 @@ export type EventSubject = {
   uri: string;
 };
 
+export type EventDeviceSubject = {
+  device: SubjectDevice;
+  tenant: SubjectTenant;
+};
+
+export type EventSessionSubject = {
+  session: SubjectSession;
+  user: SubjectUser;
+  tenant: SubjectTenant;
+};
+
+export type SubjectDevice = {
+  format: string;
+  iss: string;
+  sub: string;
+};
+
+export type SubjectTenant = {
+  format: string;
+  id: string;
+};
+
+export type SubjectUser = {
+  format: string;
+  iss: string;
+  sub: string;
+};
+
+export type SubjectSession = {
+  format: string;
+  id: string
+};
+
 export type EventTimeframe = {
   start_time: number;
   end_time: number;
 };
+
+export type EventTimeframeMilliseconds = {
+  start_time: number;
+  end_time: number;
+};
+
 
 

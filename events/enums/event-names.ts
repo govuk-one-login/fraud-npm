@@ -20,5 +20,6 @@ export enum TxmaEventNames {
   DeviceComplianceChange = 'SSF_INBOUND_DEVICE_COMPLIANCE_CHANGE',
   SessionRecovered = 'SSF_INBOUND_SESSION_RECOVERED',
   AccountConcern = 'SSF_INBOUND_ACCOUNT_CONCERN',
+  AccountBlock = 'SSF_INBOUND_ACCOUNT_BLOCK',
   DeviceConcern = 'SSF_INBOUND_DEVICE_CONCERN',
 }

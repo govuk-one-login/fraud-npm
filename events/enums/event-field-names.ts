@@ -12,6 +12,7 @@ export enum EventFieldNames {
   NewValue = 'new-value',
   EventTimestamp = 'event_timestamp',
   EventTimeframeMs = 'event_timeframe_ms',
+  EventTimeframe = 'event_timeframe',
   ReasonAdmin = 'reason_admin',
   ReasonUser = 'reason_user',
   InitiatingEntity = 'initiating_entity',
@@ -21,5 +22,8 @@ export enum EventFieldNames {
   Fido2Aaguid = 'fido2_aaguid',
   Device = 'device',
   DeviceId = 'device_id',
-  Location = 'location'
+  Location = 'location',
+  Session = 'session',
+  PreviousSessionId = 'previous_session_id',
+  Rationale = 'rationale'
 }

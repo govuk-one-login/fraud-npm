@@ -42,6 +42,14 @@
       },
       "type": "object"
     },
+    "reason_user": {
+      "properties": {
+        "en": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "event_timestamp": {
       "type": "number"
     }

@@ -25,18 +25,15 @@
     "subject": {
       "properties": {
         "format": {
-          "type": "string",
-          "const": "uri"
+          "type": "string"
         },
-        "uri": {
-          "format": "uri",
+        "iss": {
+          "type": "string"
+        },
+        "jti": {
           "type": "string"
         }
       },
-      "required": [
-        "format",
-        "uri"
-      ],
       "type": "object"
     }
   },
