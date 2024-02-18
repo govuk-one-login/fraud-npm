@@ -15,13 +15,17 @@ import { SessionsRevokedEvent } from '../event-classes/risc/sessions-revoked';
 import { SETEvents } from '../types/ssf';
 import {
   DEFAULT_ACCOUNT_DISABLED_REASON,
-  DEFAULT_CREDENTIAL_TYPE, DEFAULT_EMAIL, DEFAULT_EMAIL_2, DEFAULT_PHONE, DEFAULT_PHONE_2,
-  generateEventMetaDataAndDetails,
-  generateStandardUserSubjectEvent,
-} from './event-mapping';
+  DEFAULT_CREDENTIAL_TYPE,
+  DEFAULT_EMAIL,
+  DEFAULT_EMAIL_2,
+  DEFAULT_PHONE,
+  DEFAULT_PHONE_2,
+  generateMetaDataAndDetailsEvents,
+  generateStandardUserSubjectEvents,
+} from './events-mapping';
 import { AllEventURIs, TimestampTypes } from '../enums/events';
 
-export const riscEventMapping: Record<string, any> = {
+export const riscEventsMapping: Record<string, any> = {
   [RiscEventURIs[RiscEventTypes.AccountPurged].uri]: AccountPurgedEvent,
   [RiscEventURIs[RiscEventTypes.AccountDisabled].uri]: AccountDisabledEvent,
   [RiscEventURIs[RiscEventTypes.AccountEnabled].uri]: AccountPurgedEvent,
@@ -40,11 +44,11 @@ export const riscEventMapping: Record<string, any> = {
   [RiscEventURIs[RiscEventTypes.SessionsRevoked].uri]: SessionsRevokedEvent,
 };
 
-async function generateRiscEmailSubjectEvent(eventType: RiscEventTypes, email: string,
+async function generateRiscEmailSubjectEvents(eventType: RiscEventTypes, email: string,
                                               timestampType: TimestampTypes,
-                                              startTime: number, endTime: number): Promise<SETEvents> {
+                                              startTimeInMillis: number, endTimeInMillis: number): Promise<SETEvents> {
 
-  let metadataAndDetails = await generateEventMetaDataAndDetails(eventType, timestampType, startTime, endTime)
+  let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType, timestampType, startTimeInMillis, endTimeInMillis)
 
   return {
     ...metadataAndDetails,
@@ -57,11 +61,11 @@ async function generateRiscEmailSubjectEvent(eventType: RiscEventTypes, email: s
   }
 }
 
-async function generateRiscPhoneSubjectEvent(eventType: RiscEventTypes, phoneNumber: string,
+async function generateRiscPhoneSubjectEvents(eventType: RiscEventTypes, phoneNumber: string,
                                              timestampType: TimestampTypes,
                                              startTime: number, endTime: number): Promise<SETEvents> {
 
-  let metadataAndDetails = await generateEventMetaDataAndDetails(eventType, timestampType, startTime, endTime)
+  let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType, timestampType, startTime, endTime)
 
   return {
     ...metadataAndDetails,
@@ -74,63 +78,57 @@ async function generateRiscPhoneSubjectEvent(eventType: RiscEventTypes, phoneNum
   }
 }
 
-export const riscPopulatedEventMapping: Record<string, (id: string, timestampType: TimestampTypes,
-      startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => Promise<SETEvents>> = {
+export const riscPopulatedEventsMapping: Record<string, (id: string, startTimeInMillis: number, endTimeInMillis: number,
+     ...args: (string | null) []) => Promise<SETEvents>> = {
 
   [RiscEventURIs[RiscEventTypes.AccountEnabled].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => (
-      await generateStandardUserSubjectEvent(RiscEventTypes.AccountEnabled, id, timestampType,
-        startTimeAsLong, endTimeAsLong)
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number) => (
+      await generateStandardUserSubjectEvents(RiscEventTypes.AccountEnabled, id, TimestampTypes.timeStamp,
+        startTimeInMillis, endTimeInMillis)
     ),
 
   [RiscEventURIs[RiscEventTypes.AccountDisabled].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) =>
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) =>
     {
-      let ret = await generateStandardUserSubjectEvent(RiscEventTypes.AccountDisabled, id, timestampType,
-        startTimeAsLong, endTimeAsLong)
+      let ret = await generateStandardUserSubjectEvents(RiscEventTypes.AccountDisabled, id,
+        TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
       let event = ret[AllEventURIs[RiscEventTypes.AccountDisabled].uri]
       event ['reason'] = args[0] ?? DEFAULT_ACCOUNT_DISABLED_REASON
       return ret
     },
 
   [RiscEventURIs[RiscEventTypes.AccountPurged].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => (
-      await generateStandardUserSubjectEvent(RiscEventTypes.AccountPurged, id, timestampType,
-        startTimeAsLong, endTimeAsLong)
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number) => (
+      await generateStandardUserSubjectEvents(RiscEventTypes.AccountPurged, id, TimestampTypes.timeStamp,
+        startTimeInMillis, endTimeInMillis)
     ),
 
   [RiscEventURIs[RiscEventTypes.AccountCredentialChangeRequired].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => (
-      await generateStandardUserSubjectEvent(RiscEventTypes.AccountCredentialChangeRequired, id, timestampType,
-        startTimeAsLong, endTimeAsLong)
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number) => (
+      await generateStandardUserSubjectEvents(RiscEventTypes.AccountCredentialChangeRequired, id,
+        TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
     ),
 
   [RiscEventURIs[RiscEventTypes.CredentialCompromise].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) =>
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) =>
 
       {
-        let ret = await generateStandardUserSubjectEvent(RiscEventTypes.CredentialCompromise, id, timestampType,
-          startTimeAsLong, endTimeAsLong)
+        let ret = await generateStandardUserSubjectEvents(RiscEventTypes.CredentialCompromise, id,
+        TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
         let event = ret[AllEventURIs[RiscEventTypes.CredentialCompromise].uri]
         event ['credential_type'] = args[0] ?? DEFAULT_CREDENTIAL_TYPE
         return ret
       },
 
   [RiscEventURIs[RiscEventTypes.IdentifierChanged].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) =>  {
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) =>  {
       let ret: SETEvents = {}
       if (id === 'email') {
-        ret = await generateRiscEmailSubjectEvent(RiscEventTypes.IdentifierChanged, args[0] ?? DEFAULT_EMAIL, timestampType,
-          startTimeAsLong, endTimeAsLong)
+        ret = await generateRiscEmailSubjectEvents(RiscEventTypes.IdentifierChanged, args[0] ?? DEFAULT_EMAIL,
+          TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
       } else if (id === 'phone') {
-        ret = await generateRiscPhoneSubjectEvent(RiscEventTypes.IdentifierChanged, args[0] ?? DEFAULT_PHONE, timestampType,
-          startTimeAsLong, endTimeAsLong)
+        ret = await generateRiscPhoneSubjectEvents(RiscEventTypes.IdentifierChanged, args[0] ?? DEFAULT_PHONE,
+          TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
       }
       let event = ret[AllEventURIs[RiscEventTypes.IdentifierChanged].uri]
       if (id === 'email') {
@@ -142,66 +140,58 @@ export const riscPopulatedEventMapping: Record<string, (id: string, timestampTyp
     },
 
   [RiscEventURIs[RiscEventTypes.IdentifierRecycled].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => {
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) => {
       let ret: SETEvents = {}
       if (id === 'email') {
-        ret = await generateRiscEmailSubjectEvent(RiscEventTypes.IdentifierRecycled, args[0] ?? DEFAULT_EMAIL, timestampType,
-          startTimeAsLong, endTimeAsLong)
+        ret = await generateRiscEmailSubjectEvents(RiscEventTypes.IdentifierRecycled, args[0] ?? DEFAULT_EMAIL,
+          TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
       } else if (id === 'phone') {
-        ret = await generateRiscPhoneSubjectEvent(RiscEventTypes.IdentifierRecycled, args[0] ?? DEFAULT_PHONE, timestampType,
-          startTimeAsLong, endTimeAsLong)
+        ret = await generateRiscPhoneSubjectEvents(RiscEventTypes.IdentifierRecycled, args[0] ?? DEFAULT_PHONE,
+          TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
       }
       return ret
     },
 
   [RiscEventURIs[RiscEventTypes.OptIn].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => (
-      await generateStandardUserSubjectEvent(RiscEventTypes.OptIn, id, timestampType,
-        startTimeAsLong, endTimeAsLong)
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number) => (
+      await generateStandardUserSubjectEvents(RiscEventTypes.OptIn, id, TimestampTypes.timeStamp,
+        startTimeInMillis, endTimeInMillis)
     ),
 
   [RiscEventURIs[RiscEventTypes.OptOutInitiated].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null)[]) => (
-      await generateStandardUserSubjectEvent(RiscEventTypes.OptOutInitiated, id, timestampType,
-        startTimeAsLong, endTimeAsLong)
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number) => (
+      await generateStandardUserSubjectEvents(RiscEventTypes.OptOutInitiated, id, TimestampTypes.timeStamp,
+        startTimeInMillis, endTimeInMillis)
     ),
 
   [RiscEventURIs[RiscEventTypes.OptOutCancelled].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => (
-      await generateStandardUserSubjectEvent(RiscEventTypes.OptOutCancelled, id, timestampType,
-        startTimeAsLong, endTimeAsLong)
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number) => (
+      await generateStandardUserSubjectEvents(RiscEventTypes.OptOutCancelled, id, TimestampTypes.timeStamp,
+        startTimeInMillis, endTimeInMillis)
     ),
 
   [RiscEventURIs[RiscEventTypes.OptOutEffective].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => (
-      await generateStandardUserSubjectEvent(RiscEventTypes.OptOutEffective, id, timestampType,
-        startTimeAsLong, endTimeAsLong)
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number) => (
+      await generateStandardUserSubjectEvents(RiscEventTypes.OptOutEffective, id, TimestampTypes.timeStamp,
+        startTimeInMillis, endTimeInMillis)
     ),
 
   [RiscEventURIs[RiscEventTypes.RecoveryActivated].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => (
-      await generateStandardUserSubjectEvent(RiscEventTypes.RecoveryActivated, id, timestampType,
-        startTimeAsLong, endTimeAsLong)
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number) => (
+      await generateStandardUserSubjectEvents(RiscEventTypes.RecoveryActivated, id, TimestampTypes.timeStamp,
+        startTimeInMillis, endTimeInMillis)
     ),
 
   [RiscEventURIs[RiscEventTypes.RecoveryInformationChanged].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => (
-      await generateStandardUserSubjectEvent(RiscEventTypes.RecoveryInformationChanged, id, timestampType,
-        startTimeAsLong, endTimeAsLong)
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number) => (
+      await generateStandardUserSubjectEvents(RiscEventTypes.RecoveryInformationChanged, id, TimestampTypes.timeStamp,
+        startTimeInMillis, endTimeInMillis)
     ),
 
   [RiscEventURIs[RiscEventTypes.SessionsRevoked].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => (
-      await generateStandardUserSubjectEvent(RiscEventTypes.SessionsRevoked, id, timestampType,
-        startTimeAsLong, endTimeAsLong)
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number) => (
+      await generateStandardUserSubjectEvents(RiscEventTypes.SessionsRevoked, id, TimestampTypes.timeStamp,
+        startTimeInMillis, endTimeInMillis)
     ),
 
 };

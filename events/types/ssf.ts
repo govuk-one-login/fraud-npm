@@ -10,7 +10,7 @@ export interface SsfSchema {
   // Optional to inbound-ssf
   txn?: string; // Transaction ID: A OneLogin defined field used as a way to group multiple events that refer to the same incident
   toe?: number; // This is the time the event occurred.
-  exp?: string;
+  exp?: string; // What is this?
 }
 
 export interface SETEvents {

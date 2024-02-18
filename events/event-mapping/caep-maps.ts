@@ -27,11 +27,11 @@ import {
   DEFAULT_SUB,
   DEFAULT_TENANT_ID,
   DEFAULT_TOKEN_FORMAT,
-  generateEventMetaDataAndDetails,
-  generateStandardUserSubjectEvent,
+  generateMetaDataAndDetailsEvents,
+  generateStandardUserSubjectEvents,
   getNameValuePairList,
   NameValuePair,
-} from './event-mapping';
+} from './events-mapping';
 
 export const caepEventMapping: Record<string, any> = {
   [CaepEventURIs[CaepEventTypes.AssuranceLevelChange].uri]: AssuranceLevelChangeEvent,
@@ -41,11 +41,12 @@ export const caepEventMapping: Record<string, any> = {
   [CaepEventURIs[CaepEventTypes.TokenClaimsChange].uri]: TokenClaimsChange,
 };
 
-async function generateCaepDeviceSubjectEvent(eventType: CaepEventTypes, deviceIss: string, deviceSub: string, tenantId: string,
+async function generateCaepDeviceSubjectEvents(eventType: CaepEventTypes, deviceIss: string, deviceSub: string, tenantId: string,
                                                   timestampType: TimestampTypes,
-                                                  startTime: number, endTime: number): Promise<SETEvents> {
+                                                  startTimeInMillis: number, endTimeInMillis: number): Promise<SETEvents> {
 
-  let metadataAndDetails = await generateEventMetaDataAndDetails(eventType, timestampType, startTime, endTime)
+  let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType, timestampType,
+      startTimeInMillis, endTimeInMillis)
 
   return {
     ...metadataAndDetails,
@@ -66,12 +67,13 @@ async function generateCaepDeviceSubjectEvent(eventType: CaepEventTypes, deviceI
   }
 }
 
-async function generateCaepSessionSubjectEvent(eventType: CaepEventTypes, sessionId: string,
+async function generateCaepSessionSubjectEvents(eventType: CaepEventTypes, sessionId: string,
                                                 userIssuer: string, userSub: string, tenantId: string,
                                                 timestampType: TimestampTypes,
-                                                startTime: number, endTime: number): Promise<SETEvents> {
+                                                startTimeInMillis: number, endTimeInMillis: number): Promise<SETEvents> {
 
-  let metadataAndDetails = await generateEventMetaDataAndDetails(eventType, timestampType, startTime, endTime)
+  let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType, timestampType,
+    startTimeInMillis, endTimeInMillis)
 
   return {
     ...metadataAndDetails,
@@ -96,10 +98,11 @@ async function generateCaepSessionSubjectEvent(eventType: CaepEventTypes, sessio
   }
 }
 
-async function generateCaepTokenSubjectEvent(eventType: CaepEventTypes, tokenFormat: string, tokenIssuer: string,
-    jti: string, timestampType: TimestampTypes, startTime: number, endTime: number): Promise<SETEvents> {
+async function generateCaepTokenSubjectEvents(eventType: CaepEventTypes, tokenFormat: string, tokenIssuer: string,
+    jti: string, timestampType: TimestampTypes, startTimeInMillis: number, endTimeInMillis: number): Promise<SETEvents> {
 
-  let metadataAndDetails = await generateEventMetaDataAndDetails(eventType, timestampType, startTime, endTime)
+  let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType, timestampType,
+    startTimeInMillis, endTimeInMillis)
 
   return {
     ...metadataAndDetails,
@@ -113,14 +116,13 @@ async function generateCaepTokenSubjectEvent(eventType: CaepEventTypes, tokenFor
   }
 }
 
-export const caepPopulatedEventMapping: Record<string, (id: string, timestampType: TimestampTypes,
-      startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => Promise<SETEvents>> = {
+export const caepPopulatedEventsMapping: Record<string, (id: string,
+  startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) => Promise<SETEvents>> = {
 
   [CaepEventURIs[CaepEventTypes.AssuranceLevelChange].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => {
+    async (id: string, startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => {
 
-      let ret = await generateStandardUserSubjectEvent(CaepEventTypes.AssuranceLevelChange, id, timestampType,
+      let ret = await generateStandardUserSubjectEvents(CaepEventTypes.AssuranceLevelChange, id, TimestampTypes.timeStamp,
         startTimeAsLong, endTimeAsLong)
 
       let event= ret[CaepEventURIs[CaepEventTypes.AssuranceLevelChange].uri]
@@ -138,14 +140,13 @@ export const caepPopulatedEventMapping: Record<string, (id: string, timestampTyp
     },
 
   [CaepEventURIs[CaepEventTypes.CredentialChange].uri] :
-    async (id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null)[]) => {
+    async (id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null)[]) => {
 
-      let ret = await generateStandardUserSubjectEvent(CaepEventTypes.CredentialChange, id, timestampType,
-        startTimeAsLong, endTimeAsLong)
+      let ret = await generateStandardUserSubjectEvents(CaepEventTypes.CredentialChange, id,
+        TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
       let event = ret[CaepEventURIs[CaepEventTypes.CredentialChange].uri]
 
-      addStandardEventFields(event, startTimeAsLong, args[0] ?? DEFAULT_INITIATING_ENTITY,
+      addStandardEventFields(event, startTimeInMillis, args[0] ?? DEFAULT_INITIATING_ENTITY,
         args[1] ?? DEFAULT_REASON_ADMIN, args[2] ?? DEFAULT_REASON_USER)
 
       event ['change_type'] = args[3] ?? DEFAULT_CHANGE_TYPE
@@ -157,16 +158,15 @@ export const caepPopulatedEventMapping: Record<string, (id: string, timestampTyp
     },
 
   [CaepEventURIs[CaepEventTypes.DeviceComplianceChange].uri] :
-    async (_id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => {
+    async (_id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) => {
 
-      let ret = await generateCaepDeviceSubjectEvent(CaepEventTypes.DeviceComplianceChange,
+      let ret = await generateCaepDeviceSubjectEvents(CaepEventTypes.DeviceComplianceChange,
         args[0] ?? DEFAULT_ISS, args[1] ?? DEFAULT_SUB,
-         args[2] ?? DEFAULT_TENANT_ID, timestampType, startTimeAsLong, endTimeAsLong)
+         args[2] ?? DEFAULT_TENANT_ID, TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
 
       let event = ret[CaepEventURIs[CaepEventTypes.DeviceComplianceChange].uri]
 
-      addStandardEventFields(event, startTimeAsLong, args[3] ?? DEFAULT_INITIATING_ENTITY,
+      addStandardEventFields(event, startTimeInMillis, args[3] ?? DEFAULT_INITIATING_ENTITY,
         args[4] ?? DEFAULT_REASON_ADMIN, args[5] ?? DEFAULT_REASON_USER)
 
       event ['current_status'] = args[6] ?? DEFAULT_CURRENT_STATUS
@@ -176,25 +176,23 @@ export const caepPopulatedEventMapping: Record<string, (id: string, timestampTyp
     },
 
   [CaepEventURIs[CaepEventTypes.SessionRevoked].uri] :
-    async (_id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => {
+    async (_id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) => {
 
-      let ret = await generateCaepSessionSubjectEvent(CaepEventTypes.SessionRevoked,
+      let ret = await generateCaepSessionSubjectEvents(CaepEventTypes.SessionRevoked,
       args[0] ?? DEFAULT_SESSION_ID, args[1] ?? DEFAULT_ISS,
         args[2] ?? DEFAULT_SUB, args[3] ?? DEFAULT_TENANT_ID,
-        timestampType, startTimeAsLong, endTimeAsLong)
+        TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
 
       let event = ret[CaepEventURIs[CaepEventTypes.SessionRevoked].uri]
 
-      addStandardEventFields(event, startTimeAsLong, args[4] ?? DEFAULT_INITIATING_ENTITY,
+      addStandardEventFields(event, startTimeInMillis, args[4] ?? DEFAULT_INITIATING_ENTITY,
         args[5] ?? DEFAULT_REASON_ADMIN, args[6] ?? DEFAULT_REASON_USER)
 
       return ret
     },
 
   [CaepEventURIs[CaepEventTypes.TokenClaimsChange].uri] :
-    async (_id: string, timestampType: TimestampTypes,
-           startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => {
+    async (_id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) => {
 
       //
       // args[0] is a comma-separated list of name value pairs in the format:
@@ -204,13 +202,14 @@ export const caepPopulatedEventMapping: Record<string, (id: string, timestampTyp
       let claims: any = { }
       addFields(claims, nameValuePairList)
 
-      let ret =  await generateCaepTokenSubjectEvent(CaepEventTypes.TokenClaimsChange,
+      let ret =  await generateCaepTokenSubjectEvents(CaepEventTypes.TokenClaimsChange,
         args[1] ?? DEFAULT_TOKEN_FORMAT,
-        args[2] ?? DEFAULT_ISS, args[3] ?? DEFAULT_JTI, timestampType, startTimeAsLong, endTimeAsLong)
+        args[2] ?? DEFAULT_ISS, args[3] ?? DEFAULT_JTI,
+        TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
 
       let event = ret[CaepEventURIs[CaepEventTypes.TokenClaimsChange].uri]
 
-      addStandardEventFields(event, startTimeAsLong, args[4] ?? DEFAULT_INITIATING_ENTITY,
+      addStandardEventFields(event, startTimeInMillis, args[4] ?? DEFAULT_INITIATING_ENTITY,
         args[5] ?? DEFAULT_REASON_ADMIN, args[6] ?? DEFAULT_REASON_USER)
 
       event ['claims'] = claims

@@ -11,6 +11,7 @@ export enum EventFieldNames {
   Reason = 'reason',
   NewValue = 'new-value',
   EventTimestamp = 'event_timestamp',
+  EventTimestampMs = 'event_timestamp_ms',
   EventTimeframeMs = 'event_timeframe_ms',
   EventTimeframe = 'event_timeframe',
   ReasonAdmin = 'reason_admin',

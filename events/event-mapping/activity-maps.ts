@@ -9,19 +9,15 @@ import {
   DEFAULT_REASON_ADMIN,
   DEFAULT_REASON_USER,
   DEFAULT_SESSION_ID,
-  generateEventMetaDataAndDetails,
-} from './event-mapping';
+  generateMetaDataAndDetailsEvents,
+} from './events-mapping';
 
-/*
-  An activity is a type of fraud signal added by OneLogin to the SSF data model that corresponds to an account
-  or session event that does not correspond to a signal in SSF.
- */
-
-async function generateActivityUserSessionEvent(eventType: ActivityEventTypes, userId: string, sessionId: string,
+async function generateActivityUserSessionEvents(eventType: ActivityEventTypes, userId: string, sessionId: string,
                                               timestampType: TimestampTypes,
-                                              startTime: number, endTime: number): Promise<SETEvents> {
+                                              startTimeInMillis: number, endTimeInMillis: number): Promise<SETEvents> {
 
-  let metadataAndDetails = await generateEventMetaDataAndDetails(eventType, timestampType, startTime, endTime)
+  let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType, timestampType,
+        startTimeInMillis, endTimeInMillis)
 
   return {
     ...metadataAndDetails,
@@ -39,19 +35,19 @@ async function generateActivityUserSessionEvent(eventType: ActivityEventTypes, u
   }
 }
 
-export const activityEventMapping: Record<string, any> = {
+export const activityEventsMapping: Record<string, any> = {
   [ActivityEventURIs[ActivityEventTypes.SessionRecovered].uri] : SessionRecoveredEvent,
 };
 
-export const activityPopulatedEventMapping: Record<string, (id: string, timestampType: TimestampTypes,
-  startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => Promise<SETEvents>> = {
+export const activityPopulatedEventsMapping: Record<string, (id: string,
+  startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) => Promise<SETEvents>> = {
 
   [ActivityEventURIs[ActivityEventTypes.SessionRecovered].uri] :
-    async (id: string, timestampType: TimestampTypes, startTimeAsLong: number, endTimeAsLong: number,
+    async (id: string, startTimeAsLong: number, endTimeAsLong: number,
          ...args: (string | null) []) => {
 
-      let metadataAndDetails = await generateActivityUserSessionEvent(ActivityEventTypes.SessionRecovered,
-        id, args[0] ?? DEFAULT_SESSION_ID, timestampType, startTimeAsLong, endTimeAsLong)
+      let metadataAndDetails = await generateActivityUserSessionEvents(ActivityEventTypes.SessionRecovered,
+        id, args[0] ?? DEFAULT_SESSION_ID, TimestampTypes.timeFrame, startTimeAsLong, endTimeAsLong)
 
       let event = metadataAndDetails[ActivityEventURIs[ActivityEventTypes.SessionRecovered].uri]
 

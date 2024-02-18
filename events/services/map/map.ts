@@ -1,32 +1,17 @@
 import { ErrorMessages } from '../../enums/errors';
-import { AllEventURIs, AllEventTypes, EventTypes } from '../../enums/events';
+import { AllEventTypes, AllEventURIs } from '../../enums/events';
 import { BaseEvent } from '../../event-classes/base-event';
-import { eventMapping } from '../../event-mapping/event-mapping';
+import { eventsMapping } from '../../event-mapping/events-mapping';
+import { isEventType, isEventURI } from '../service-utils/service-utils';
 
 export class MapService {
   /**
    * Return correct event class based on the event type or URI passed in
    */
   static getEventClass(searchTerm: string): BaseEvent {
-    if (!this.isEventType(searchTerm) && !this.isEventURI(searchTerm))
+    if (!isEventType(searchTerm) && !isEventURI(searchTerm))
       throw new Error(ErrorMessages.NotValidEventType);
 
-    return eventMapping[
-      this.isEventURI(searchTerm)
-        ? searchTerm
-        : AllEventURIs[searchTerm as AllEventTypes].uri
-    ];
+    return eventsMapping[isEventURI(searchTerm) ? searchTerm : AllEventURIs[searchTerm as AllEventTypes].uri];
   }
-
-  /**
-   * Return if searchTerm is a valid event type
-   */
-  static isEventType = (searchTerm: string): searchTerm is AllEventTypes =>
-    Object.values(EventTypes).includes(searchTerm as AllEventTypes);
-
-  /**
-   * Return if searchTerm is a valid event URI
-   */
-  static isEventURI = (searchTerm: string): boolean =>
-    Object.values(AllEventURIs).map( (uriInfo) => uriInfo.uri).includes(searchTerm);
 }

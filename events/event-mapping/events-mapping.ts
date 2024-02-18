@@ -1,14 +1,12 @@
 import { AllEventTypes, AllEventURIs, TimestampTypes } from '../enums/events';
-import { activityEventMapping } from './activity-maps';
-import { caepEventMapping } from './caep-maps';
-import { notificationEventMapping } from './notification-maps';
-import { riscEventMapping } from './risc-maps';
+import { activityEventsMapping, activityPopulatedEventsMapping } from './activity-maps';
+import { caepEventMapping, caepPopulatedEventsMapping } from './caep-maps';
+import { notificationEventsMapping, notificationPopulatedEventsMapping } from './notification-maps';
+import { riscEventsMapping, riscPopulatedEventsMapping } from './risc-maps';
 import { EventStructure, SETEvents } from '../types/ssf';
 
 export const EVENT_METADATA_URI= 'https://vocab.account.gov.uk/secevent/v1/eventMetadata'
 export const EVENT_DETAILS_URI = 'https://vocab.account.gov.uk/secevent/v1/'
-
-export const MOCK_DEVICE_ID = 'some-device-id'
 export const DEFAULT_LOCATION = 'GB'
 
 export const DEFAULT_URI = 'uri:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw='
@@ -63,25 +61,33 @@ export function addFields(object: {[key: string]: any}, properties: NameValuePai
   }
 }
 
-export function addStandardEventFields(event: EventStructure, timeStamp: number,
+export function addStandardEventFields(event: EventStructure, timeStampInMillis: number,
                                        initiatingEntity: string, reasonAdmin:string, reasonUser: string) {
-  event ['event_timestamp'] = timeStamp
+
+  event ['event_timestamp'] = Math.round(timeStampInMillis / 1000)
   event ['initiating_entity'] = initiatingEntity
   event ['reason_admin'] = { en: reasonAdmin }
   event ['reason_user'] = { en: reasonUser }
 }
 
-export async function generateEventMetaDataAndDetails(eventType: AllEventTypes, timestampType: TimestampTypes,
-                                               startTime: number, endTime: number): Promise<SETEvents> {
+export async function generateMetaDataAndDetailsEvents(eventType: AllEventTypes, timestampType: TimestampTypes,
+                                                       startTimeInMillis: number, endTimeInMillis: number ): Promise<SETEvents> {
+
+  let timeFrame: {}
+  if (startTimeInMillis == 0 && endTimeInMillis != 0) {
+    timeFrame = { end_time: endTimeInMillis }
+  } else if (startTimeInMillis !== 0 && endTimeInMillis == 0) {
+    timeFrame = { start_time: startTimeInMillis }
+  } else {
+    timeFrame = { start_time: startTimeInMillis, end_time: endTimeInMillis }
+  }
+
   return {
     [EVENT_METADATA_URI]: {
       ...(timestampType === TimestampTypes.timeStamp
-        ? ({ event_timestamp: 100 })
+        ? ({ event_timestamp_ms: startTimeInMillis })
         : {
-          event_timeframe_ms: {
-            start_time: startTime,
-            end_time: endTime
-          },
+          event_timeframe_ms: timeFrame,
         }),
     },
 
@@ -91,10 +97,11 @@ export async function generateEventMetaDataAndDetails(eventType: AllEventTypes, 
   }
 }
 
-export async function generateStandardUserSubjectEvent(eventType: AllEventTypes, id: string,
-  timestampType: TimestampTypes, startTime: number, endTime: number): Promise<SETEvents> {
+export async function generateStandardUserSubjectEvents(eventType: AllEventTypes, id: string,
+                                                        timestampType: TimestampTypes, startTimeInMillis: number, endTimeInMillis: number): Promise<SETEvents> {
 
-  let metadataAndDetails = await generateEventMetaDataAndDetails(eventType, timestampType, startTime, endTime)
+  let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType,
+    timestampType, startTimeInMillis, endTimeInMillis)
 
   return {
     ...metadataAndDetails,
@@ -105,11 +112,19 @@ export async function generateStandardUserSubjectEvent(eventType: AllEventTypes,
       },
     }
   }
+}
+
+export const eventsMapping: Record<string, any> = {
+  ...notificationEventsMapping,
+  ...riscEventsMapping,
+  ...activityEventsMapping,
+  ...caepEventMapping,
 };
 
-export const eventMapping: Record<string, any> = {
-  ...notificationEventMapping,
-  ...riscEventMapping,
-  ...activityEventMapping,
-  ...caepEventMapping,
+export const populatedEventsMapping: Record<string, (id: string, startTimeInMillis: number, endTimeInMillis: number,
+      ...args: (string | null) []) => Promise<SETEvents>> = {
+  ...notificationPopulatedEventsMapping,
+  ...riscPopulatedEventsMapping,
+  ...activityPopulatedEventsMapping,
+  ...caepPopulatedEventsMapping,
 };

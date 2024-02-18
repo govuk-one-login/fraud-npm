@@ -36,11 +36,24 @@
           "type": "number"
         },
         "end_time": {
-          "type": "number"
+          "type" : "number"
         }
       },
+      "anyOf": [
+        {
+          "required": [
+            "start_time"
+          ]
+        },
+        {
+          "required": [
+            "end_time"
+          ]
+        }
+      ],
       "type": "object"
     }
   },
-  "required": ["subject"]
+  "required": ["subject"],
+  "type": "object"
 }

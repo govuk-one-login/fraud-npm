@@ -4,7 +4,27 @@
       "type": "number"
     },
     "event_timeframe_ms": {
-      "type": "number"
+      "properties": {
+        "start_time": {
+          "type": "number"
+        },
+        "end_time": {
+          "type": "number"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "start_time"
+          ]
+        },
+        {
+          "required": [
+            "end_time"
+          ]
+        }
+      ],
+      "type": "object"
     }
   },
   "type": "object"

@@ -1,11 +1,11 @@
 import { AllEventTypes, AllEventURIs } from '../../enums/events';
 import { NotificationEventTypes } from '../../enums/notification-events';
 import { AccountConcernEvent } from '../../event-classes/notification/account-concern';
-import { eventMapping } from '../../event-mapping/event-mapping';
+import { eventsMapping } from '../../event-mapping/events-mapping';
 import { MapService } from './map';
 
-const eventUriTestInput = Object.entries(eventMapping);
-const eventTypeTestInput = Object.entries(eventMapping).map((event) => {
+const eventUriTestInput = Object.entries(eventsMapping);
+const eventTypeTestInput = Object.entries(eventsMapping).map((event) => {
   event[0] =
     Object.keys(AllEventURIs).find(
       (uri) => AllEventURIs[uri as AllEventTypes].uri === event[0]

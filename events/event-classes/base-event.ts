@@ -1,13 +1,12 @@
-import { SETEvents, SsfSchema } from '../types/ssf';
+import { SsfSchema } from '../types/ssf';
 import { ValidateService } from '../services/validate/validate';
 import { Schema } from 'ajv';
 import { TxmaEventNames } from '../enums/event-names';
-import { AllEventTypes, AllEventURIs, IdentifierTypes } from '../enums/events';
+import { AllEventTypes, AllEventURIs } from '../enums/events';
 import * as setSchema from '../schemas/set-schema.json';
 import * as eventDetailsSchema from '../schemas/extensions/event-details.json';
 import * as eventMetadataSchema from '../schemas/extensions/metadata.json';
 import { ErrorMessages } from '../enums/errors';
-import { BaseSET } from './base-set';
 
 export class BaseEvent {
 
@@ -26,7 +25,7 @@ export class BaseEvent {
     eventType: AllEventTypes,
     txmaEventName: TxmaEventNames,
     eventSchema: Schema,
-    message?: SsfSchema
+    message?: SsfSchema,
   ) {
     this.eventType = eventType;
     this.txmaEventName = txmaEventName;
@@ -36,10 +35,10 @@ export class BaseEvent {
       this.setMessage = message;
       this.eventMessage = this.setMessage?.events[AllEventURIs[this.eventType].uri];
       this.eventDetailsKey = Object.keys(this.setMessage.events).find((key) =>
-        key.includes('eventDetails')
+        key.includes('eventDetails'),
       );
       this.eventMetadataKey = Object.keys(this.setMessage.events).find((key) =>
-        key.includes('eventMetadata')
+        key.includes('eventMetadata'),
       );
     }
   }
@@ -71,8 +70,8 @@ export class BaseEvent {
 
     await Promise.all(
       validations.map(async ([schema, message]) =>
-        ValidateService.validate(schema, message)
-      )
+        ValidateService.validate(schema, message),
+      ),
     );
   }
 }
