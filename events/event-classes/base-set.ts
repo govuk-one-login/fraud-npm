@@ -8,15 +8,11 @@ export class BaseSET implements SsfSchema {
   events: {
     [key: string]: EventStructure;
   } = {};
-  txn: string;
-  toe: number;
 
   constructor(issuer: string) {
     this.iat = BaseSET.generateTimeOfEvent();
     this.jti = BaseSET.generateUniqueID();
     this.iss = issuer;
-    this.txn = BaseSET.generateUniqueID();
-    this.toe = BaseSET.generateTimeOfEvent();
   }
 
   /**

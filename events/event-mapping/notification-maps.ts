@@ -66,47 +66,47 @@ export const notificationPopulatedEventsMapping: Record<string, (id: string,
     async (id: string, startTimeInMillis: number, endTimeInMillis: number,
            ...args: (string | null) []) => {
 
-      let metadataAndDetails = await generateStandardUserSubjectEvents(NotificationEventTypes.AccountConcern,
+      let events = await generateStandardUserSubjectEvents(NotificationEventTypes.AccountConcern,
         id, TimestampTypes.timeFrame, startTimeInMillis, endTimeInMillis);
 
-      let event = metadataAndDetails[NotificationEventURIs[NotificationEventTypes.AccountConcern].uri];
+      let event = events[NotificationEventURIs[NotificationEventTypes.AccountConcern].uri];
 
       event ['rationale'] = { code: args[0] ?? DEFAULT_RATIONALE_CODE };
 
       addStandardNotificationFields(event, startTimeInMillis, endTimeInMillis,
         args[1] ?? DEFAULT_INITIATING_ENTITY, args[2] ?? DEFAULT_REASON_ADMIN);
 
-      return metadataAndDetails;
+      return events;
     },
 
   [NotificationEventURIs[NotificationEventTypes.AccountBlock].uri]:
     async (id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) => {
 
-      let metadataAndDetails = await generateStandardUserSubjectEvents(NotificationEventTypes.AccountBlock,
+      let events = await generateStandardUserSubjectEvents(NotificationEventTypes.AccountBlock,
         id, TimestampTypes.timeFrame, startTimeInMillis, endTimeInMillis);
 
-      let event = metadataAndDetails[NotificationEventURIs[NotificationEventTypes.AccountBlock].uri];
+      let event = events[NotificationEventURIs[NotificationEventTypes.AccountBlock].uri];
 
       addStandardNotificationFields(event, startTimeInMillis, endTimeInMillis,
         args[0] ?? DEFAULT_INITIATING_ENTITY, args[1] ?? DEFAULT_REASON_ADMIN);
 
-      return metadataAndDetails;
+      return events;
     },
 
   [NotificationEventURIs[NotificationEventTypes.DeviceConcern].uri]:
     async (id: string, startTimeInMillis: number, endTimeInMillis: number,
            ...args: (string | null) []) => {
 
-      let metadataAndDetails = await generateNotificationDeviceSubjectEvents(NotificationEventTypes.DeviceConcern,
+      let events = await generateNotificationDeviceSubjectEvents(NotificationEventTypes.DeviceConcern,
         id, TimestampTypes.timeFrame, startTimeInMillis, endTimeInMillis);
 
-      let event = metadataAndDetails[NotificationEventURIs[NotificationEventTypes.DeviceConcern].uri];
+      let event = events[NotificationEventURIs[NotificationEventTypes.DeviceConcern].uri];
 
       event ['rationale'] = { code: args[0] ?? DEFAULT_RATIONALE_CODE };
 
       addStandardNotificationFields(event, startTimeInMillis, endTimeInMillis,
         args[1] ?? DEFAULT_INITIATING_ENTITY, args[2] ?? DEFAULT_REASON_ADMIN);
 
-      return metadataAndDetails;
+      return events;
     },
 };

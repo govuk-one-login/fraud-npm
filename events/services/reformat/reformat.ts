@@ -33,10 +33,10 @@ export class ReformatService {
    * {
    *   "event_name": "SSF_INBOUND_ACCOUNT_PURGED",
    *   "user": {
-   *     "user_id": "<internal pairwise id>"
+   *     "user_id": "<common subject ID>"
    *     },
    *   "timestamp": "<timestamp of submission to TXMA>",
-   *   "component_id": "<SET.events.[https://schemas.openid.net/secevent/risc/event-type/account-purged].iss>",
+   *   "component_id": "<iss field from top-level of SET>",
    *   "extensions": {
    *     "SET": {
    *       ... contents of the set ....

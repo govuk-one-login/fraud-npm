@@ -18,12 +18,6 @@
     },
     "sub": {
       "type": "string"
-    },
-    "toe": {
-      "type": "number"
-    },
-    "txn": {
-      "type": "string"
     }
   },
   "required": [

@@ -46,17 +46,17 @@ export const activityPopulatedEventsMapping: Record<string, (id: string,
     async (id: string, startTimeAsLong: number, endTimeAsLong: number,
          ...args: (string | null) []) => {
 
-      let metadataAndDetails = await generateActivityUserSessionEvents(ActivityEventTypes.SessionRecovered,
+      let events = await generateActivityUserSessionEvents(ActivityEventTypes.SessionRecovered,
         id, args[0] ?? DEFAULT_SESSION_ID, TimestampTypes.timeFrame, startTimeAsLong, endTimeAsLong)
 
-      let event = metadataAndDetails[ActivityEventURIs[ActivityEventTypes.SessionRecovered].uri]
+      let event = events[ActivityEventURIs[ActivityEventTypes.SessionRecovered].uri]
 
       addStandardEventFields(event, startTimeAsLong, args[2] ?? DEFAULT_INITIATING_ENTITY,
         args[3] ?? DEFAULT_REASON_ADMIN, args[4] ?? DEFAULT_REASON_USER)
 
       event['previous_session_id'] = args[1] ?? DEFAULT_PREVIOUS_SESSION_ID;
 
-      return metadataAndDetails
+      return events
     }
 };
 

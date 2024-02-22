@@ -6,11 +6,6 @@ export interface SsfSchema {
   jti: string; // A unique identifier for the SET. May be used by clients to check if a SET has already been received.
   aud: string; // The audience ID for the SET, as far as we are concerned in shared signals this should be our ID. If not we drop the message.
   events: SETEvents; // A set of event statements describing a single logical event that has occurred about a security subject.
-
-  // Optional to inbound-ssf
-  txn?: string; // Transaction ID: A OneLogin defined field used as a way to group multiple events that refer to the same incident
-  toe?: number; // This is the time the event occurred.
-  exp?: string; // What is this?
 }
 
 export interface SETEvents {
@@ -81,6 +76,3 @@ export type EventTimeframeMilliseconds = {
   start_time: number;
   end_time: number;
 };
-
-
-
