@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: 20
       - run: |
+          echo "Publishing package in directory ${directory}"
           cd ${{ matrix.directory }}
           echo @govuk-one-login:https://npm.pkg.github.com/ > .npmrc
           echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> .npmrc
