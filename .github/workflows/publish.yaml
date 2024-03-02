@@ -36,5 +36,6 @@ jobs:
             npm test
             npm publish
           fi
+        shell: bash
         env:
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
