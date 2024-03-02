@@ -16,13 +16,22 @@ jobs:
         with:
           node-version: 20
       - run: |
-          echo "Publishing package in directory ${directory}"
+          echo "Checking and publishing package from directory ${{ matrix.directory }}"
           cd ${{ matrix.directory }}
-          echo @govuk-one-login:https://npm.pkg.github.com/ > .npmrc
-          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> .npmrc
-          npm ci
-          npx tsc
-          npm test
-          npm publish
+          
+          PACKAGE_EXISTS=$(npm view . name > /dev/null 2>&1 && echo "exists" || echo "not exists")
+          echo "Package ${PACKAGE_EXISTS} in npm registry"
+          
+          if [ "$PACKAGE_EXISTS" == "not exists" ]; then
+            # package does not exist in the npm registry, so proceed with publishing
+            echo @govuk-one-login:https://npm.pkg.github.com/ > .npmrc
+            echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> .npmrc
+            npm ci
+            npx tsc
+            npm test
+            npm publish
+          else
+            echo "Package already exists in npm registry, skipping publish..."
+          fi
         env:
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
