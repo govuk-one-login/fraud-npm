@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 20
       - run: |
-          case "${github.events.inputs.environment}" in
+          case "${github.event.inputs.environment}" in
             'Logging')
               echo "Publishing Logging Package"
               cd ./logging
