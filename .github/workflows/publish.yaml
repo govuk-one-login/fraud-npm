@@ -1,41 +1,45 @@
 # Publish logging and events packages
 name: Publish
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        default: 'Logging'
+        description: Please select the package to publish
+        type: choice
+        options:
+          - Logging
+          - Events
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-    strategy:
-      matrix:
-        directory: [ './logging', './events' ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 20
       - run: |
-          echo "Checking and publishing package from directory ${{ matrix.directory }}"
-          cd ${{ matrix.directory }}
-          
-          PACKAGE_NAME=$(npm view . name)
-          PACKAGE_VERSION=$(npm view . version)
-          REGISTRY_VERSIONS=$(npm view . versions)
-          
-          echo -n "Package ${PACKAGE_NAME} at version ${PACKAGE_VERSION}"
-           
-          if echo "${REGISTRY_VERSIONS}" | grep -q "${PACKAGE_VERSION}"; then
-            echo "already exists in npm registry, skipping publish..."
-          else
-            echo "does not exist in npm registry, publishing..."
-            echo @govuk-one-login:https://npm.pkg.github.com/ > .npmrc
-            echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> .npmrc
-            npm ci
-            npx tsc
-            npm test
-            npm publish
-          fi
+          case "${github.events.inputs.environment}" in
+            'Logging')
+              echo "Publishing Logging Package"
+              cd ./logging
+              ;;   
+            'Events')
+              echo "Publishing Events Package"
+              cd ./events
+              ;;
+          esac
+      
+          echo @govuk-one-login:https://npm.pkg.github.com/ > .npmrc
+          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> .npmrc
+          npm ci
+          npx tsc
+          npm test
+          npm publish
         shell: bash
         env:
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
