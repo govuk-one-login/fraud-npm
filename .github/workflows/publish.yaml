@@ -1,14 +1,19 @@
-# currently hardcode logging dir. if multiple packages change to enable run over
-# multiple directories to create each package
-# decide how to run also+
+# Publish logging and events packages
 name: Publish
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        default: 'Logging'
+        description: Please select the package to publish
+        type: choice
+        options:
+          - Logging
+          - Events
 jobs:
   publish:
     runs-on: ubuntu-latest
-    defaults:
-        run:
-            working-directory: ./logging
     permissions:
       contents: read
       packages: write
@@ -17,12 +22,24 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 20
-      - run: npm ci
-      - run: npx tsc
-      - run: npm test
       - run: |
+          case "${{github.event.inputs.environment}}" in
+            'Logging')
+              echo "Publishing Logging Package"
+              cd ./logging
+              ;;   
+            'Events')
+              echo "Publishing Events Package"
+              cd ./events
+              ;;
+          esac
+      
           echo @govuk-one-login:https://npm.pkg.github.com/ > .npmrc
           echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> .npmrc
-      - run: npm publish
+          npm ci
+          npx tsc
+          npm test
+          npm publish
+        shell: bash
         env:
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}

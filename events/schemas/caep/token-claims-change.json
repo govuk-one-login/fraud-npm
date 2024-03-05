@@ -1,0 +1,45 @@
+{
+  "properties": {
+    "claims": {
+      "minProperties": 1,
+      "type": "object"
+    },
+    "event_timestamp": {
+      "type": "number"
+    },
+    "initiating_entity": {
+      "enum": [
+        "admin",
+        "user",
+        "policy",
+        "system"
+      ],
+      "type": "string"
+    },
+    "reason_admin": {
+      "type": "object"
+    },
+    "reason_user": {
+      "type": "object"
+    },
+    "subject": {
+      "properties": {
+        "format": {
+          "type": "string"
+        },
+        "iss": {
+          "type": "string"
+        },
+        "jti": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "subject",
+    "claims"
+  ],
+  "type": "object"
+}

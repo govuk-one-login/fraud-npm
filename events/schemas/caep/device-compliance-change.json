@@ -1,0 +1,77 @@
+{
+  "properties": {
+    "current_status": {
+      "enum": [
+        "compliant",
+        "non-compliant"
+      ],
+      "minLength": 1,
+      "type": "string"
+    },
+    "event_timestamp": {
+      "type": "number"
+    },
+    "initiating_entity": {
+      "enum": [
+        "admin",
+        "user",
+        "policy",
+        "system"
+      ],
+      "type": "string"
+    },
+    "previous_status": {
+      "enum": [
+        "compliant",
+        "non-compliant"
+      ],
+      "minLength": 1,
+      "type": "string"
+    },
+    "reason_admin": {
+      "type": "object"
+    },
+    "reason_user": {
+      "type": "object"
+    },
+    "subject": {
+      "properties": {
+        "device": {
+          "properties": {
+            "format": {
+              "type": "string"
+            },
+            "iss": {
+              "type": "string"
+            },
+            "sub": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "tenant": {
+          "properties": {
+            "format": {
+              "type": "string"
+            },
+            "iss": {
+              "type": "string"
+            },
+            "sub": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "subject",
+    "previous_status",
+    "current_status"
+  ],
+  "type": "object"
+}

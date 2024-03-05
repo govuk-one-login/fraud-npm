@@ -4,3 +4,4 @@ logging/node_modules/
 coverage/
 .vscode/
 .DS_Store
+.idea/

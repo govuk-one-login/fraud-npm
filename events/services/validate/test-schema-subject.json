@@ -1,0 +1,22 @@
+{
+  "properties": {
+    "subject": {
+      "properties": {
+        "format": {
+          "type": "string",
+          "const": "uri"
+        },
+        "uri": {
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "format",
+        "uri"
+      ],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,72 @@
+{
+  "properties": {
+    "change_direction": {
+      "enum": [
+        "increase",
+        "decrease"
+      ],
+      "minLength": 1,
+      "type": "string"
+    },
+    "current_level": {
+      "enum": [
+        "nist-aal1",
+        "nist-aal2",
+        "nist-aal3"
+      ],
+      "minLength": 1,
+      "type": "string"
+    },
+    "event_timestamp": {
+      "type": "number"
+    },
+    "initiating_entity": {
+      "enum": [
+        "admin",
+        "user",
+        "policy",
+        "system"
+      ],
+      "type": "string"
+    },
+    "previous_level": {
+      "enum": [
+        "nist-aal1",
+        "nist-aal2",
+        "nist-aal3"
+      ],
+      "minLength": 1,
+      "type": "string"
+    },
+    "reason_admin": {
+      "type": "object"
+    },
+    "reason_user": {
+      "type": "object"
+    },
+    "subject": {
+      "properties": {
+        "format": {
+          "type": "string",
+          "const": "uri"
+        },
+        "uri": {
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "format",
+        "uri"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "subject",
+    "current_level",
+    "previous_level",
+    "change_direction"
+  ],
+  "type": "object"
+}
