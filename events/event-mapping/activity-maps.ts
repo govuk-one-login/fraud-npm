@@ -20,8 +20,6 @@ async function generateActivityUserSessionEvents(eventType: ActivityEventTypes, 
         startTimeInMillis, endTimeInMillis)
 
   return {
-    ...metadataAndDetails,
-
     [AllEventURIs[eventType].uri]: {
       subject: {
         format: 'uri',
@@ -31,7 +29,8 @@ async function generateActivityUserSessionEvents(eventType: ActivityEventTypes, 
         format : "opaque",
         id: sessionId
       },
-    }
+    },
+    ...metadataAndDetails
   }
 }
 

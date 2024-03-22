@@ -51,13 +51,13 @@ async function generateRiscEmailSubjectEvents(eventType: RiscEventTypes, email: 
   let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType, timestampType, startTimeInMillis, endTimeInMillis)
 
   return {
-    ...metadataAndDetails,
     [AllEventURIs[eventType].uri]: {
       subject: {
         format: 'email',
         email: email
       }
-    }
+    },
+    ...metadataAndDetails
   }
 }
 
@@ -68,13 +68,13 @@ async function generateRiscPhoneSubjectEvents(eventType: RiscEventTypes, phoneNu
   let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType, timestampType, startTime, endTime)
 
   return {
-    ...metadataAndDetails,
     [AllEventURIs[eventType].uri]: {
       subject: {
         format: 'phone',
         phone: phoneNumber
-      },
-    }
+      }
+    },
+    ...metadataAndDetails,
   }
 }
 

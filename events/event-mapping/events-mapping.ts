@@ -104,13 +104,13 @@ export async function generateStandardUserSubjectEvents(eventType: AllEventTypes
     timestampType, startTimeInMillis, endTimeInMillis)
 
   return {
-    ...metadataAndDetails,
     [AllEventURIs[eventType].uri]: {
       subject: {
         format: "uri",
         uri: id
       },
-    }
+    },
+    ...metadataAndDetails
   }
 }
 
