@@ -46,8 +46,6 @@ async function generateNotificationDeviceSubjectEvents(eventType: NotificationEv
   let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType, timestampType, startTimeInMillis, endTimeInMillis);
 
   return {
-    ...metadataAndDetails,
-
     [AllEventURIs[eventType].uri]: {
       subject: {
         device: {
@@ -56,6 +54,7 @@ async function generateNotificationDeviceSubjectEvents(eventType: NotificationEv
         },
       },
     },
+    ...metadataAndDetails
   };
 }
 
