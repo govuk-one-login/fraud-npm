@@ -49,8 +49,6 @@ async function generateCaepDeviceSubjectEvents(eventType: CaepEventTypes, device
       startTimeInMillis, endTimeInMillis)
 
   return {
-    ...metadataAndDetails,
-
     [AllEventURIs[eventType].uri]: {
       subject: {
         device: {
@@ -63,7 +61,8 @@ async function generateCaepDeviceSubjectEvents(eventType: CaepEventTypes, device
           id: tenantId
         }
       }
-    }
+    },
+    ...metadataAndDetails
   }
 }
 
@@ -76,8 +75,6 @@ async function generateCaepSessionSubjectEvents(eventType: CaepEventTypes, sessi
     startTimeInMillis, endTimeInMillis)
 
   return {
-    ...metadataAndDetails,
-
     [AllEventURIs[eventType].uri]: {
       subject: {
         session: {
@@ -95,6 +92,7 @@ async function generateCaepSessionSubjectEvents(eventType: CaepEventTypes, sessi
         }
       }
     },
+    ...metadataAndDetails
   }
 }
 
@@ -105,14 +103,14 @@ async function generateCaepTokenSubjectEvents(eventType: CaepEventTypes, tokenFo
     startTimeInMillis, endTimeInMillis)
 
   return {
-    ...metadataAndDetails,
     [AllEventURIs[eventType].uri]: {
       subject: {
         format: tokenFormat,
         iss: tokenIssuer,
         jti: jti
       }
-    }
+    },
+    ...metadataAndDetails
   }
 }
 

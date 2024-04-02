@@ -36,7 +36,7 @@ describe('populated notification events', () => {
 
       const set: SETEvents = await subjectFn(DEFAULT_URI, 1000, 2000, ...extraArgs);
 
-      await validateSetEvents(set, type, schema, true);
+      await validateSetEvents(set, type, schema);
     }
   });
 });
