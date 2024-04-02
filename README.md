@@ -47,6 +47,6 @@ To add a new package, do the following:
 - add the new package to the top-level of the fraud-npm project;
 - add the new package to the publish.yaml workflow action. This action allows the user to choose from a drop-down of 
 packages to publish;
-- go to the fraud-npm repo in GitLab, choose your new package from the packages list in the bottom-right of the screen,
+- go to the fraud-npm repo in GitHub, choose your new package from the packages list in the bottom-right of the screen,
 then choose Package Settings from the bottom-right, and then add all the repositories you would like to be able to
 access your new package to the list in the "Manage Actions access" section.
