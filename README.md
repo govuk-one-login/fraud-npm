@@ -1,52 +1,42 @@
 # Fraud NPM
 
-This repository contains packages that are designed to be reusable across multiple other repositories. 
-Currently, it contains packages for logging and handling fraud events.
+![node](https://img.shields.io/badge/node-20.13.0-339933?logo=nodedotjs)
+![Publish Main](https://github.com/govuk-one-login/fraud-npm/actions/workflows/publish.yaml/badge.svg?branch=main)
+
+This repository contains packages that are designed to be reusable across multiple other repositories.
 
 ## Packages
 
-### 1. Events Package
+The packages in this repository are detailed further below:
 
-The events package contains services that validate, construct and reformat SETs. A SET is a fraud signal in the standard
-One Login format, which is an extension of the OpenID shared signals format. The One Login format for SETs is defined 
-here: https://github.com/govuk-one-login/architecture/blob/main/rfc/0052-shared-signals-data-spec.md
+- [Events Package](events/README.md)
+- [Logging Package](logging/README.md)
 
-The Events package offers the following services:
+## Development Environment Set Up
 
-- __map service__. This returns the Event class that matches a given URI or event type;
-- __populated-set service__. This returns a populated subject event given an event type. 
-- __reformat service__. This maps an inbound event to the TxMA message schema and validates required fields. The format 
-of TxMA messages is defined here: 
-https://govukverify.atlassian.net/wiki/spaces/Architecture/pages/3650519041/Inbound+Event+Field+Mapping+to+TXMA+Audit+Structure;
-- __validate service__. This validates a given SET against a given JSON schema.
+To set your environment up for local development and deployment, follow the guide
+[here](https://govukverify.atlassian.net/wiki/x/J4AS-g)
 
-### 2. Logging Package
+## Publishing a new package version
 
-The Logging package extends the Logging package in Powertools for AWS Lambda. The package allows messages to be logged 
-at debug, info, warning, error, critical levels, and also allows metrics to be logged. Metrics are logged in Amazon 
-CloudWatch Embedded Metric Format (EMF).
+To publish a new version of a package, increase the package's version number in the version field at the top-level
+of the `packages.json` file, and then check this file in to the branch to publish, or merge this file to the branch
+to publish (typically the `main` branch).
 
-### 3. Development Environment Set Up
+Then, go to the fraud-npm repo in GitLab, select the `Actions` tab, and click on the `Publish` action in the list on the
+left-hand side. Then, click on the `Run workflow` button in the upper right-hand corner and, in the resultant dialog,
+specify the branch to publish from, and the package to publish, and then click on the `Run workflow` button to publish
+the package to the One Login package repository.
 
-Setup your environment using the following tools:
+Note that packages will normally be published from main after a merge.
 
-- VS Code - [Install VS Code](https://code.visualstudio.com/download)
-- Node.js - [Install Node.js](https://nodejs.org/en/), including `npm`.
-
-### 4. Local Development
-
-Install `npm` dependencies:
-
-```bash
-npm i
-```
-### 5. Adding a new package
+## Adding a new package
 
 To add a new package, do the following:
 
 - add the new package to the top-level of the fraud-npm project;
-- add the new package to the publish.yaml workflow action. This action allows the user to choose from a drop-down of 
-packages to publish;
+- add the new package to the publish.yaml workflow action. This action allows the user to choose from a drop-down of
+  packages to publish;
 - go to the fraud-npm repo in GitHub, choose your new package from the packages list in the bottom-right of the screen,
-then choose Package Settings from the bottom-right, and then add all the repositories you would like to be able to
-access your new package to the list in the "Manage Actions access" section.
+  then choose Package Settings from the bottom-right, and then add all the repositories you would like to be able to
+  access your new package to the list in the "Manage Actions access" section.
