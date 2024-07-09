@@ -33,10 +33,11 @@ export enum IdentifierTypes {
 }
 
 export enum TimestampTypes {
-  timeStamp, timeFrame
+  timeStamp,
+  timeFrame,
 }
 
 export type UriInfo = {
-  uri : string,
-  detailsKey: string
-}
+  uri: string;
+  detailsKey: string;
+};

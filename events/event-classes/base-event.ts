@@ -9,7 +9,6 @@ import * as eventMetadataSchema from '../schemas/extensions/metadata.json';
 import { ErrorMessages } from '../enums/errors';
 
 export class BaseEvent {
-
   readonly setSchema: Schema = setSchema;
   readonly eventDetailsSchema: Schema = eventDetailsSchema;
   readonly eventMetadataSchema: Schema = eventMetadataSchema;
@@ -25,7 +24,7 @@ export class BaseEvent {
     eventType: AllEventTypes,
     txmaEventName: TxmaEventNames,
     eventSchema: Schema,
-    message?: SsfSchema,
+    message?: SsfSchema
   ) {
     this.eventType = eventType;
     this.txmaEventName = txmaEventName;
@@ -33,12 +32,13 @@ export class BaseEvent {
 
     if (message) {
       this.setMessage = message;
-      this.eventMessage = this.setMessage?.events[AllEventURIs[this.eventType].uri];
+      this.eventMessage =
+        this.setMessage?.events[AllEventURIs[this.eventType].uri];
       this.eventDetailsKey = Object.keys(this.setMessage.events).find((key) =>
-        key.includes('eventDetails'),
+        key.includes('eventDetails')
       );
       this.eventMetadataKey = Object.keys(this.setMessage.events).find((key) =>
-        key.includes('eventMetadata'),
+        key.includes('eventMetadata')
       );
     }
   }
@@ -70,8 +70,8 @@ export class BaseEvent {
 
     await Promise.all(
       validations.map(async ([schema, message]) =>
-        ValidateService.validate(schema, message),
-      ),
+        ValidateService.validate(schema, message)
+      )
     );
   }
 }

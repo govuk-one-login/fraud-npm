@@ -19,45 +19,82 @@ import { TimestampTypes } from '../enums/events';
 import { riscPopulatedEventsMapping } from './risc-maps';
 import { TestInfo, validateSetEvents } from './event-mapping.test';
 
-export const riscTestCases: TestInfo[] = [{
-  type: RiscEventTypes.AccountPurged, schema: accountPurgedSchema, extraArgs: [],
-}, {
-  type: RiscEventTypes.AccountCredentialChangeRequired, schema: accountCredentialChangeRequiredSchema, extraArgs: [],
-}, {
-  type: RiscEventTypes.AccountDisabled, schema: accountDisabledSchema, extraArgs: [],
-}, {
-  type: RiscEventTypes.AccountEnabled, schema: accountEnabledSchema, extraArgs: [],
-}, {
-  type: RiscEventTypes.CredentialCompromise, schema: credentialCompromiseSchema, extraArgs: ['cred-type'],
-}, {
-  type: RiscEventTypes.IdentifierChanged,
-  schema: identifierChangedSchema,
-  extraArgs: ['ray@evans.com', 'ray@smith.com'],
-}, {
-  type: RiscEventTypes.IdentifierRecycled, schema: identifierRecycledSchema, extraArgs: ['ray@evans.com'],
-}, {
-  type: RiscEventTypes.OptIn, schema: optInSchema, extraArgs: [],
-}, {
-  type: RiscEventTypes.OptOutInitiated, schema: optOutInitiatedSchema, extraArgs: [],
-}, {
-  type: RiscEventTypes.OptOutCancelled, schema: optOutCancelledSchema, extraArgs: [],
-}, {
-  type: RiscEventTypes.OptOutEffective, schema: optOutEffectiveSchema, extraArgs: [],
-}, {
-  type: RiscEventTypes.RecoveryActivated, schema: recoveryActivatedSchema, extraArgs: [],
-}, {
-  type: RiscEventTypes.RecoveryInformationChanged, schema: recoveryInformationChangedSchema, extraArgs: [],
-}, {
-  type: RiscEventTypes.SessionsRevoked, schema: sessionsRevokedSchema, extraArgs: [],
-},
+export const riscTestCases: TestInfo[] = [
+  {
+    type: RiscEventTypes.AccountPurged,
+    schema: accountPurgedSchema,
+    extraArgs: [],
+  },
+  {
+    type: RiscEventTypes.AccountCredentialChangeRequired,
+    schema: accountCredentialChangeRequiredSchema,
+    extraArgs: [],
+  },
+  {
+    type: RiscEventTypes.AccountDisabled,
+    schema: accountDisabledSchema,
+    extraArgs: [],
+  },
+  {
+    type: RiscEventTypes.AccountEnabled,
+    schema: accountEnabledSchema,
+    extraArgs: [],
+  },
+  {
+    type: RiscEventTypes.CredentialCompromise,
+    schema: credentialCompromiseSchema,
+    extraArgs: ['cred-type'],
+  },
+  {
+    type: RiscEventTypes.IdentifierChanged,
+    schema: identifierChangedSchema,
+    extraArgs: ['ray@evans.com', 'ray@smith.com'],
+  },
+  {
+    type: RiscEventTypes.IdentifierRecycled,
+    schema: identifierRecycledSchema,
+    extraArgs: ['ray@evans.com'],
+  },
+  {
+    type: RiscEventTypes.OptIn,
+    schema: optInSchema,
+    extraArgs: [],
+  },
+  {
+    type: RiscEventTypes.OptOutInitiated,
+    schema: optOutInitiatedSchema,
+    extraArgs: [],
+  },
+  {
+    type: RiscEventTypes.OptOutCancelled,
+    schema: optOutCancelledSchema,
+    extraArgs: [],
+  },
+  {
+    type: RiscEventTypes.OptOutEffective,
+    schema: optOutEffectiveSchema,
+    extraArgs: [],
+  },
+  {
+    type: RiscEventTypes.RecoveryActivated,
+    schema: recoveryActivatedSchema,
+    extraArgs: [],
+  },
+  {
+    type: RiscEventTypes.RecoveryInformationChanged,
+    schema: recoveryInformationChangedSchema,
+    extraArgs: [],
+  },
+  {
+    type: RiscEventTypes.SessionsRevoked,
+    schema: sessionsRevokedSchema,
+    extraArgs: [],
+  },
 ];
 
 describe('populated RISC events', () => {
-
   it('check populated RISC events conforms to schemas', async () => {
-
     for (let testCase of riscTestCases) {
-
       const schema = testCase.schema;
       const extraArgs = testCase.extraArgs;
       const type = testCase.type as RiscEventTypes;
@@ -65,7 +102,10 @@ describe('populated RISC events', () => {
       const subjectFn = riscPopulatedEventsMapping[uri];
 
       let id = DEFAULT_URI;
-      if (type == RiscEventTypes.IdentifierChanged || type == RiscEventTypes.IdentifierRecycled) {
+      if (
+        type == RiscEventTypes.IdentifierChanged ||
+        type == RiscEventTypes.IdentifierRecycled
+      ) {
         id = 'email';
       }
 
@@ -74,9 +114,4 @@ describe('populated RISC events', () => {
       await validateSetEvents(set, type, schema);
     }
   });
-
 });
-
-
-
-

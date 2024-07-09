@@ -3,16 +3,13 @@ import { SsfSchema } from '../../types/ssf';
 import { TxmaType } from '../../enums/txma';
 import { TxmaEventNames } from '../../enums/event-names';
 
-
 describe('ReformatService', () => {
-
   it('should be defined', () => {
     expect(ReformatService).toBeDefined();
   });
 
   describe('Check reformat service', () => {
     it('test reformat service works as expected', async () => {
-
       jest.useFakeTimers().setSystemTime(10000);
 
       let set: SsfSchema = {
@@ -24,11 +21,11 @@ describe('ReformatService', () => {
           uri: {
             subject: {
               format: 'some-format',
-              uri: 'some-uri'
-            }
-          }
-        }
-      }
+              uri: 'some-uri',
+            },
+          },
+        },
+      };
 
       //let now = Math.round(new Date().getTime() / 1000);
 
@@ -48,18 +45,21 @@ describe('ReformatService', () => {
               uri: {
                 subject: {
                   format: 'some-format',
-                  uri: 'some-uri'
-                }
-              }
-            }
+                  uri: 'some-uri',
+                },
+              },
+            },
           },
         },
-      }
+      };
 
-      let actualTxMaMessage = await ReformatService.reformatForTxma(set, TxmaEventNames.AccountConcern,
-        'csi', 'client-id');
+      let actualTxMaMessage = await ReformatService.reformatForTxma(
+        set,
+        TxmaEventNames.AccountConcern,
+        'csi',
+        'client-id'
+      );
       expect(actualTxMaMessage).toEqual(expectedTxmaMessage);
-
     });
   });
 });

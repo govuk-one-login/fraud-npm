@@ -1,6 +1,11 @@
 import { TxmaEventNames } from '../../enums/event-names';
 import { TxmaType } from '../../enums/txma';
-import { EventStructure, EventSubject, SETEvents, SsfSchema } from '../../types/ssf';
+import {
+  EventStructure,
+  EventSubject,
+  SETEvents,
+  SsfSchema,
+} from '../../types/ssf';
 
 export class ReformatService {
   /**
@@ -60,12 +65,11 @@ export class ReformatService {
     commonSubjectId: string,
     clientId: string
   ): Promise<TxmaType> {
-
     return {
       client_id: clientId,
       event_name: txmaEventName,
       user: {
-        user_id: commonSubjectId
+        user_id: commonSubjectId,
       },
       timestamp: Math.round(new Date().getTime() / 1000),
       component_id: setMessage.iss,
