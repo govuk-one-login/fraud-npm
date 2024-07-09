@@ -1,5 +1,7 @@
 # The Events Package
 
+![events-version](https://img.shields.io/badge/events_version-0.0.3-blue?logo=gitlab)
+
 The events package contains services that validate, construct and reformat SETs (Security Event Tokens). A SET is a
 fraud signal in the standard One Login format, which is an extension of the OpenID shared signals format. The One Login
 format for SETs is defined here:

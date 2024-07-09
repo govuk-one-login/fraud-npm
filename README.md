@@ -2,6 +2,8 @@
 
 ![node](https://img.shields.io/badge/node-20.13.0-339933?logo=nodedotjs)
 ![Publish Main](https://github.com/govuk-one-login/fraud-npm/actions/workflows/publish.yaml/badge.svg?branch=main)
+![events-version](https://img.shields.io/badge/events_version-0.0.3-blue?logo=gitlab)
+![logging-version](https://img.shields.io/badge/logging_version-0.0.15-blue?logo=gitlab)
 
 This repository contains packages that are designed to be reusable across multiple other repositories.
 
@@ -28,7 +30,8 @@ left-hand side. Then, click on the `Run workflow` button in the upper right-hand
 specify the branch to publish from, and the package to publish, and then click on the `Run workflow` button to publish
 the package to the One Login package repository.
 
-Note that packages will normally be published from main after a merge.
+> [!TIP]
+> packages will normally be published from main after a merge.
 
 ## Adding a new package
 
