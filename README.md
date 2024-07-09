@@ -2,8 +2,9 @@
 
 ![node](https://img.shields.io/badge/node-20.13.0-339933?logo=nodedotjs)
 ![Publish Main](https://github.com/govuk-one-login/fraud-npm/actions/workflows/publish.yaml/badge.svg?branch=main)
-![events-version](https://img.shields.io/badge/events_version-0.0.3-blue?logo=gitlab)
-![logging-version](https://img.shields.io/badge/logging_version-0.0.15-blue?logo=gitlab)
+
+![Events version](https://img.shields.io/github/package-json/v/govuk-one-login/fraud-npm?filename=events%2Fpackage.json&label=events%20version)
+![Logging package.json version](https://img.shields.io/github/package-json/v/govuk-one-login/fraud-npm?filename=logging%2Fpackage.json&label=logging%20version)
 
 This repository contains packages that are designed to be reusable across multiple other repositories.
 
@@ -22,7 +23,7 @@ To set your environment up for local development and deployment, follow the guid
 ## Publishing a new package version
 
 To publish a new version of a package, increase the package's version number in the version field at the top-level
-of the `packages.json` file, and then check this file in to the branch to publish, or merge this file to the branch
+of the `package.json` file, and then check this file in to the branch to publish, or merge this file to the branch
 to publish (typically the `main` branch).
 
 Then, go to the fraud-npm repo in GitLab, select the `Actions` tab, and click on the `Publish` action in the list on the
