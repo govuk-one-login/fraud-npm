@@ -34,19 +34,30 @@ import {
 } from './events-mapping';
 
 export const caepEventMapping: Record<string, any> = {
-  [CaepEventURIs[CaepEventTypes.AssuranceLevelChange].uri]: AssuranceLevelChangeEvent,
+  [CaepEventURIs[CaepEventTypes.AssuranceLevelChange].uri]:
+    AssuranceLevelChangeEvent,
   [CaepEventURIs[CaepEventTypes.CredentialChange].uri]: CredentialChangeEvent,
-  [CaepEventURIs[CaepEventTypes.DeviceComplianceChange].uri]: DeviceComplianceChangeEvent,
+  [CaepEventURIs[CaepEventTypes.DeviceComplianceChange].uri]:
+    DeviceComplianceChangeEvent,
   [CaepEventURIs[CaepEventTypes.SessionRevoked].uri]: SessionRevokedEvent,
   [CaepEventURIs[CaepEventTypes.TokenClaimsChange].uri]: TokenClaimsChange,
 };
 
-async function generateCaepDeviceSubjectEvents(eventType: CaepEventTypes, deviceIss: string, deviceSub: string, tenantId: string,
-                                                  timestampType: TimestampTypes,
-                                                  startTimeInMillis: number, endTimeInMillis: number): Promise<SETEvents> {
-
-  let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType, timestampType,
-      startTimeInMillis, endTimeInMillis)
+async function generateCaepDeviceSubjectEvents(
+  eventType: CaepEventTypes,
+  deviceIss: string,
+  deviceSub: string,
+  tenantId: string,
+  timestampType: TimestampTypes,
+  startTimeInMillis: number,
+  endTimeInMillis: number
+): Promise<SETEvents> {
+  let metadataAndDetails = await generateMetaDataAndDetailsEvents(
+    eventType,
+    timestampType,
+    startTimeInMillis,
+    endTimeInMillis
+  );
 
   return {
     [AllEventURIs[eventType].uri]: {
@@ -58,21 +69,30 @@ async function generateCaepDeviceSubjectEvents(eventType: CaepEventTypes, device
         },
         tenant: {
           format: 'opaque',
-          id: tenantId
-        }
-      }
+          id: tenantId,
+        },
+      },
     },
-    ...metadataAndDetails
-  }
+    ...metadataAndDetails,
+  };
 }
 
-async function generateCaepSessionSubjectEvents(eventType: CaepEventTypes, sessionId: string,
-                                                userIssuer: string, userSub: string, tenantId: string,
-                                                timestampType: TimestampTypes,
-                                                startTimeInMillis: number, endTimeInMillis: number): Promise<SETEvents> {
-
-  let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType, timestampType,
-    startTimeInMillis, endTimeInMillis)
+async function generateCaepSessionSubjectEvents(
+  eventType: CaepEventTypes,
+  sessionId: string,
+  userIssuer: string,
+  userSub: string,
+  tenantId: string,
+  timestampType: TimestampTypes,
+  startTimeInMillis: number,
+  endTimeInMillis: number
+): Promise<SETEvents> {
+  let metadataAndDetails = await generateMetaDataAndDetailsEvents(
+    eventType,
+    timestampType,
+    startTimeInMillis,
+    endTimeInMillis
+  );
 
   return {
     [AllEventURIs[eventType].uri]: {
@@ -88,131 +108,218 @@ async function generateCaepSessionSubjectEvents(eventType: CaepEventTypes, sessi
         },
         tenant: {
           format: 'opaque',
-          id: tenantId
-        }
-      }
+          id: tenantId,
+        },
+      },
     },
-    ...metadataAndDetails
-  }
+    ...metadataAndDetails,
+  };
 }
 
-async function generateCaepTokenSubjectEvents(eventType: CaepEventTypes, tokenFormat: string, tokenIssuer: string,
-    jti: string, timestampType: TimestampTypes, startTimeInMillis: number, endTimeInMillis: number): Promise<SETEvents> {
-
-  let metadataAndDetails = await generateMetaDataAndDetailsEvents(eventType, timestampType,
-    startTimeInMillis, endTimeInMillis)
+async function generateCaepTokenSubjectEvents(
+  eventType: CaepEventTypes,
+  tokenFormat: string,
+  tokenIssuer: string,
+  jti: string,
+  timestampType: TimestampTypes,
+  startTimeInMillis: number,
+  endTimeInMillis: number
+): Promise<SETEvents> {
+  let metadataAndDetails = await generateMetaDataAndDetailsEvents(
+    eventType,
+    timestampType,
+    startTimeInMillis,
+    endTimeInMillis
+  );
 
   return {
     [AllEventURIs[eventType].uri]: {
       subject: {
         format: tokenFormat,
         iss: tokenIssuer,
-        jti: jti
-      }
+        jti: jti,
+      },
     },
-    ...metadataAndDetails
-  }
+    ...metadataAndDetails,
+  };
 }
 
-export const caepPopulatedEventsMapping: Record<string, (id: string,
-  startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) => Promise<SETEvents>> = {
+export const caepPopulatedEventsMapping: Record<
+  string,
+  (
+    id: string,
+    startTimeInMillis: number,
+    endTimeInMillis: number,
+    ...args: (string | null)[]
+  ) => Promise<SETEvents>
+> = {
+  [CaepEventURIs[CaepEventTypes.AssuranceLevelChange].uri]: async (
+    id: string,
+    startTimeAsLong: number,
+    endTimeAsLong: number,
+    ...args: (string | null)[]
+  ) => {
+    let userSubjectEvents = await generateStandardUserSubjectEvents(
+      CaepEventTypes.AssuranceLevelChange,
+      id,
+      TimestampTypes.timeStamp,
+      startTimeAsLong,
+      endTimeAsLong
+    );
 
-  [CaepEventURIs[CaepEventTypes.AssuranceLevelChange].uri] :
-    async (id: string, startTimeAsLong: number, endTimeAsLong: number, ...args: (string | null) []) => {
+    let event =
+      userSubjectEvents[CaepEventURIs[CaepEventTypes.AssuranceLevelChange].uri];
 
-      let userSubjectEvents = await generateStandardUserSubjectEvents(CaepEventTypes.AssuranceLevelChange, id, TimestampTypes.timeStamp,
-        startTimeAsLong, endTimeAsLong)
+    // add standard fields
+    addStandardEventFields(
+      event,
+      startTimeAsLong,
+      args[0] ?? DEFAULT_INITIATING_ENTITY,
+      args[1] ?? DEFAULT_REASON_ADMIN,
+      args[2] ?? DEFAULT_REASON_USER
+    );
 
-      let event= userSubjectEvents[CaepEventURIs[CaepEventTypes.AssuranceLevelChange].uri]
+    // add message-specific fields
+    event['change_direction'] = args[3] ?? DEFAULT_CHANGE_DIRECTION;
+    event['current_level'] = args[4] ?? DEFAULT_LEVEL;
+    event['previous_level'] = args[5] ?? DEFAULT_PREVIOUS_LEVEL;
 
-      // add standard fields
-      addStandardEventFields(event, startTimeAsLong, args[0] ?? DEFAULT_INITIATING_ENTITY,
-        args[1] ?? DEFAULT_REASON_ADMIN, args[2] ?? DEFAULT_REASON_USER)
+    return userSubjectEvents;
+  },
 
-      // add message-specific fields
-      event ['change_direction'] = args[3] ?? DEFAULT_CHANGE_DIRECTION
-      event ['current_level'] = args[4] ?? DEFAULT_LEVEL
-      event ['previous_level'] = args[5] ?? DEFAULT_PREVIOUS_LEVEL
+  [CaepEventURIs[CaepEventTypes.CredentialChange].uri]: async (
+    id: string,
+    startTimeInMillis: number,
+    endTimeInMillis: number,
+    ...args: (string | null)[]
+  ) => {
+    let userSubjectEvents = await generateStandardUserSubjectEvents(
+      CaepEventTypes.CredentialChange,
+      id,
+      TimestampTypes.timeStamp,
+      startTimeInMillis,
+      endTimeInMillis
+    );
+    let event =
+      userSubjectEvents[CaepEventURIs[CaepEventTypes.CredentialChange].uri];
 
-      return userSubjectEvents
-    },
+    addStandardEventFields(
+      event,
+      startTimeInMillis,
+      args[0] ?? DEFAULT_INITIATING_ENTITY,
+      args[1] ?? DEFAULT_REASON_ADMIN,
+      args[2] ?? DEFAULT_REASON_USER
+    );
 
-  [CaepEventURIs[CaepEventTypes.CredentialChange].uri] :
-    async (id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null)[]) => {
+    event['change_type'] = args[3] ?? DEFAULT_CHANGE_TYPE;
+    event['credential_type'] = args[4] ?? DEFAULT_CREDENTIAL_TYPE;
+    event['fido2_aaguid'] = args[5] ?? DEFAULT_FIDO_AAGUID;
+    event['friendly_name'] = args[6] ?? DEFAULT_FRIENDLY_NAME;
 
-      let userSubjectEvents = await generateStandardUserSubjectEvents(CaepEventTypes.CredentialChange, id,
-        TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
-      let event = userSubjectEvents[CaepEventURIs[CaepEventTypes.CredentialChange].uri]
+    return userSubjectEvents;
+  },
 
-      addStandardEventFields(event, startTimeInMillis, args[0] ?? DEFAULT_INITIATING_ENTITY,
-        args[1] ?? DEFAULT_REASON_ADMIN, args[2] ?? DEFAULT_REASON_USER)
+  [CaepEventURIs[CaepEventTypes.DeviceComplianceChange].uri]: async (
+    _id: string,
+    startTimeInMillis: number,
+    endTimeInMillis: number,
+    ...args: (string | null)[]
+  ) => {
+    let events = await generateCaepDeviceSubjectEvents(
+      CaepEventTypes.DeviceComplianceChange,
+      args[0] ?? DEFAULT_ISS,
+      args[1] ?? DEFAULT_SUB,
+      args[2] ?? DEFAULT_TENANT_ID,
+      TimestampTypes.timeStamp,
+      startTimeInMillis,
+      endTimeInMillis
+    );
 
-      event ['change_type'] = args[3] ?? DEFAULT_CHANGE_TYPE
-      event ['credential_type'] = args[4] ?? DEFAULT_CREDENTIAL_TYPE
-      event ['fido2_aaguid'] = args[5] ?? DEFAULT_FIDO_AAGUID
-      event ['friendly_name'] = args[6] ?? DEFAULT_FRIENDLY_NAME
+    let event =
+      events[CaepEventURIs[CaepEventTypes.DeviceComplianceChange].uri];
 
-      return userSubjectEvents
-    },
+    addStandardEventFields(
+      event,
+      startTimeInMillis,
+      args[3] ?? DEFAULT_INITIATING_ENTITY,
+      args[4] ?? DEFAULT_REASON_ADMIN,
+      args[5] ?? DEFAULT_REASON_USER
+    );
 
-  [CaepEventURIs[CaepEventTypes.DeviceComplianceChange].uri] :
-    async (_id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) => {
+    event['current_status'] = args[6] ?? DEFAULT_CURRENT_STATUS;
+    event['previous_status'] = args[7] ?? DEFAULT_PREVIOUS_STATUS;
 
-      let events = await generateCaepDeviceSubjectEvents(CaepEventTypes.DeviceComplianceChange,
-        args[0] ?? DEFAULT_ISS, args[1] ?? DEFAULT_SUB,
-         args[2] ?? DEFAULT_TENANT_ID, TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
+    return events;
+  },
 
-      let event = events[CaepEventURIs[CaepEventTypes.DeviceComplianceChange].uri]
+  [CaepEventURIs[CaepEventTypes.SessionRevoked].uri]: async (
+    _id: string,
+    startTimeInMillis: number,
+    endTimeInMillis: number,
+    ...args: (string | null)[]
+  ) => {
+    let events = await generateCaepSessionSubjectEvents(
+      CaepEventTypes.SessionRevoked,
+      args[0] ?? DEFAULT_SESSION_ID,
+      args[1] ?? DEFAULT_ISS,
+      args[2] ?? DEFAULT_SUB,
+      args[3] ?? DEFAULT_TENANT_ID,
+      TimestampTypes.timeStamp,
+      startTimeInMillis,
+      endTimeInMillis
+    );
 
-      addStandardEventFields(event, startTimeInMillis, args[3] ?? DEFAULT_INITIATING_ENTITY,
-        args[4] ?? DEFAULT_REASON_ADMIN, args[5] ?? DEFAULT_REASON_USER)
+    let event = events[CaepEventURIs[CaepEventTypes.SessionRevoked].uri];
 
-      event ['current_status'] = args[6] ?? DEFAULT_CURRENT_STATUS
-      event ['previous_status'] = args[7] ?? DEFAULT_PREVIOUS_STATUS
+    addStandardEventFields(
+      event,
+      startTimeInMillis,
+      args[4] ?? DEFAULT_INITIATING_ENTITY,
+      args[5] ?? DEFAULT_REASON_ADMIN,
+      args[6] ?? DEFAULT_REASON_USER
+    );
 
-      return events
-    },
+    return events;
+  },
 
-  [CaepEventURIs[CaepEventTypes.SessionRevoked].uri] :
-    async (_id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) => {
+  [CaepEventURIs[CaepEventTypes.TokenClaimsChange].uri]: async (
+    _id: string,
+    startTimeInMillis: number,
+    endTimeInMillis: number,
+    ...args: (string | null)[]
+  ) => {
+    //
+    // args[0] is a comma-separated list of name value pairs in the format:
+    // a=b;c=d;e=f
+    //
+    const nameValuePairList: NameValuePair[] = getNameValuePairList(
+      args[0] ?? ''
+    );
+    let claims: any = {};
+    addFields(claims, nameValuePairList);
 
-      let events = await generateCaepSessionSubjectEvents(CaepEventTypes.SessionRevoked,
-      args[0] ?? DEFAULT_SESSION_ID, args[1] ?? DEFAULT_ISS,
-        args[2] ?? DEFAULT_SUB, args[3] ?? DEFAULT_TENANT_ID,
-        TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
+    let events = await generateCaepTokenSubjectEvents(
+      CaepEventTypes.TokenClaimsChange,
+      args[1] ?? DEFAULT_TOKEN_FORMAT,
+      args[2] ?? DEFAULT_ISS,
+      args[3] ?? DEFAULT_JTI,
+      TimestampTypes.timeStamp,
+      startTimeInMillis,
+      endTimeInMillis
+    );
 
-      let event = events[CaepEventURIs[CaepEventTypes.SessionRevoked].uri]
+    let event = events[CaepEventURIs[CaepEventTypes.TokenClaimsChange].uri];
 
-      addStandardEventFields(event, startTimeInMillis, args[4] ?? DEFAULT_INITIATING_ENTITY,
-        args[5] ?? DEFAULT_REASON_ADMIN, args[6] ?? DEFAULT_REASON_USER)
+    addStandardEventFields(
+      event,
+      startTimeInMillis,
+      args[4] ?? DEFAULT_INITIATING_ENTITY,
+      args[5] ?? DEFAULT_REASON_ADMIN,
+      args[6] ?? DEFAULT_REASON_USER
+    );
 
-      return events
-    },
+    event['claims'] = claims;
 
-  [CaepEventURIs[CaepEventTypes.TokenClaimsChange].uri] :
-    async (_id: string, startTimeInMillis: number, endTimeInMillis: number, ...args: (string | null) []) => {
-
-      //
-      // args[0] is a comma-separated list of name value pairs in the format:
-      // a=b;c=d;e=f
-      //
-      const nameValuePairList: NameValuePair[] = getNameValuePairList(args[0] ?? '')
-      let claims: any = { }
-      addFields(claims, nameValuePairList)
-
-      let events =  await generateCaepTokenSubjectEvents(CaepEventTypes.TokenClaimsChange,
-        args[1] ?? DEFAULT_TOKEN_FORMAT,
-        args[2] ?? DEFAULT_ISS, args[3] ?? DEFAULT_JTI,
-        TimestampTypes.timeStamp, startTimeInMillis, endTimeInMillis)
-
-      let event = events[CaepEventURIs[CaepEventTypes.TokenClaimsChange].uri]
-
-      addStandardEventFields(event, startTimeInMillis, args[4] ?? DEFAULT_INITIATING_ENTITY,
-        args[5] ?? DEFAULT_REASON_ADMIN, args[6] ?? DEFAULT_REASON_USER)
-
-      event ['claims'] = claims
-
-      return events
-    },
-
+    return events;
+  },
 };

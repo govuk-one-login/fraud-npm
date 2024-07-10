@@ -26,7 +26,7 @@ export class BaseSET implements SsfSchema {
    * Generate unique SET identifier
    */
   static generateUniqueID(): string {
-    const time: number = BaseSET.generateTimeOfEvent()
+    const time: number = BaseSET.generateTimeOfEvent();
     const characters: string =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     let uniqueID: string = time.toString();

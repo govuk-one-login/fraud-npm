@@ -12,6 +12,10 @@ export class MapService {
     if (!isEventType(searchTerm) && !isEventURI(searchTerm))
       throw new Error(ErrorMessages.NotValidEventType);
 
-    return eventsMapping[isEventURI(searchTerm) ? searchTerm : AllEventURIs[searchTerm as AllEventTypes].uri];
+    return eventsMapping[
+      isEventURI(searchTerm)
+        ? searchTerm
+        : AllEventURIs[searchTerm as AllEventTypes].uri
+    ];
   }
 }

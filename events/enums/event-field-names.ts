@@ -26,5 +26,5 @@ export enum EventFieldNames {
   Location = 'location',
   Session = 'session',
   PreviousSessionId = 'previous_session_id',
-  Rationale = 'rationale'
+  Rationale = 'rationale',
 }

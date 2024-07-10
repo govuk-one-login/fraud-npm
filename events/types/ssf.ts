@@ -22,7 +22,7 @@ export type EventStructure = {
     | EventClaims
     | EventStructure
     | EventTimeframe
-    | EventTimeframeMilliseconds
+    | EventTimeframeMilliseconds;
 };
 
 export interface EventClaims {
@@ -64,7 +64,7 @@ export type SubjectUser = {
 
 export type SubjectSession = {
   format: string;
-  id: string
+  id: string;
 };
 
 export type EventTimeframe = {
