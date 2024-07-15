@@ -23,7 +23,7 @@ export class ReformatService {
    *         "https://schemas.openid.net/secevent/caep/event-type/credential-change": {
    *             "subject": {
    *                 "format": "uri",
-   *                 "uri": "uri:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw="
+   *                 "uri": "urn:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw="
    *             },
    *             "credential_type": "password",
    *             "change_type": "update",
