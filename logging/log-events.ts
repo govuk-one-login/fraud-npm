@@ -6,6 +6,8 @@ export enum LogEvents {
   FullSQSBatchGenerated = 'Successfully sent all SQS Batch messages',
   PartialSQSBatchGenerated = 'Partially sent all SQS Batch messages',
   FailedSQSBatchGenerated = 'Failed to send all attempted SQS Batch messages',
+  FullSETBatchGenerated = 'SET Batch Generation Successful',
   PartialSETBatchGenerated = 'SET Batch Generation Partially Successful',
+  FailedSETBatchGenerated = 'SET Batch Generation Failed',
   JWSSignSuccess = 'Successfully signed JWS',
 }
