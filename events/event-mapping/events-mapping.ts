@@ -17,7 +17,7 @@ export const EVENT_DETAILS_URI = 'https://vocab.account.gov.uk/secevent/v1/';
 export const DEFAULT_LOCATION = 'GB';
 
 export const DEFAULT_URI =
-  'uri:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=';
+  'urn:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=';
 
 export const DEFAULT_CHANGE_DIRECTION = 'increase';
 export const DEFAULT_LEVEL = 'nist-aal1';

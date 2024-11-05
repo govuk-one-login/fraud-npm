@@ -21,7 +21,7 @@ describe('PopulatedSetService', () => {
   describe('check service works', () => {
     it('should retrieve correct SET by event type', async () => {
       const uri =
-        'uri:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=';
+        'urn:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=';
 
       const set = await PopulatedSetService.getPopulatedSet(
         'accountDisabled',
@@ -41,7 +41,7 @@ describe('PopulatedSetService', () => {
 
     it('should retrieve correct SET by URI', async () => {
       const uri =
-        'uri:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=';
+        'urn:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=';
 
       const set = await PopulatedSetService.getPopulatedSet(
         RiscEventURIs[RiscEventTypes.AccountDisabled].uri,
@@ -62,7 +62,7 @@ describe('PopulatedSetService', () => {
     it('should retrieve correct SET by URI with timeStamp of now', async () => {
       jest.useFakeTimers().setSystemTime(10000);
       const uri =
-        'uri:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=';
+        'urn:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=';
 
       const set = await PopulatedSetService.getPopulatedSetNow(
         RiscEventURIs[RiscEventTypes.AccountDisabled].uri,
@@ -99,7 +99,7 @@ describe('PopulatedSetService', () => {
     it('should retrieve correct SET by URI with timeStamp of now and all defaults', async () => {
       jest.useFakeTimers().setSystemTime(10000);
       const uri =
-        'uri:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=';
+        'urn:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=';
 
       const set = await PopulatedSetService.getPopulatedSetNow(
         RiscEventURIs[RiscEventTypes.AccountDisabled].uri,
