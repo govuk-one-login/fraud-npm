@@ -35,7 +35,7 @@ describe('ValidateService', () => {
       let message = {
         subject: {
           format: 'uri',
-          uri: 'uri:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=',
+          uri: 'urn:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=',
         },
       };
       await ValidateService.validate(testSchemaSubject, message);
@@ -45,7 +45,7 @@ describe('ValidateService', () => {
       let message = {
         subject: {
           format: 'some-random-string',
-          uri: 'uri:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=',
+          uri: 'urn:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=',
         },
       };
       await expect(
@@ -68,7 +68,7 @@ describe('ValidateService', () => {
     it('fails when format is missing', async () => {
       let message = {
         subject: {
-          uri: 'uri:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=',
+          uri: 'urn:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=',
         },
       };
       await expect(
@@ -93,7 +93,7 @@ describe('ValidateService', () => {
       let message = {
         subject: {
           format: 'uri',
-          uri: 'uri:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=',
+          uri: 'urn:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=',
         },
         session: {
           format: 'string',
