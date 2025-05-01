@@ -22,4 +22,5 @@ export enum TxmaEventNames {
   AccountConcern = 'SSF_INBOUND_ACCOUNT_CONCERN',
   AccountBlock = 'SSF_INBOUND_ACCOUNT_BLOCK',
   DeviceConcern = 'SSF_INBOUND_DEVICE_CONCERN',
+  Verification = 'SSF_INBOUND_VERIFICATION',
 }
