@@ -62,7 +62,7 @@ export class ReformatService {
   static async reformatForTxma(
     setMessage: SsfSchema,
     txmaEventName: TxmaEventNames,
-    commonSubjectId: string,
+    commonSubjectId: string | undefined,
     clientId: string
   ): Promise<TxmaType> {
     return {
