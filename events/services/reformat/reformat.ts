@@ -62,8 +62,8 @@ export class ReformatService {
   static async reformatForTxma(
     setMessage: SsfSchema,
     txmaEventName: TxmaEventNames,
-    clientId: string,
-    commonSubjectId?: string
+    commonSubjectId?: string,
+    clientId?: string
   ): Promise<TxmaType> {
     const userObj = commonSubjectId
       ? { user: { user_id: commonSubjectId } }
