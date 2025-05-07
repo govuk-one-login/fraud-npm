@@ -62,19 +62,17 @@ export class ReformatService {
   static async reformatForTxma(
     setMessage: SsfSchema,
     txmaEventName: TxmaEventNames,
-    commonSubjectId: string | undefined,
-    clientId: string
+    clientId: string,
+    commonSubjectId?: string
   ): Promise<TxmaType> {
+    const userObj = commonSubjectId
+      ? { user: { user_id: commonSubjectId } }
+      : {};
+
     return {
       client_id: clientId,
       event_name: txmaEventName,
-      ...(commonSubjectId
-        ? {
-            user: {
-              user_id: commonSubjectId,
-            },
-          }
-        : undefined),
+      ...userObj,
       timestamp: Math.round(new Date().getTime() / 1000),
       component_id: setMessage.iss,
       extensions: {

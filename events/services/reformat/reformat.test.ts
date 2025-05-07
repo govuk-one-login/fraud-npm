@@ -12,7 +12,7 @@ describe('ReformatService', () => {
     it('test reformat service works as expected', async () => {
       jest.useFakeTimers().setSystemTime(10000);
 
-      let set: SsfSchema = {
+      const set: SsfSchema = {
         iss: 'some-iss',
         iat: 101,
         jti: 'some-jti',
@@ -27,9 +27,7 @@ describe('ReformatService', () => {
         },
       };
 
-      //let now = Math.round(new Date().getTime() / 1000);
-
-      let expectedTxmaMessage: TxmaType = {
+      const expectedTxmaMessage: TxmaType = {
         client_id: 'client-id',
         timestamp: 10,
         event_name: TxmaEventNames.AccountConcern,
@@ -53,11 +51,11 @@ describe('ReformatService', () => {
         },
       };
 
-      let actualTxMaMessage = await ReformatService.reformatForTxma(
+      const actualTxMaMessage = await ReformatService.reformatForTxma(
         set,
         TxmaEventNames.AccountConcern,
-        'csi',
-        'client-id'
+        'client-id',
+        'csi'
       );
       expect(actualTxMaMessage).toEqual(expectedTxmaMessage);
     });
@@ -66,7 +64,7 @@ describe('ReformatService', () => {
   it('test reformat service works without commonSubjectId as expected', async () => {
     jest.useFakeTimers().setSystemTime(10000);
 
-    let set: SsfSchema = {
+    const set: SsfSchema = {
       iss: 'some-iss',
       iat: 101,
       jti: 'some-jti',
@@ -81,7 +79,7 @@ describe('ReformatService', () => {
       },
     };
 
-    let expectedTxmaMessage: TxmaType = {
+    const expectedTxmaMessage: TxmaType = {
       client_id: 'client-id',
       timestamp: 10,
       event_name: TxmaEventNames.AccountConcern,
@@ -104,11 +102,11 @@ describe('ReformatService', () => {
       },
     };
 
-    let actualTxMaMessage = await ReformatService.reformatForTxma(
+    const actualTxMaMessage = await ReformatService.reformatForTxma(
       set,
       TxmaEventNames.AccountConcern,
-      undefined,
-      'client-id'
+      'client-id',
+      undefined
     );
     expect(actualTxMaMessage).toEqual(expectedTxmaMessage);
   });
