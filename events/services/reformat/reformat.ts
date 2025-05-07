@@ -68,13 +68,13 @@ export class ReformatService {
     return {
       client_id: clientId,
       event_name: txmaEventName,
-      ... (commonSubjectId ? {
-        user: {
-        user_id: commonSubjectId,
-        } 
-      } 
-      : 
-      undefined),
+      ...(commonSubjectId
+        ? {
+            user: {
+              user_id: commonSubjectId,
+            },
+          }
+        : undefined),
       timestamp: Math.round(new Date().getTime() / 1000),
       component_id: setMessage.iss,
       extensions: {
