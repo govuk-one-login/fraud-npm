@@ -54,8 +54,8 @@ describe('ReformatService', () => {
       const actualTxMaMessage = await ReformatService.reformatForTxma(
         set,
         TxmaEventNames.AccountConcern,
-        'client-id',
-        'csi'
+        'csi',
+        'client-id'
       );
       expect(actualTxMaMessage).toEqual(expectedTxmaMessage);
     });
@@ -80,7 +80,6 @@ describe('ReformatService', () => {
     };
 
     const expectedTxmaMessage: TxmaType = {
-      client_id: 'client-id',
       timestamp: 10,
       event_name: TxmaEventNames.AccountConcern,
       component_id: 'some-iss',
@@ -105,7 +104,7 @@ describe('ReformatService', () => {
     const actualTxMaMessage = await ReformatService.reformatForTxma(
       set,
       TxmaEventNames.AccountConcern,
-      'client-id',
+      undefined,
       undefined
     );
     expect(actualTxMaMessage).toEqual(expectedTxmaMessage);
