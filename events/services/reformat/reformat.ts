@@ -1,11 +1,6 @@
 import { TxmaEventNames } from '../../enums/event-names';
 import { TxmaType } from '../../enums/txma';
-import {
-  EventStructure,
-  EventSubject,
-  SETEvents,
-  SsfSchema,
-} from '../../types/ssf';
+import { SsfSchema } from '../../types/ssf';
 
 export class ReformatService {
   /**
