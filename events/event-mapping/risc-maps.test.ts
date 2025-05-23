@@ -114,4 +114,25 @@ describe('populated RISC events', () => {
       await validateSetEvents(set, type, schema);
     }
   });
+  it('check populated RISC events conforms to schemas', async () => {
+    for (let testCase of riscTestCases) {
+      const schema = testCase.schema;
+      const extraArgs = testCase.extraArgs;
+      const type = testCase.type as RiscEventTypes;
+      const uri = RiscEventURIs[type].uri;
+      const subjectFn = riscPopulatedEventsMapping[uri];
+
+      let id = DEFAULT_URI;
+      if (
+        type == RiscEventTypes.IdentifierChanged ||
+        type == RiscEventTypes.IdentifierRecycled
+      ) {
+        id = 'phone';
+      }
+
+      const set: SETEvents = await subjectFn(id, 100, 100, ...extraArgs);
+
+      await validateSetEvents(set, type, schema);
+    }
+  });
 });
