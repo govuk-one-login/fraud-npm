@@ -1,0 +1,61 @@
+name: SonarCloud
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}-quality-sonar
+  cancel-in-progress: true
+
+permissions:
+  packages: read
+  id-token: write
+  contents: read
+
+jobs:
+  sonarcloud:
+    if: ${{ github.event.pull_request.draft == false && github.actor != 'dependabot[bot]' }}
+    name: Run SonarCloud Job
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.13.0
+
+      - name: Install Dependencies for Events
+        working-directory: ./events
+        run: npm install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Tests for Events
+        working-directory: ./events
+        run: |
+          npm ci
+          npm test
+
+      - name: Install Dependencies for Logging
+        working-directory: ./logging
+        run: npm install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Tests for Logging
+        working-directory: ./logging
+        run: |
+          npm ci
+          npm test
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@v4.2.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
