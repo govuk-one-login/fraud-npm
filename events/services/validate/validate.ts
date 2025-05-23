@@ -2,8 +2,8 @@ import Ajv, { Schema, ValidateFunction } from 'ajv';
 import addFormats, { FormatName } from 'ajv-formats';
 
 export class ValidateService {
-  static AJV: Ajv = new Ajv();
-  static AjvFormats: FormatName[] = ['date', 'uri', 'email'];
+  static readonly AJV: Ajv = new Ajv();
+  static readonly AjvFormats: FormatName[] = ['date', 'uri', 'email'];
 
   /**
    * Validates against a given message against a given schema
