@@ -6,15 +6,12 @@ export enum RiscEventTypes {
   AccountDisabled = 'accountDisabled',
   AccountEnabled = 'accountEnabled',
   CredentialCompromise = 'credentialCompromise',
-  IdentifierChanged = 'identifierChanged',
-  IdentifierRecycled = 'identifierRecycled',
   OptIn = 'optIn',
   OptOutInitiated = 'optOutInitiated',
   OptOutCancelled = 'optOutCancelled',
   OptOutEffective = 'optOutEffective',
   RecoveryActivated = 'recoveryActivated',
   RecoveryInformationChanged = 'recoveryInformationChanged',
-  SessionsRevoked = 'sessionsRevoked',
 }
 export const RiscEventKeys: Array<RiscEventTypes> = Object.keys(
   RiscEventTypes
@@ -43,14 +40,6 @@ export const RiscEventURIs: Record<RiscEventTypes, UriInfo> = {
     uri: RISC_SCHEMA_ROOT + 'credential-compromise',
     detailsKey: 'credentialCompromise',
   },
-  [RiscEventTypes.IdentifierChanged]: {
-    uri: RISC_SCHEMA_ROOT + 'identifier-changed',
-    detailsKey: 'identifierChanged',
-  },
-  [RiscEventTypes.IdentifierRecycled]: {
-    uri: RISC_SCHEMA_ROOT + 'identifier-recycled',
-    detailsKey: 'identifierRecycled',
-  },
   [RiscEventTypes.OptIn]: {
     uri: RISC_SCHEMA_ROOT + 'opt-in',
     detailsKey: 'optIn',
@@ -74,9 +63,5 @@ export const RiscEventURIs: Record<RiscEventTypes, UriInfo> = {
   [RiscEventTypes.RecoveryInformationChanged]: {
     uri: RISC_SCHEMA_ROOT + 'recovery-information-changed',
     detailsKey: 'recoveryInformationChanged',
-  },
-  [RiscEventTypes.SessionsRevoked]: {
-    uri: RISC_SCHEMA_ROOT + 'sessions-revoked',
-    detailsKey: 'sessionsRevoked',
   },
 };

@@ -3,7 +3,6 @@ import { UriInfo } from './events';
 export enum NotificationEventTypes {
   AccountConcern = 'accountConcern',
   AccountBlock = 'accountBlock',
-  DeviceConcern = 'deviceConcern',
 }
 
 export const NotificationEventKeys: Array<NotificationEventTypes> = Object.keys(
@@ -21,9 +20,5 @@ export const NotificationEventURIs: Record<NotificationEventTypes, UriInfo> = {
   [NotificationEventTypes.AccountBlock]: {
     uri: GOV_UK_SCHEMA_ROOT_NOTIFICATION + 'accountBlock',
     detailsKey: 'accountConcern',
-  },
-  [NotificationEventTypes.DeviceConcern]: {
-    uri: GOV_UK_SCHEMA_ROOT_NOTIFICATION + 'deviceConcern',
-    detailsKey: 'deviceConcern',
   },
 };

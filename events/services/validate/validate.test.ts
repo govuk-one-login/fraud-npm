@@ -1,7 +1,6 @@
 import { ValidateService } from './validate';
 import * as testSchema from './test-schema.json';
 import * as testSchemaSubject from './test-schema-subject.json';
-import * as sessionRecoveredEventSchema from '../../schemas/activity/session-recovered.json';
 
 describe('ValidateService', () => {
   it('should be defined', () => {
@@ -85,28 +84,6 @@ describe('ValidateService', () => {
       await expect(
         ValidateService.validate(testSchemaSubject, message)
       ).rejects.toThrow(Error);
-    });
-  });
-
-  describe('Check validation of session recovered schema', () => {
-    it('works for valid json', async () => {
-      let message = {
-        subject: {
-          format: 'uri',
-          uri: 'urn:fdc:gov.uk:2022:56P4CMsGh_02YOlWpd8PAOI-2sVlB2nsNU7mcLZYhYw=',
-        },
-        session: {
-          format: 'string',
-          id: 'string',
-        },
-        previous_session_id: 'string',
-        initiating_entity: 'string',
-        reason_admin: {
-          en: 'string',
-        },
-        event_timestamp: 100,
-      };
-      await ValidateService.validate(sessionRecoveredEventSchema, message);
     });
   });
 });

@@ -3,15 +3,12 @@ import { AccountCredentialChangeEvent } from '../event-classes/risc/account-cred
 import { AccountDisabledEvent } from '../event-classes/risc/account-disabled';
 import { AccountPurgedEvent } from '../event-classes/risc/account-purged';
 import { CredentialCompromiseEvent } from '../event-classes/risc/credential-compromise';
-import { IdentifierChangedEvent } from '../event-classes/risc/identifier-changed';
-import { IdentifierRecycledEvent } from '../event-classes/risc/identifier-recycled';
 import { OptInEvent } from '../event-classes/risc/opt-in';
 import { OptOutCancelledEvent } from '../event-classes/risc/opt-out-cancelled';
 import { OptOutEffectiveEvent } from '../event-classes/risc/opt-out-effective';
 import { OptOutInitiatedEvent } from '../event-classes/risc/opt-out-initiated';
 import { RecoveryActivatedEvent } from '../event-classes/risc/recovery-activated';
 import { RecoveryInformationChangedEvent } from '../event-classes/risc/recovery-information-changed';
-import { SessionsRevokedEvent } from '../event-classes/risc/sessions-revoked';
 import { SETEvents } from '../types/ssf';
 import {
   DEFAULT_ACCOUNT_DISABLED_REASON,
@@ -33,9 +30,6 @@ export const riscEventsMapping: Record<string, any> = {
     AccountCredentialChangeEvent,
   [RiscEventURIs[RiscEventTypes.CredentialCompromise].uri]:
     CredentialCompromiseEvent,
-  [RiscEventURIs[RiscEventTypes.IdentifierChanged].uri]: IdentifierChangedEvent,
-  [RiscEventURIs[RiscEventTypes.IdentifierRecycled].uri]:
-    IdentifierRecycledEvent,
   [RiscEventURIs[RiscEventTypes.OptIn].uri]: OptInEvent,
   [RiscEventURIs[RiscEventTypes.OptOutInitiated].uri]: OptOutInitiatedEvent,
   [RiscEventURIs[RiscEventTypes.OptOutCancelled].uri]: OptOutCancelledEvent,
@@ -43,7 +37,6 @@ export const riscEventsMapping: Record<string, any> = {
   [RiscEventURIs[RiscEventTypes.RecoveryActivated].uri]: RecoveryActivatedEvent,
   [RiscEventURIs[RiscEventTypes.RecoveryInformationChanged].uri]:
     RecoveryInformationChangedEvent,
-  [RiscEventURIs[RiscEventTypes.SessionsRevoked].uri]: SessionsRevokedEvent,
 };
 
 async function generateRiscEmailSubjectEvents(
@@ -180,66 +173,6 @@ export const riscPopulatedEventsMapping: Record<
     return events;
   },
 
-  [RiscEventURIs[RiscEventTypes.IdentifierChanged].uri]: async (
-    id: string,
-    startTimeInMillis: number,
-    endTimeInMillis: number,
-    ...args: (string | null)[]
-  ) => {
-    let events: SETEvents = {};
-    if (id === 'email') {
-      events = await generateRiscEmailSubjectEvents(
-        RiscEventTypes.IdentifierChanged,
-        args[0] ?? DEFAULT_EMAIL,
-        TimestampTypes.timeStamp,
-        startTimeInMillis,
-        endTimeInMillis
-      );
-    } else if (id === 'phone') {
-      events = await generateRiscPhoneSubjectEvents(
-        RiscEventTypes.IdentifierChanged,
-        args[0] ?? DEFAULT_PHONE,
-        TimestampTypes.timeStamp,
-        startTimeInMillis,
-        endTimeInMillis
-      );
-    }
-    let event = events[AllEventURIs[RiscEventTypes.IdentifierChanged].uri];
-    if (id === 'email') {
-      event['new-value'] = args[1] ?? DEFAULT_EMAIL_2;
-    } else if (id === 'phone') {
-      event['new-value'] = args[1] ?? DEFAULT_PHONE_2;
-    }
-    return events;
-  },
-
-  [RiscEventURIs[RiscEventTypes.IdentifierRecycled].uri]: async (
-    id: string,
-    startTimeInMillis: number,
-    endTimeInMillis: number,
-    ...args: (string | null)[]
-  ) => {
-    let events: SETEvents = {};
-    if (id === 'email') {
-      events = await generateRiscEmailSubjectEvents(
-        RiscEventTypes.IdentifierRecycled,
-        args[0] ?? DEFAULT_EMAIL,
-        TimestampTypes.timeStamp,
-        startTimeInMillis,
-        endTimeInMillis
-      );
-    } else if (id === 'phone') {
-      events = await generateRiscPhoneSubjectEvents(
-        RiscEventTypes.IdentifierRecycled,
-        args[0] ?? DEFAULT_PHONE,
-        TimestampTypes.timeStamp,
-        startTimeInMillis,
-        endTimeInMillis
-      );
-    }
-    return events;
-  },
-
   [RiscEventURIs[RiscEventTypes.OptIn].uri]: async (
     id: string,
     startTimeInMillis: number,
@@ -312,19 +245,6 @@ export const riscPopulatedEventsMapping: Record<
   ) =>
     await generateStandardUserSubjectEvents(
       RiscEventTypes.RecoveryInformationChanged,
-      id,
-      TimestampTypes.timeStamp,
-      startTimeInMillis,
-      endTimeInMillis
-    ),
-
-  [RiscEventURIs[RiscEventTypes.SessionsRevoked].uri]: async (
-    id: string,
-    startTimeInMillis: number,
-    endTimeInMillis: number
-  ) =>
-    await generateStandardUserSubjectEvents(
-      RiscEventTypes.SessionsRevoked,
       id,
       TimestampTypes.timeStamp,
       startTimeInMillis,

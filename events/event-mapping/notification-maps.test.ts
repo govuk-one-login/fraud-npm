@@ -1,12 +1,10 @@
 import * as accountConcernSchema from '../schemas/notification/account-concern.json';
 import * as accountBlockSchema from '../schemas/notification/account-block.json';
-import * as deviceConcernSchema from '../schemas/notification/device-concern.json';
 import {
   NotificationEventTypes,
   NotificationEventURIs,
 } from '../enums/notification-events';
 import { SETEvents } from '../types/ssf';
-import { TimestampTypes } from '../enums/events';
 import { notificationPopulatedEventsMapping } from './notification-maps';
 import { DEFAULT_URI } from './events-mapping';
 import { TestInfo, validateSetEvents } from './event-mapping.test';
@@ -21,11 +19,6 @@ const notificationTestCases: TestInfo[] = [
     type: NotificationEventTypes.AccountBlock,
     schema: accountBlockSchema,
     extraArgs: ['admin', 'reason-admin'],
-  },
-  {
-    type: NotificationEventTypes.DeviceConcern,
-    schema: deviceConcernSchema,
-    extraArgs: ['rationale-code', 'admin', 'reason-admin'],
   },
 ];
 

@@ -1,10 +1,5 @@
 import { AllEventTypes, AllEventURIs, TimestampTypes } from '../enums/events';
 import {
-  activityEventsMapping,
-  activityPopulatedEventsMapping,
-} from './activity-maps';
-import { caepEventMapping, caepPopulatedEventsMapping } from './caep-maps';
-import {
   notificationEventsMapping,
   notificationPopulatedEventsMapping,
 } from './notification-maps';
@@ -148,8 +143,6 @@ export async function generateStandardUserSubjectEvents(
 export const eventsMapping: Record<string, any> = {
   ...notificationEventsMapping,
   ...riscEventsMapping,
-  ...activityEventsMapping,
-  ...caepEventMapping,
 };
 
 export const populatedEventsMapping: Record<
@@ -163,6 +156,4 @@ export const populatedEventsMapping: Record<
 > = {
   ...notificationPopulatedEventsMapping,
   ...riscPopulatedEventsMapping,
-  ...activityPopulatedEventsMapping,
-  ...caepPopulatedEventsMapping,
 };

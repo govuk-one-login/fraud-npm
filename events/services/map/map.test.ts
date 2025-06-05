@@ -1,6 +1,4 @@
 import { AllEventTypes, AllEventURIs } from '../../enums/events';
-import { NotificationEventTypes } from '../../enums/notification-events';
-import { AccountConcernEvent } from '../../event-classes/notification/account-concern';
 import { eventsMapping } from '../../event-mapping/events-mapping';
 import { MapService } from './map';
 

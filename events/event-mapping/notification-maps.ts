@@ -3,7 +3,6 @@ import {
   NotificationEventURIs,
 } from '../enums/notification-events';
 import { AccountConcernEvent } from '../event-classes/notification/account-concern';
-import { DeviceConcernEvent } from '../event-classes/notification/device-concern';
 import { AllEventURIs, TimestampTypes } from '../enums/events';
 import { EventStructure, SETEvents } from '../types/ssf';
 import {
@@ -20,8 +19,6 @@ export const notificationEventsMapping: Record<string, any> = {
     AccountConcernEvent,
   [NotificationEventURIs[NotificationEventTypes.AccountBlock].uri]:
     AccountBlockEvent,
-  [NotificationEventURIs[NotificationEventTypes.DeviceConcern].uri]:
-    DeviceConcernEvent,
 };
 
 export function addStandardNotificationFields(
@@ -137,36 +134,6 @@ export const notificationPopulatedEventsMapping: Record<
       endTimeInMillis,
       args[0] ?? DEFAULT_INITIATING_ENTITY,
       args[1] ?? DEFAULT_REASON_ADMIN
-    );
-
-    return events;
-  },
-
-  [NotificationEventURIs[NotificationEventTypes.DeviceConcern].uri]: async (
-    id: string,
-    startTimeInMillis: number,
-    endTimeInMillis: number,
-    ...args: (string | null)[]
-  ) => {
-    let events = await generateNotificationDeviceSubjectEvents(
-      NotificationEventTypes.DeviceConcern,
-      id,
-      TimestampTypes.timeFrame,
-      startTimeInMillis,
-      endTimeInMillis
-    );
-
-    let event =
-      events[NotificationEventURIs[NotificationEventTypes.DeviceConcern].uri];
-
-    event['rationale'] = { code: args[0] ?? DEFAULT_RATIONALE_CODE };
-
-    addStandardNotificationFields(
-      event,
-      startTimeInMillis,
-      endTimeInMillis,
-      args[1] ?? DEFAULT_INITIATING_ENTITY,
-      args[2] ?? DEFAULT_REASON_ADMIN
     );
 
     return events;

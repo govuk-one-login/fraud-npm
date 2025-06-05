@@ -1,5 +1,4 @@
 import { ActivityEventURIs, ActivityEventTypes } from './activity-events';
-import { CaepEventURIs, CaepEventTypes } from './caep-events';
 import {
   NotificationEventURIs,
   NotificationEventTypes,
@@ -8,7 +7,6 @@ import { RiscEventURIs, RiscEventTypes } from './risc-events';
 
 export const AllEventURIs: Record<AllEventTypes, UriInfo> = {
   ...RiscEventURIs,
-  ...CaepEventURIs,
   ...NotificationEventURIs,
   ...ActivityEventURIs,
 };
@@ -16,13 +14,11 @@ export const AllEventURIs: Record<AllEventTypes, UriInfo> = {
 export type AllEventTypes =
   | NotificationEventTypes
   | RiscEventTypes
-  | CaepEventTypes
   | ActivityEventTypes;
 
 export const EventTypes: Record<string, AllEventTypes> = {
   ...NotificationEventTypes,
   ...RiscEventTypes,
-  ...CaepEventTypes,
   ...ActivityEventTypes,
 };
 
