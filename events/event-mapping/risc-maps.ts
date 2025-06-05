@@ -13,10 +13,6 @@ import { SETEvents } from '../types/ssf';
 import {
   DEFAULT_ACCOUNT_DISABLED_REASON,
   DEFAULT_CREDENTIAL_TYPE,
-  DEFAULT_EMAIL,
-  DEFAULT_EMAIL_2,
-  DEFAULT_PHONE,
-  DEFAULT_PHONE_2,
   generateMetaDataAndDetailsEvents,
   generateStandardUserSubjectEvents,
 } from './events-mapping';
