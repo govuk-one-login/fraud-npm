@@ -6,6 +6,7 @@ export enum TxmaEventNames {
   IdentifierChanged = 'SSF_INBOUND_IDENTIFIER_CHANGED',
   IdentifierRecycled = 'SSF_INBOUND_IDENTIFIER_RECYCLED',
   CredentialCompromise = 'SSF_INBOUND_CREDENTIAL_COMPROMISE',
+  CredentialConcern = 'SSF_INBOUND_CREDENTIAL_CONCERN',
   OptIn = 'SSF_INBOUND_OPT_IN',
   OptOutInitiated = 'SSF_INBOUND_OPT_OUT_INITIATED',
   OptOutCancelled = 'SSF_INBOUND_OPT_OUT_CANCELLED',
