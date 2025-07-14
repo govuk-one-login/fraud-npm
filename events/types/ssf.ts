@@ -7,7 +7,9 @@ export interface SsfSchema {
   aud: string; // The audience ID for the SET, as far as we are concerned in shared signals this should be our ID. If not we drop the message.
   events: SETEvents; // A set of event statements describing a single logical event that has occurred about a security subject.
 }
-
+export interface Test {
+  [key: string]: EventStructure;
+}
 export interface SETEvents {
   [key: string]: EventStructure;
 }
