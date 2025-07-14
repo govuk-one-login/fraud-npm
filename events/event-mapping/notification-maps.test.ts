@@ -1,6 +1,7 @@
 import * as accountConcernSchema from '../schemas/notification/account-concern.json';
 import * as accountBlockSchema from '../schemas/notification/account-block.json';
 import * as deviceConcernSchema from '../schemas/notification/device-concern.json';
+import * as credentialConcernSchema from '../schemas/notification/credential-concern.json';
 import {
   NotificationEventTypes,
   NotificationEventURIs,
@@ -26,6 +27,11 @@ const notificationTestCases: TestInfo[] = [
     type: NotificationEventTypes.DeviceConcern,
     schema: deviceConcernSchema,
     extraArgs: ['rationale-code', 'admin', 'reason-admin'],
+  },
+  {
+    type: NotificationEventTypes.CredentialConcern,
+    schema: credentialConcernSchema,
+    extraArgs: ['admin', 'reason-admin'],
   },
 ];
 
