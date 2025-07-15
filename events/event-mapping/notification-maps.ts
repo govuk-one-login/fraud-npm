@@ -14,6 +14,7 @@ import {
   generateStandardUserSubjectEvents,
 } from './events-mapping';
 import { AccountBlockEvent } from '../event-classes/notification/account-block';
+import { CredentialConcernEvent } from '../event-classes/notification/credential-concern';
 
 export const notificationEventsMapping: Record<string, any> = {
   [NotificationEventURIs[NotificationEventTypes.AccountConcern].uri]:
@@ -22,6 +23,8 @@ export const notificationEventsMapping: Record<string, any> = {
     AccountBlockEvent,
   [NotificationEventURIs[NotificationEventTypes.DeviceConcern].uri]:
     DeviceConcernEvent,
+  [NotificationEventURIs[NotificationEventTypes.CredentialConcern].uri]:
+    CredentialConcernEvent,
 };
 
 export function addStandardNotificationFields(
@@ -158,6 +161,38 @@ export const notificationPopulatedEventsMapping: Record<
 
     let event =
       events[NotificationEventURIs[NotificationEventTypes.DeviceConcern].uri];
+
+    event['rationale'] = { code: args[0] ?? DEFAULT_RATIONALE_CODE };
+
+    addStandardNotificationFields(
+      event,
+      startTimeInMillis,
+      endTimeInMillis,
+      args[1] ?? DEFAULT_INITIATING_ENTITY,
+      args[2] ?? DEFAULT_REASON_ADMIN
+    );
+
+    return events;
+  },
+
+  [NotificationEventURIs[NotificationEventTypes.CredentialConcern].uri]: async (
+    id: string,
+    startTimeInMillis: number,
+    endTimeInMillis: number,
+    ...args: (string | null)[]
+  ) => {
+    let events = await generateNotificationDeviceSubjectEvents(
+      NotificationEventTypes.CredentialConcern,
+      id,
+      TimestampTypes.timeFrame,
+      startTimeInMillis,
+      endTimeInMillis
+    );
+
+    let event =
+      events[
+        NotificationEventURIs[NotificationEventTypes.CredentialConcern].uri
+      ];
 
     event['rationale'] = { code: args[0] ?? DEFAULT_RATIONALE_CODE };
 
