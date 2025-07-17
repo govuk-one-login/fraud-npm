@@ -9,6 +9,7 @@ export enum LogEvents {
   FullSETBatchGenerated = 'SET Batch Generation Successful',
   PartialSETBatchGenerated = 'SET Batch Generation Partially Successful',
   FailedSETBatchGenerated = 'SET Batch Generation Failed',
+  JWSSignSuccess = 'Successfully signed JWS',
   BackstopItemCreated = "Created BACKSTOP item",
   RpExcluded = "Excluded subject from processing as it is from a test RP"
 }
