@@ -11,5 +11,6 @@ export enum LogEvents {
   FailedSETBatchGenerated = 'SET Batch Generation Failed',
   JWSSignSuccess = 'Successfully signed JWS',
   BackstopItemCreated = "Created BACKSTOP item",
-  RpExcluded = "Excluded subject from processing as it is from a test RP"
+  RpExcluded = "Excluded subject from processing as it is from a test RP",
+  RiskAssessmentTimeout ="No sira response was received within the time period" 
 }
