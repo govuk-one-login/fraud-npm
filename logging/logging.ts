@@ -2,6 +2,7 @@ import { Logger } from '@aws-lambda-powertools/logger';
 import { LogEvents } from './log-events';
 import { MetricUnit, Metrics } from '@aws-lambda-powertools/metrics';
 import { Tracer } from '@aws-lambda-powertools/tracer';
+import { LogItemExtraInput } from '@aws-lambda-powertools/logger/types';
 
 export const fraudTracer = new Tracer();
 
@@ -17,7 +18,7 @@ export class FraudLogger extends Logger {
   debugWithMetrics = (
     input: string,
     metric: LogEvents,
-    ...extraInput: any []
+    ...extraInput: LogItemExtraInput
   ): void => {
     super.debug(input, ...extraInput);
     this.metrics.addMetric(metric, MetricUnit.Count, 1);
@@ -25,7 +26,7 @@ export class FraudLogger extends Logger {
   infoWithMetrics = (
     input: string,
     metric: LogEvents,
-    ...extraInput: any []
+    ...extraInput: LogItemExtraInput
   ): void => {
     super.info(input, ...extraInput);
     this.metrics.addMetric(metric, MetricUnit.Count, 1);
@@ -33,7 +34,7 @@ export class FraudLogger extends Logger {
   warnWithMetrics = (
     input: string,
     metric: LogEvents,
-    ...extraInput: any []
+    ...extraInput: LogItemExtraInput
   ): void => {
     super.warn(input, ...extraInput);
     this.metrics.addMetric(metric, MetricUnit.Count, 1);
@@ -41,7 +42,7 @@ export class FraudLogger extends Logger {
   errorWithMetrics = (
     input: string,
     metric: LogEvents,
-    ...extraInput: any []
+    ...extraInput: LogItemExtraInput
   ): void => {
     super.error(input, ...extraInput);
     this.metrics.addMetric(metric, MetricUnit.Count, 1);
@@ -49,7 +50,7 @@ export class FraudLogger extends Logger {
   criticalWithMetrics = (
     input: string,
     metric: LogEvents,
-    ...extraInput: any []
+    ...extraInput: LogItemExtraInput
   ): void => {
     super.critical(input, ...extraInput);
     this.metrics.addMetric(metric, MetricUnit.Count, 1);
