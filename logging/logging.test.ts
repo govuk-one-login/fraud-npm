@@ -1,4 +1,4 @@
-import { MetricUnits, Metrics } from '@aws-lambda-powertools/metrics';
+import { MetricUnit, Metrics } from '@aws-lambda-powertools/metrics';
 import { LogEvents } from './log-events';
 import { FraudLogger } from './logging';
 import { Logger } from '@aws-lambda-powertools/logger';
@@ -55,7 +55,7 @@ describe('debugWithMetrics', () => {
 
     expect(debugMetricsSpy).toHaveBeenCalledWith(
       LogEvents.StartedProcessing,
-      MetricUnits.Count,
+      MetricUnit.Count,
       1
     );
     expect(debugMetricsSpy).toHaveBeenCalledTimes(1);
@@ -87,7 +87,7 @@ describe('infoWithMetrics', () => {
 
     expect(infoMetricsSpy).toHaveBeenCalledWith(
       LogEvents.StartedProcessing,
-      MetricUnits.Count,
+      MetricUnit.Count,
       1
     );
     expect(infoMetricsSpy).toHaveBeenCalledTimes(1);
@@ -119,7 +119,7 @@ describe('warnWithMetrics', () => {
 
     expect(warnMetricsSpy).toHaveBeenCalledWith(
       LogEvents.StartedProcessing,
-      MetricUnits.Count,
+      MetricUnit.Count,
       1
     );
     expect(warnMetricsSpy).toHaveBeenCalledTimes(1);
@@ -151,7 +151,7 @@ describe('errorWithMetrics', () => {
 
     expect(errorMetricsSpy).toHaveBeenCalledWith(
       LogEvents.ErrorProcessing,
-      MetricUnits.Count,
+      MetricUnit.Count,
       1
     );
     expect(errorMetricsSpy).toHaveBeenCalledTimes(1);
@@ -185,7 +185,7 @@ describe('criticalWithMetrics', () => {
 
     expect(criticalMetricsSpy).toHaveBeenCalledWith(
       LogEvents.ErrorProcessing,
-      MetricUnits.Count,
+      MetricUnit.Count,
       1
     );
     expect(criticalMetricsSpy).toHaveBeenCalledTimes(1);
