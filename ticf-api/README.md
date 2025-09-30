@@ -3,7 +3,7 @@
 # TICF Raw Data Access API
 
 - \*\* Definition
-  internal API to access clear PII data access from TICF CRI data stores.
+  Internal API to access clear PII data access from TICF CRI data stores.
 
 - \*\* Request and Response objects
   RawDataApiRequest object
