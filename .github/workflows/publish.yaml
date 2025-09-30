@@ -11,6 +11,7 @@ on:
         options:
           - Logging
           - Events
+          - Ticf-api
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -31,6 +32,10 @@ jobs:
             'Events')
               echo "Publishing Events Package"
               cd ./events
+              ;;
+            'Ticf-api')
+              echo "Publishing Ticf-api Package"
+              cd ./ticf-api
               ;;
           esac
 
