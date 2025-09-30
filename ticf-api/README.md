@@ -1,4 +1,13 @@
-# The ticf-api package contains all the objects used in the interface:
+# The ticf-api package contains TICF APIs including:
 
-The TICF Raw Data Access API is defined here:
-https://govukverify.atlassian.net/wiki/spaces/FPAD/pages/5602541904/Interface+specification+TICF+CRI+raw+data+access+requests#Drivers-Permit-examples
+# TICF Raw Data Access API
+
+- \*\* Definition
+  internal API to access clear PII data access from TICF CRI data stores.
+
+- \*\* Request and Response objects
+  RawDataApiRequest object
+  RawDataApiResponse object
+
+- \*\*Interface specification:
+  https://govukverify.atlassian.net/wiki/x/UAHwTQE
