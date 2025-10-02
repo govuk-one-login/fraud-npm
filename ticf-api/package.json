@@ -1,0 +1,28 @@
+{
+  "name": "@govuk-one-login/ticf-api",
+  "version": "0.0.1",
+  "description": "TICF-CRI API Interface common",
+  "author": {
+    "name": "FPAD"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.23.2",
+    "@babel/preset-typescript": "^7.23.2",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/govuk-one-login/fraud-npm"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/govuk-one-login"
+  },
+  "scripts": {
+    "format": "npx prettier --write .",
+    "test": "jest --coverage"
+  }
+}
