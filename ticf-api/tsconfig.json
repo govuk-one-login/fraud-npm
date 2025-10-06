@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
+    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "moduleResolution": "Node",
+    "experimentalDecorators": true,
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "strict": true,
-    "target": "ES2022",
-    "resolveJsonModule": true
+    "target": "ES2020"
   }
 }
