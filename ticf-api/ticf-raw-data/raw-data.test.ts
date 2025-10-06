@@ -27,7 +27,7 @@ describe('RawDataInterface', () => {
     const req: RawDataApiResponse = {
       requestType: RawDataRequestType.PASSPORT,
       requestId: 'requestId',
-      requestStatus: RawDataRequestStatus.COMPLETED,
+      requestStatus: RawDataRequestStatus.SUCCESSFUL,
       responseField: {
         name: 'name',
         value: 'value',
@@ -37,7 +37,7 @@ describe('RawDataInterface', () => {
     expect(req).toStrictEqual({
       requestType: RawDataRequestType.PASSPORT,
       requestId: 'requestId',
-      requestStatus: RawDataRequestStatus.COMPLETED,
+      requestStatus: RawDataRequestStatus.SUCCESSFUL,
       responseField: {
         name: 'name',
         value: 'value',

@@ -13,7 +13,7 @@ export interface RawDataApiRequest {
 }
 
 export enum RawDataRequestStatus {
-  COMPLETED = 'COMPLETED',
+  SUCCESSFUL = 'SUCCESSFUL',
   FAILED = 'FAILED'
 }
 
