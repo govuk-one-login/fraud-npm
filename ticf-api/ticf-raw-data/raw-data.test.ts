@@ -1,9 +1,9 @@
-import { RawDataApiRequest, RawDataApiResponse } from './raw-data';
+import { RawDataApiRequest, RawDataApiResponse, RawDataRequestStatus, RawDataRequestType } from './raw-data';
 
 describe('RawDataInterface', () => {
   test('request should be defined', () => {
     const req: RawDataApiRequest = {
-      requestType: 'reqType',
+      requestType: RawDataRequestType.PASSPORT,
       requestOriginator: 'requestOriginator',
       subjectId: 'subjectId',
       requestField: {
@@ -13,7 +13,7 @@ describe('RawDataInterface', () => {
     };
 
     expect(req).toStrictEqual({
-      requestType: 'reqType',
+      requestType: RawDataRequestType.PASSPORT,
       requestOriginator: 'requestOriginator',
       subjectId: 'subjectId',
       requestField: {
@@ -25,9 +25,9 @@ describe('RawDataInterface', () => {
 
   test('response should be defined', () => {
     const req: RawDataApiResponse = {
-      requestType: 'reqType',
+      requestType: RawDataRequestType.PASSPORT,
       requestId: 'requestId',
-      requestStatus: 'requestStatus',
+      requestStatus: RawDataRequestStatus.COMPLETED,
       responseField: {
         name: 'name',
         value: 'value',
@@ -35,9 +35,9 @@ describe('RawDataInterface', () => {
     };
 
     expect(req).toStrictEqual({
-      requestType: 'reqType',
+      requestType: RawDataRequestType.PASSPORT,
       requestId: 'requestId',
-      requestStatus: 'requestStatus',
+      requestStatus: RawDataRequestStatus.COMPLETED,
       responseField: {
         name: 'name',
         value: 'value',
