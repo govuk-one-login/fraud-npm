@@ -9,7 +9,7 @@ export interface RawDataApiRequest {
   requestType: RawDataRequestType;
   requestOriginator: string;
   subjectId: string;
-  requestField: NameValue;
+  requestField: RequestField;
 }
 
 export enum RawDataRequestStatus {
@@ -27,4 +27,8 @@ export interface RawDataApiResponse {
 export interface NameValue {
   name: string;
   value?: string;
+}
+
+export interface RequestField extends NameValue {
+  hashType?: 'ticf' | 'splunk',
 }
