@@ -22,7 +22,8 @@ export type EventStructure = {
     | EventClaims
     | EventStructure
     | EventTimeframe
-    | EventTimeframeMilliseconds;
+    | EventTimeframeMilliseconds
+    | DrivingPermit;
 };
 
 export interface EventClaims {
@@ -75,4 +76,14 @@ export type EventTimeframe = {
 export type EventTimeframeMilliseconds = {
   start_time: number;
   end_time: number;
+};
+
+export type DrivingPermit = {
+  expiryDate: string;
+  fullAddress?: string;
+  issueDate?: string;
+  issueNumber?: string;
+  issuedBy?: string;
+  issuingCountry?: string;
+  personalNumber?: string;
 };
