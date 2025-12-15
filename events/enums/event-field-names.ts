@@ -27,4 +27,5 @@ export enum EventFieldNames {
   Session = 'session',
   PreviousSessionId = 'previous_session_id',
   Rationale = 'rationale',
+  DrivingPermit = 'drivingPermit',
 }
