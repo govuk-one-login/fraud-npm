@@ -21,12 +21,16 @@ export interface RawDataApiResponse {
   requestType: RawDataRequestType;
   requestId: string;
   requestStatus: RawDataRequestStatus;
-  responseField: NameValue;
+  responseField: HistoricalNameValue;
 }
 
 export interface NameValue {
   name: string;
   value?: string;
+}
+
+export interface HistoricalNameValue extends NameValue {
+  historical: boolean;
 }
 
 export interface RequestField extends NameValue {
