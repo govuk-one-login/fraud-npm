@@ -31,6 +31,7 @@ describe('RawDataInterface', () => {
       responseField: {
         name: 'name',
         value: 'value',
+        historical: false,
       },
     };
 
@@ -41,6 +42,7 @@ describe('RawDataInterface', () => {
       responseField: {
         name: 'name',
         value: 'value',
+        historical: false,
       },
     });
   });
