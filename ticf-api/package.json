@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/ticf-api",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "TICF-CRI API Interface common",
   "author": {
     "name": "FPAD"
