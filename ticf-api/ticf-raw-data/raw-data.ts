@@ -3,6 +3,9 @@ export enum RawDataRequestType {
   DRIVERS_PERMIT = 'DRIVERS_PERMIT',
   RESIDENCE_PERMIT = 'RESIDENCE_PERMIT',
   IDENTITY_CARD = 'IDENTITY_CARD',
+  EMAIL = 'EMAIL',
+  PHONE_NUMBER = 'PHONE_NUMBER',
+  NATIONAL_INSURANCE_NUMBER = 'NATIONAL_INSURANCE_NUMBER',
 }
 
 export interface RawDataApiRequest {
@@ -14,7 +17,7 @@ export interface RawDataApiRequest {
 
 export enum RawDataRequestStatus {
   SUCCESSFUL = 'SUCCESSFUL',
-  FAILED = 'FAILED'
+  FAILED = 'FAILED',
 }
 
 export interface RawDataApiResponse {
@@ -34,5 +37,5 @@ export interface HistoricalNameValue extends NameValue {
 }
 
 export interface RequestField extends NameValue {
-  hashType?: 'ticf' | 'splunk',
+  hashType?: 'ticf' | 'splunk';
 }
