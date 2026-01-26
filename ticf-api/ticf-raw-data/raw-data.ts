@@ -6,7 +6,6 @@ export enum RawDataRequestType {
   EMAIL_ADDRESS = 'EMAIL_ADDRESS',
   PHONE_NUMBER = 'PHONE_NUMBER',
   NINO = 'NINO',
-  BIOMETRIC_RESIDENCY_CARD = 'BIOMETRIC_RESIDENCY_CARD',
 }
 
 export interface RawDataApiRequest {
