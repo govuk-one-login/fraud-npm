@@ -1,0 +1,24 @@
+{
+  "properties": {
+    "subject": {
+      "properties": {
+        "format": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "format",
+        "uri"
+      ],
+      "type": "object"
+    },
+    "event_timestamp": {
+      "type": "number"
+    }
+  },
+  "required": ["subject"],
+  "type": "object"
+}
