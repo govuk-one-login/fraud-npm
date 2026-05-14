@@ -42,7 +42,7 @@ jobs:
           echo @govuk-one-login:https://npm.pkg.github.com/ > .npmrc
           echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> .npmrc
           npm ci --ignore-scripts
-          ./node_modules/.bin/tsc
+          npx tsc
           npm test --ignore-scripts
           npm publish --ignore-scripts
         shell: bash
