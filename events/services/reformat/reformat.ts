@@ -68,7 +68,7 @@ export class ReformatService {
       client_id: clientId,
       event_name: txmaEventName,
       ...userObj,
-      timestamp: Math.round(new Date().getTime() / 1000),
+      timestamp: Math.round(Date.now() / 1000),
       component_id: setMessage.iss,
       extensions: {
         SET: {

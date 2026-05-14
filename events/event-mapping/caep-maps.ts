@@ -77,16 +77,21 @@ async function generateCaepDeviceSubjectEvents(
   };
 }
 
+interface SessionSubjectParams {
+  eventType: CaepEventTypes;
+  sessionId: string;
+  userIssuer: string;
+  userSub: string;
+  tenantId: string;
+  timestampType: TimestampTypes;
+  startTimeInMillis: number;
+  endTimeInMillis: number;
+}
+
 async function generateCaepSessionSubjectEvents(
-  eventType: CaepEventTypes,
-  sessionId: string,
-  userIssuer: string,
-  userSub: string,
-  tenantId: string,
-  timestampType: TimestampTypes,
-  startTimeInMillis: number,
-  endTimeInMillis: number
+  params: SessionSubjectParams
 ): Promise<SETEvents> {
+  const { eventType, sessionId, userIssuer, userSub, tenantId, timestampType, startTimeInMillis, endTimeInMillis } = params;
   let metadataAndDetails = await generateMetaDataAndDetailsEvents(
     eventType,
     timestampType,
@@ -258,16 +263,16 @@ export const caepPopulatedEventsMapping: Record<
     endTimeInMillis: number,
     ...args: (string | null)[]
   ) => {
-    let events = await generateCaepSessionSubjectEvents(
-      CaepEventTypes.SessionRevoked,
-      args[0] ?? DEFAULT_SESSION_ID,
-      args[1] ?? DEFAULT_ISS,
-      args[2] ?? DEFAULT_SUB,
-      args[3] ?? DEFAULT_TENANT_ID,
-      TimestampTypes.timeStamp,
+    let events = await generateCaepSessionSubjectEvents({
+      eventType: CaepEventTypes.SessionRevoked,
+      sessionId: args[0] ?? DEFAULT_SESSION_ID,
+      userIssuer: args[1] ?? DEFAULT_ISS,
+      userSub: args[2] ?? DEFAULT_SUB,
+      tenantId: args[3] ?? DEFAULT_TENANT_ID,
+      timestampType: TimestampTypes.timeStamp,
       startTimeInMillis,
-      endTimeInMillis
-    );
+      endTimeInMillis,
+    });
 
     let event = events[CaepEventURIs[CaepEventTypes.SessionRevoked].uri];
 
