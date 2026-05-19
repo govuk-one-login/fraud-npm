@@ -15,6 +15,7 @@ import {
 } from './events-mapping';
 import { AccountBlockEvent } from '../event-classes/notification/account-block';
 import { CredentialConcernEvent } from '../event-classes/notification/credential-concern';
+import { SubjectGroupEvent } from '../event-classes/notification/subject-group';
 
 export const notificationEventsMapping: Record<string, any> = {
   [NotificationEventURIs[NotificationEventTypes.AccountConcern].uri]:
@@ -25,6 +26,8 @@ export const notificationEventsMapping: Record<string, any> = {
     DeviceConcernEvent,
   [NotificationEventURIs[NotificationEventTypes.CredentialConcern].uri]:
     CredentialConcernEvent,
+  [NotificationEventURIs[NotificationEventTypes.SubjectGroup].uri]:
+    SubjectGroupEvent,
 };
 
 export function addStandardNotificationFields(
@@ -205,5 +208,19 @@ export const notificationPopulatedEventsMapping: Record<
     );
 
     return events;
+  },
+
+  [NotificationEventURIs[NotificationEventTypes.SubjectGroup].uri]: async (
+    id: string,
+    startTimeInMillis: number,
+    endTimeInMillis: number
+  ) => {
+    return await generateStandardUserSubjectEvents(
+      NotificationEventTypes.SubjectGroup,
+      id,
+      TimestampTypes.timeStamp,
+      startTimeInMillis,
+      endTimeInMillis
+    );
   },
 };
