@@ -83,13 +83,12 @@ async function generateCaepSessionSubjectEvents(
   userIssuer: string,
   userSub: string,
   tenantId: string,
-  timestampType: TimestampTypes,
   startTimeInMillis: number,
   endTimeInMillis: number
 ): Promise<SETEvents> {
   let metadataAndDetails = await generateMetaDataAndDetailsEvents(
     eventType,
-    timestampType,
+    TimestampTypes.timeStamp,
     startTimeInMillis,
     endTimeInMillis
   );
@@ -264,7 +263,6 @@ export const caepPopulatedEventsMapping: Record<
       args[1] ?? DEFAULT_ISS,
       args[2] ?? DEFAULT_SUB,
       args[3] ?? DEFAULT_TENANT_ID,
-      TimestampTypes.timeStamp,
       startTimeInMillis,
       endTimeInMillis
     );
