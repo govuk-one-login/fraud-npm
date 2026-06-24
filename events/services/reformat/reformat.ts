@@ -13,7 +13,7 @@ export class ReformatService {
    *     "iss": "https://ssf.account.gov.uk/",
    *     "jti": "756E69717565206964656E746966696572",
    *     "iat": 1615305159,
-   *     "aud": "https://audience.othergovenmentdepartment.gov/",
+   *     "aud": "https://audience.othergovernmentdepartment.gov/",
    *     "events": {
    *         "https://schemas.openid.net/secevent/caep/event-type/credential-change": {
    *             "subject": {
