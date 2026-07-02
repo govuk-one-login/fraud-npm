@@ -30,6 +30,7 @@ describe('ReformatService', () => {
       const expectedTxmaMessage: TxmaType = {
         client_id: 'client-id',
         timestamp: 10,
+        event_timestamp_ms: 10000,
         event_name: TxmaEventNames.AccountConcern,
         component_id: 'some-iss',
         user: { user_id: 'csi' },
@@ -81,6 +82,7 @@ describe('ReformatService', () => {
 
     const expectedTxmaMessage: TxmaType = {
       timestamp: 10,
+      event_timestamp_ms: 10000,
       event_name: TxmaEventNames.AccountConcern,
       component_id: 'some-iss',
       extensions: {
