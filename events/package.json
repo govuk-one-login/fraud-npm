@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/events",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Fraud common events",
   "author": {
     "name": "FPAD"
