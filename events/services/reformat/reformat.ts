@@ -64,11 +64,14 @@ export class ReformatService {
       ? { user: { user_id: commonSubjectId } }
       : {};
 
+    const currentTimeMs = Date.now();
+    const currentTimeSec = Math.round(currentTimeMs / 1000);
     return {
       client_id: clientId,
       event_name: txmaEventName,
       ...userObj,
-      timestamp: Math.round(Date.now() / 1000),
+      timestamp: currentTimeSec,
+      event_timestamp_ms: currentTimeMs,
       component_id: setMessage.iss,
       extensions: {
         SET: {

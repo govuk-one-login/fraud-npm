@@ -4,6 +4,7 @@ import { TxmaEventNames } from './event-names';
 export interface TxmaType {
   client_id?: string;
   timestamp: number;
+  event_timestamp_ms: number;
   event_name: TxmaEventNames;
   component_id: string;
   user?: { user_id: string };
