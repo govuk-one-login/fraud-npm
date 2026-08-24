@@ -33,8 +33,5 @@
     "scripts": {
         "format": "npx prettier --write .",
         "test": "jest --coverage"
-    },
-    "overrides": {
-        "brace-expansion": "5.0.8"
     }
 }
