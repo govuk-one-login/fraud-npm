@@ -30,6 +30,9 @@
         "prettier": "^3.0.3",
         "typescript": "^5.2.2"
     },
+    "overrides": {
+        "sprintf-js": "^1.1.3"
+    },
     "scripts": {
         "format": "npx prettier --write .",
         "test": "jest --coverage"
