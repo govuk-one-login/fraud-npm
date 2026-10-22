@@ -29,7 +29,8 @@
   "overrides": {
     "@istanbuljs/load-nyc-config": {
       "js-yaml": "^4.1.0"
-    }
+    },
+    "sprintf-js": "^1.1.3"
   },
   "scripts": {
     "format": "npx prettier --write .",
